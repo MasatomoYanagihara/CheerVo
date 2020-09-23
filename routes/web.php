@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// APIのURL以外のリクエストに対してはindexテンプレートを返す
+Route::get('/{any?}', fn () => view('index'))->where('any', '.+');
