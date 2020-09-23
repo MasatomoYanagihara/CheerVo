@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +11,19 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js("resources/js/app.js", "public/js").sass(
+    "resources/sass/app.scss",
+    "public/css"
+);
+
+// Vue-quizの設定
+// mix.browserSync({
+//     files: ["public/**/*.*"],
+//     proxy: "http://localhost:8000"
+// });
+
+mix.browserSync("vuevoice.test")
+    // .js("コンパイル対象のファイル","コンパイル結果の配置先")
+    .js("resources/js/app.js", "public/js")
+    // バージョニングを有効にする（ブラウザがキャッシュを読み込まなようにしている）
+    .version();
