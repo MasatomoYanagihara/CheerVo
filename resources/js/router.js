@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 
 import VoiceList from "./pages/VoiceList.vue";
 import Login from "./pages/Login.vue";
+import Register from "./pages/Register.vue";
 
 Vue.use(VueRouter);
 
@@ -14,6 +15,10 @@ const routes = [
     {
         path: "/login",
         component: Login
+    },
+    {
+        path: "/register",
+        component: Register
     }
 ];
 
