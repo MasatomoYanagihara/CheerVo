@@ -1,10 +1,32 @@
-const state = {};
+const state = {
+    user: null
+};
+
+const mutations = {
+    setUser(state, user) {
+        state.user = user;
+    }
+};
 
 const getters = {};
 
-const mutations = {};
-
-const actions = {};
+const actions = {
+    // 会員登録処理
+    async register(context, data) {
+        const response = await axios.post("/api/register", data);
+        context.commit("setUser", response.data);
+    },
+    // ログイン処理
+    async login(context, data) {
+        const response = await axios.post("/api/login", data);
+        context.commit("setUser", response.data);
+    },
+    // ログアウト処理
+    async logout(context) {
+        const response = await axios.post("/api/logout");
+        context.commit("setUser", null);
+    }
+};
 
 export default {
     namespaced: true,
