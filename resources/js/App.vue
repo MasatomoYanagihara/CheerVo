@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="grobal_wrapper">
         <v-app>
             <Navbar />
             <RouterView />
@@ -42,5 +42,11 @@ export default {
 <style lang="scss">
 a {
     text-decoration: none;
+}
+</style>
+<style lang="scss" scoped>
+.grobal_wrapper {
+    max-width: 1600px;
+    margin: 0 auto;
 }
 </style>

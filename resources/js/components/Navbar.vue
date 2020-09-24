@@ -33,6 +33,8 @@
     </div>
 </template>
 <script>
+import { mapState, mapGetters } from "vuex";
+
 export default {
     computed: {
         // ログインチェック
@@ -42,14 +44,21 @@ export default {
         // ユーザーネーム取得
         username() {
             return this.$store.getters["auth/username"];
-        }
+        },
+        ...mapState({
+            apiStatus: state => state.auth.apiStatus
+        }),
+        ...mapGetters({
+            isLogin: "auth/check"
+        })
     },
     methods: {
         async logout() {
             await this.$store.dispatch("auth/logout");
-            console.log("ログアウトしました");
 
-            this.$router.push("/login");
+            if (this.apiStatus) {
+                this.$router.push("/login");
+            }
         }
     }
 };

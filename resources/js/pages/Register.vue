@@ -6,6 +6,28 @@
             </v-card-title>
             <v-card-text>
                 <v-form @submit.prevent="register">
+                    <!-- エラー表示 -->
+                    <div v-if="registerErrors" class="errors">
+                        <ul v-if="registerErrors.name">
+                            <li v-for="msg in registerErrors.name" :key="msg">
+                                {{ msg }}
+                            </li>
+                        </ul>
+                        <ul v-if="registerErrors.email">
+                            <li v-for="msg in registerErrors.email" :key="msg">
+                                {{ msg }}
+                            </li>
+                        </ul>
+                        <ul v-if="registerErrors.password">
+                            <li
+                                v-for="msg in registerErrors.password"
+                                :key="msg"
+                            >
+                                {{ msg }}
+                            </li>
+                        </ul>
+                    </div>
+
                     <v-text-field
                         prepend-icon="mdi-account-circle"
                         label="Name"
@@ -37,6 +59,8 @@
     </div>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
     data() {
         return {
@@ -48,15 +72,26 @@ export default {
             }
         };
     },
+    computed: mapState({
+        apiStatus: state => state.auth.apiStatus,
+        loginErrors: state => state.auth.loginErrorMessages,
+        registerErrors: state => state.auth.registerErrorMessages
+    }),
     methods: {
         // 会員登録メソッド
         async register() {
             // authストアのresigterアクションを呼び出す
             await this.$store.dispatch("auth/register", this.registerForm);
-            console.log('会員登録しました')
 
-            this.$router.push("/");
+            // API通信に問題がなければ"/"に遷移
+            if (this.apiStatus) {
+                this.$router.push("/");
+            }
         }
+    },
+    clearError() {
+        this.$store.commit("auth/setLoginErrorMessages", null);
+        this.$store.commit("auth/setRegisterErrorMessages", null);
     }
 };
 </script>
