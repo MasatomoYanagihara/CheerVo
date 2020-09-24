@@ -2495,7 +2495,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, ".grobal_wrapper[data-v-f348271a] {\n  max-width: 1500px;\n  margin: 0 auto;\n}", ""]);
+exports.push([module.i, ".grobal_wrapper[data-v-f348271a] {\n  max-width: 1600px;\n  margin: 0 auto;\n}", ""]);
 
 // exports
 

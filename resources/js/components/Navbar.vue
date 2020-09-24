@@ -29,13 +29,66 @@
                     </v-btn>
                 </Router-link>
             </div>
+            <v-app-bar-nav-icon
+                @click.stop="drawer = !drawer"
+            ></v-app-bar-nav-icon>
         </v-app-bar>
+        <!-- サイドナビゲーションメニュー -->
+        <v-navigation-drawer v-model="drawer" app right>
+            <v-list dense>
+                <v-list-item-title style="padding-left: 12px;"
+                    >MENU</v-list-item-title
+                >
+
+                <!-- ホーム -->
+                <router-link to="/">
+                    <v-list-item link class="menu-item-1">
+                        <v-list-item-action>
+                            <v-icon>mdi-home</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>ホーム</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </router-link>
+
+                <!-- ログイン -->
+                <div v-if="!isLogin">
+                    <router-link to="/login">
+                        <v-list-item link class="menu-item">
+                            <v-list-item-action>
+                                <v-icon>mdi-login-variant</v-icon>
+                            </v-list-item-action>
+                            <v-list-item-content>
+                                <v-list-item-title>ログイン</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </router-link>
+                </div>
+                <!-- ログアウト -->
+                <div v-if="isLogin" @click="logout">
+                    <v-list-item link class="menu-item">
+                        <v-list-item-action>
+                            <v-icon>mdi-login-variant</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>ログアウト</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </div>
+            </v-list>
+        </v-navigation-drawer>
     </div>
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
 
 export default {
+    data() {
+        return {
+            drawer: false // サイドナビトグル
+        };
+    },
     computed: {
         // ログインチェック
         isLogin() {
