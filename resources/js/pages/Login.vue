@@ -35,13 +35,21 @@ export default {
             }
         };
     },
+    computed: {
+        apiStatus() {
+            return this.$store.state.auth.apiStatus;
+        }
+    },
     methods: {
         async login() {
             // authストアのloginアクションを呼び出す
             await this.$store.dispatch("auth/login", this.loginForm);
-            console.log('ログインしました')
+            console.log("ログインしました");
 
-            this.$router.push("/");
+            // API通信に問題がなければ"/"に遷移
+            if (this.apiStatus) {
+                this.$router.push("/");
+            }
         }
     }
 };
