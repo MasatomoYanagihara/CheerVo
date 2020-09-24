@@ -49,8 +49,13 @@ export default {
         };
     },
     methods: {
-        register() {
-            console.log(this.registerForm);
+        // 会員登録メソッド
+        async register() {
+            // authストアのresigterアクションを呼び出す
+            await this.$store.dispatch("auth/register", this.registerForm);
+            console.log('会員登録しました')
+
+            this.$router.push("/");
         }
     }
 };
