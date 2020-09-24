@@ -8,7 +8,12 @@ const mutations = {
     }
 };
 
-const getters = {};
+const getters = {
+    // ログインチェック
+    check: state => !!state.user,
+    // ユーザーネーム取得
+    username: state => (state.user ? state.user.name : "")
+};
 
 const actions = {
     // 会員登録処理
@@ -25,7 +30,13 @@ const actions = {
     async logout(context) {
         const response = await axios.post("/api/logout");
         context.commit("setUser", null);
-    }
+    },
+    // ログイン確認処理
+    async currentUser (context) {
+        const response = await axios.get('/api/user')
+        const user = response.data || null
+        context.commit('setUser', user)
+      }
 };
 
 export default {

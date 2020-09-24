@@ -1,4 +1,4 @@
-import './bootstrap'
+import "./bootstrap";
 import Vue from "vue";
 import router from "./router";
 import store from "./store";
@@ -10,11 +10,18 @@ import "material-design-icons-iconfont/dist/material-design-icons.css"; // ア�
 
 Vue.use(Vuetify);
 
-new Vue({
-    el: "#app",
-    router,
-    store,
-    vuetify: new Vuetify(),
-    components: { App },
-    template: "<App />"
-});
+const createApp = async () => {
+    // ログイン確認処理
+    await store.dispatch("auth/currentUser");
+
+    new Vue({
+        el: "#app",
+        router,
+        store,
+        vuetify: new Vuetify(),
+        components: { App },
+        template: "<App />"
+    });
+};
+
+createApp();
