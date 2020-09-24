@@ -36,8 +36,12 @@ export default {
         };
     },
     methods: {
-        login() {
-            console.log(this.loginForm);
+        async login() {
+            // authストアのloginアクションを呼び出す
+            await this.$store.dispatch("auth/login", this.loginForm);
+            console.log('ログインしました')
+
+            this.$router.push("/");
         }
     }
 };
