@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Photo;
+use App\Voice;
 use App\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class PhotoSubmitApiTest extends TestCase
+class VoiceSubmitApiTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -32,21 +32,21 @@ class PhotoSubmitApiTest extends TestCase
         Storage::fake('s3');
 
         $response = $this->actingAs($this->user)
-            ->json('POST', route('photo.create'), [
+            ->json('POST', route('voice.create'), [
                 // ダミーファイルを作成して送信している
-                'photo' => UploadedFile::fake()->image('photo.jpg'),
+                'voice' => UploadedFile::fake()->image('voice.mp3'),
             ]);
 
         // レスポンスが201(CREATED)であること
         $response->assertStatus(201);
 
-        $photo = Photo::first();
+        $voice = Voice::first();
 
         // 写真のIDが12桁のランダムな文字列であること
-        $this->assertRegExp('/^[0-9a-zA-Z-_]{12}$/', $photo->id);
+        $this->assertRegExp('/^[0-9a-zA-Z-_]{12}$/', $voice->id);
 
         // DBに挿入されたファイル名のファイルがストレージに保存されていること
-        Storage::cloud()->assertExists($photo->filename);
+        Storage::cloud()->assertExists($voice->filename);
     }
 
     /**
@@ -55,13 +55,13 @@ class PhotoSubmitApiTest extends TestCase
     public function should_データベースエラーの場合はファイルを保存しない()
     {
         // 乱暴だがこれでDBエラーを起こす
-        Schema::drop('photos');
+        Schema::drop('voices');
 
         Storage::fake('s3');
 
         $response = $this->actingAs($this->user)
-            ->json('POST', route('photo.create'), [
-                'photo' => UploadedFile::fake()->image('photo.jpg'),
+            ->json('POST', route('voice.create'), [
+                'voice' => UploadedFile::fake()->image('voice.mp3'),
             ]);
 
         // レスポンスが500(INTERNAL SERVER ERROR)であること
@@ -82,14 +82,14 @@ class PhotoSubmitApiTest extends TestCase
             ->andReturnNull();
 
         $response = $this->actingAs($this->user)
-            ->json('POST', route('photo.create'), [
-                'photo' => UploadedFile::fake()->image('photo.jpg'),
+            ->json('POST', route('voice.create'), [
+                'voice' => UploadedFile::fake()->image('voice.mp3'),
             ]);
 
         // レスポンスが500(INTERNAL SERVER ERROR)であること
         $response->assertStatus(500);
 
         // データベースに何も挿入されていないこと
-        $this->assertEmpty(Photo::all());
+        $this->assertEmpty(Voice::all());
     }
 }

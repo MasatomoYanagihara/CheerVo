@@ -2106,8 +2106,62 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      drawer: false // サイドナビトグル
+
+    };
+  },
   computed: _objectSpread(_objectSpread({
     // ログインチェック
     isLogin: function isLogin() {
@@ -2441,7 +2495,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, ".grobal_wrapper[data-v-f348271a] {\n  max-width: 1600px;\n  margin: 0 auto;\n}", ""]);
+exports.push([module.i, ".grobal_wrapper[data-v-f348271a] {\n  max-width: 1500px;\n  margin: 0 auto;\n}", ""]);
 
 // exports
 
@@ -4660,7 +4714,133 @@ var render = function() {
                   )
                 ],
                 1
-              )
+              ),
+          _vm._v(" "),
+          _c("v-app-bar-nav-icon", {
+            on: {
+              click: function($event) {
+                $event.stopPropagation()
+                _vm.drawer = !_vm.drawer
+              }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-navigation-drawer",
+        {
+          attrs: { app: "", right: "" },
+          model: {
+            value: _vm.drawer,
+            callback: function($$v) {
+              _vm.drawer = $$v
+            },
+            expression: "drawer"
+          }
+        },
+        [
+          _c(
+            "v-list",
+            { attrs: { dense: "" } },
+            [
+              _c(
+                "v-list-item-title",
+                { staticStyle: { "padding-left": "12px" } },
+                [_vm._v("MENU")]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: "/" } },
+                [
+                  _c(
+                    "v-list-item",
+                    { staticClass: "menu-item-1", attrs: { link: "" } },
+                    [
+                      _c(
+                        "v-list-item-action",
+                        [_c("v-icon", [_vm._v("mdi-home")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-content",
+                        [_c("v-list-item-title", [_vm._v("ホーム")])],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              !_vm.isLogin
+                ? _c(
+                    "div",
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/login" } },
+                        [
+                          _c(
+                            "v-list-item",
+                            { staticClass: "menu-item", attrs: { link: "" } },
+                            [
+                              _c(
+                                "v-list-item-action",
+                                [_c("v-icon", [_vm._v("mdi-login-variant")])],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-list-item-content",
+                                [_c("v-list-item-title", [_vm._v("ログイン")])],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.isLogin
+                ? _c(
+                    "div",
+                    { on: { click: _vm.logout } },
+                    [
+                      _c(
+                        "v-list-item",
+                        { staticClass: "menu-item", attrs: { link: "" } },
+                        [
+                          _c(
+                            "v-list-item-action",
+                            [_c("v-icon", [_vm._v("mdi-login-variant")])],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-list-item-content",
+                            [_c("v-list-item-title", [_vm._v("ログアウト")])],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e()
+            ],
+            1
+          )
         ],
         1
       )

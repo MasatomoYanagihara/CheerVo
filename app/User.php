@@ -36,4 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * リレーションシップ - voicesテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function voices()
+    {
+        return $this->hasMany('App\Voice');
+    }
 }

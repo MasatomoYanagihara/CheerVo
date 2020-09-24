@@ -11,6 +11,9 @@ Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウト
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
+// ボイス投稿
+Route::post('/voices', 'VoiceController@create')->name('voice.create');
+
 // ログインユーザー
 Route::get('/user', function () {
     return Auth::user();
