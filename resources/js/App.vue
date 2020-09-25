@@ -2,7 +2,9 @@
     <div class="grobal_wrapper">
         <v-app>
             <Navbar />
-            <RouterView />
+            <v-main>
+                <RouterView />
+            </v-main>
             <Footer />
         </v-app>
     </div>

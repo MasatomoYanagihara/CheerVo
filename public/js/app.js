@@ -2018,6 +2018,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -4569,7 +4571,7 @@ var render = function() {
         [
           _c("Navbar"),
           _vm._v(" "),
-          _c("RouterView"),
+          _c("v-main", [_c("RouterView")], 1),
           _vm._v(" "),
           _c("Footer")
         ],
@@ -4655,20 +4657,19 @@ var render = function() {
           _c("v-spacer"),
           _vm._v(" "),
           _vm.isLogin
+            ? _c("div", [
+                _vm._v("\n            " + _vm._s(_vm.username) + "\n        ")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isLogin
             ? _c(
                 "div",
                 [
-                  _c("div", [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.username) +
-                        "\n            "
-                    )
-                  ]),
-                  _vm._v(" "),
                   _c(
                     "v-btn",
                     {
+                      staticClass: "font-weight-bold",
                       attrs: { outlined: "", small: "" },
                       on: { click: _vm.logout }
                     },

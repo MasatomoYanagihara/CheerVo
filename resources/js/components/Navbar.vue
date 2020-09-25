@@ -10,10 +10,10 @@
             <v-spacer></v-spacer>
 
             <div v-if="isLogin">
-                <div>
-                    {{ username }}
-                </div>
-                <v-btn outlined small @click="logout">
+                {{ username }}
+            </div>
+            <div v-if="isLogin">
+                <v-btn outlined small @click="logout" class="font-weight-bold">
                     ログアウト
                 </v-btn>
             </div>
