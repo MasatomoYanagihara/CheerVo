@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app-bar color="white" dense>
+        <v-app-bar color="white" dense fixed>
             <Router-link :to="{ name: 'home' }">
                 <v-toolbar-title class="black--text"
                     >Page title</v-toolbar-title
