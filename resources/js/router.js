@@ -6,6 +6,7 @@ import Login from "./pages/Login.vue";
 import Register from "./pages/Register.vue";
 import store from "./store";
 import SystemError from "./pages/errors/System.vue";
+import VoiceDetail from './pages/VoiceDetail.vue'
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,11 @@ const routes = [
                 next();
             }
         }
+    },
+    {
+        path: "/voices/:id",
+        component: VoiceDetail,
+        props: true
     },
     {
         path: "/register",

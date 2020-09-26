@@ -24,7 +24,7 @@ class VoiceController extends Controller
      */
     public function create(StoreVoice $request)
     {
-        // 投稿写真の拡張子を取得する
+        // 投稿ボイスの拡張子を取得する
         $extension = $request->voice->extension();
 
         $voice = new Voice();
