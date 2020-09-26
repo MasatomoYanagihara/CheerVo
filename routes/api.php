@@ -12,7 +12,7 @@ Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 // ボイス一覧取得
-Route::get('/voises', 'VoiceController@index')->name('voice.index');
+Route::get('/voices', 'VoiceController@index')->name('voice.index');
 
 // ボイス投稿
 Route::post('/voices', 'VoiceController@create')->name('voice.create');

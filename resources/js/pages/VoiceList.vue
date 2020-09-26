@@ -1,6 +1,16 @@
 <template>
     <div>
         <h1>Voice List</h1>
+        <v-container>
+            <v-row>
+                <Voice
+                    class="grid__item"
+                    v-for="voice in voices"
+                    :key="voice.id"
+                    :item="voice"
+                />
+            </v-row>
+        </v-container>
         <v-dialog v-model="dialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -63,11 +73,17 @@
     </div>
 </template>
 <script>
+import Voice from "../components/Voice.vue";
+
 export default {
+    components: {
+        Voice
+    },
     data() {
         return {
             dialog: false,
-            voice: null
+            voice: null, // 投稿用
+            voices: {} // 一覧表示用
         };
     },
     methods: {
@@ -98,6 +114,24 @@ export default {
 
             this.reset();
             this.dialog = false;
+        },
+        async fetchVoices() {
+            const response = await axios.get("/api/voices");
+
+            // if (response.status !== OK) {
+            //     this.$store.commit("error/setCode", response.status);
+            //     return false;
+            // }
+
+            this.voices = response.data.data;
+        }
+    },
+    watch: {
+        $route: {
+            async handler() {
+                await this.fetchVoices();
+            },
+            immediate: true
         }
     }
 };
