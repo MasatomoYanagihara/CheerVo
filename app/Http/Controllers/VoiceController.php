@@ -14,7 +14,19 @@ class VoiceController extends Controller
     public function __construct()
     {
         // 認証が必要
-        $this->middleware('auth');
+        // indexメソッド（ボイス一覧）は認証せずに閲覧させたいので除外
+        $this->middleware('auth')->except(['index']);
+    }
+
+    /**
+     * ボイス一覧
+     */
+    public function index()
+    {
+        $voices = Voice::with(['owner'])
+        ->orderBy(Voice::CREATED_AT, 'desc')->paginate();
+
+        return $voices;
     }
 
     /**

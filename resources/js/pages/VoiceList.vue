@@ -3,10 +3,19 @@
         <h1>Voice List</h1>
         <v-dialog v-model="dialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
-                <v-btn color="black" fab dark v-bind="attrs" v-on="on">
+                <v-btn
+                    class="plus_btn"
+                    color="black"
+                    fab
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                >
                     <v-icon dark>mdi-plus</v-icon>
                 </v-btn>
             </template>
+
+            <!-- 投稿フォーム -->
             <v-form @submit.prevent="submit">
                 <v-card>
                     <v-card-title>
@@ -93,3 +102,10 @@ export default {
     }
 };
 </script>
+<style lang="scss" scoped>
+.plus_btn {
+    position: fixed;
+    bottom: 80px;
+    right: 40px;
+}
+</style>
