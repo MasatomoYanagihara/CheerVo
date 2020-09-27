@@ -2,7 +2,7 @@
     <div>
         <v-card width="400px" class="mx-auto mt-8">
             <v-card-title>
-                <h1 class="display-1">ログイン</h1>
+                <h1 class="display-1 mx-auto">ログイン</h1>
             </v-card-title>
             <v-card-text>
                 <v-form @submit.prevent="login">
@@ -20,7 +20,7 @@
                         </ul>
                     </div>
                     <v-text-field
-                        prepend-icon="mdi-account-circle"
+                        prepend-icon="mdi-email"
                         label="E-mail"
                         v-model="loginForm.email"
                     />
@@ -31,7 +31,7 @@
                         v-model="loginForm.password"
                     />
                     <v-card-actions>
-                        <v-btn type="submit">ログイン</v-btn>
+                        <v-btn class="login_btn" type="submit">ログイン</v-btn>
                     </v-card-actions>
                 </v-form>
             </v-card-text>
@@ -75,3 +75,9 @@ export default {
     }
 };
 </script>
+<style lang="scss" scoped>
+.login_btn {
+    display: block;
+    margin: 0 0 0 auto;
+}
+</style>

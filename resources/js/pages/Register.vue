@@ -2,7 +2,7 @@
     <div>
         <v-card width="400px" class="mx-auto mt-8">
             <v-card-title>
-                <h1 class="display-1">会員登録</h1>
+                <h1 class="display-1 mx-auto">会員登録</h1>
             </v-card-title>
             <v-card-text>
                 <v-form @submit.prevent="register">
@@ -34,7 +34,7 @@
                         v-model="registerForm.name"
                     />
                     <v-text-field
-                        prepend-icon="mdi-account-circle"
+                        prepend-icon="mdi-email"
                         label="E-mail"
                         v-model="registerForm.email"
                     />
@@ -51,7 +51,9 @@
                         v-model="registerForm.password_confirmation"
                     />
                     <v-card-actions>
-                        <v-btn type="submit">登録する</v-btn>
+                        <v-btn class="register_btn" type="submit"
+                            >登録する</v-btn
+                        >
                     </v-card-actions>
                 </v-form>
             </v-card-text>
@@ -95,3 +97,9 @@ export default {
     }
 };
 </script>
+<style lang="scss" scoped>
+.register_btn {
+    display: block;
+    margin: 0 0 0 auto;
+}
+</style>

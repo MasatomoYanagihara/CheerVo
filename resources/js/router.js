@@ -7,6 +7,7 @@ import Register from "./pages/Register.vue";
 import store from "./store";
 import SystemError from "./pages/errors/System.vue";
 import VoiceDetail from "./pages/VoiceDetail.vue";
+import NotFound from "./pages/errors/NotFound.vue";
 
 Vue.use(VueRouter);
 
@@ -43,6 +44,10 @@ const routes = [
     {
         path: "/500",
         component: SystemError
+    },
+    {
+        path: "*",
+        component: NotFound
     }
 ];
 
