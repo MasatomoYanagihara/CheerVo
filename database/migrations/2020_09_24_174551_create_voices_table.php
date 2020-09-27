@@ -16,6 +16,7 @@ class CreateVoicesTable extends Migration
         Schema::create('voices', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->unsignedInteger('user_id');
+            $table->string('title');
             $table->string('filename');
             $table->timestamps();
     

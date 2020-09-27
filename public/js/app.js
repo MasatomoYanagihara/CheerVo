@@ -2242,6 +2242,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     item: {
@@ -2594,6 +2599,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2811,6 +2819,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2821,7 +2830,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       dialog: false,
       voice: null,
       // 投稿用
-      voices: {} // 一覧表示用
+      voices: {},
+      // 一覧表示用
+      title: "" // タイトル投稿用
 
     };
   },
@@ -2860,17 +2871,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 formData = new FormData();
                 formData.append("voice", _this.voice);
-                _context.next = 4;
+                formData.append("title", _this.title);
+                _context.next = 5;
                 return axios.post("/api/voices", formData);
 
-              case 4:
+              case 5:
                 response = _context.sent;
 
                 _this.reset();
 
                 _this.dialog = false;
 
-              case 7:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -3004,7 +3016,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".audio[data-v-d4cd1e52] {\n  margin-left: 8px;\n  margin-top: 50px;\n}", ""]);
+exports.push([module.i, ".audio[data-v-d4cd1e52] {\n  margin-left: 8px;\n  margin-top: 50px;\n}\n.wrapper_2[data-v-d4cd1e52] {\n  display: flex;\n}", ""]);
 
 // exports
 
@@ -5691,12 +5703,24 @@ var render = function() {
         _c("div", { staticClass: "wrapper_1 rounded-xl" }, [
           _c(
             "div",
+            { staticClass: "wrapper_2" },
             [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.item.owner.name) +
-                  "\n                "
-              ),
+              _c("p", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.item.owner.name) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.item.title) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
               _c("RouterLink", { attrs: { to: "/voices/" + _vm.item.id } }, [
                 _c("i", { staticClass: "icon ion-md-chatboxes" })
               ])
@@ -6068,6 +6092,10 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
+            _c("div", [
+              _vm._v("\n            " + _vm._s(_vm.voice.title) + "\n        ")
+            ]),
+            _vm._v(" "),
             _c("audio", {
               staticClass: "audio",
               attrs: {
@@ -6303,6 +6331,24 @@ var render = function() {
                           _c(
                             "v-row",
                             [
+                              _c(
+                                "v-col",
+                                { attrs: { cols: "12", sm: "6", md: "4" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: { label: "タイトル", required: "" },
+                                    model: {
+                                      value: _vm.title,
+                                      callback: function($$v) {
+                                        _vm.title = $$v
+                                      },
+                                      expression: "title"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
                               _c(
                                 "v-col",
                                 { attrs: { cols: "12", sm: "6", md: "4" } },

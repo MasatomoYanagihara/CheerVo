@@ -2,8 +2,13 @@
     <v-card width="340px" class="mx-auto" height="160px">
         <v-col cols="12" lg="4" md="6" xs="12">
             <div class="wrapper_1 rounded-xl">
-                <div>
-                    {{ item.owner.name }}
+                <div class="wrapper_2">
+                    <p>
+                        {{ item.owner.name }}
+                    </p>
+                    <p>
+                        {{ item.title }}
+                    </p>
                     <RouterLink :to="`/voices/${item.id}`">
                         <i class="icon ion-md-chatboxes"></i>
                     </RouterLink>
@@ -33,5 +38,8 @@ export default {
 .audio {
     margin-left: 8px;
     margin-top: 50px;
+}
+.wrapper_2 {
+    display: flex;
 }
 </style>

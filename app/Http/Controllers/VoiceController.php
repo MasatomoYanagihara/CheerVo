@@ -47,6 +47,9 @@ class VoiceController extends Controller
         // 本来の拡張子を組み合わせてファイル名とする
         $voice->filename = $voice->id . '.' . $extension;
 
+        // タイトル
+        $voice->title = $request->get('title');
+
         // S3にファイルを保存する
         // 第三引数の'public'はファイルを公開状態で保存するため
         Storage::cloud()

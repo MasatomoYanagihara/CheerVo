@@ -34,12 +34,13 @@
                     <v-card-text>
                         <v-container>
                             <v-row>
-                                <!-- <v-col cols="12" sm="6" md="4">
+                                <v-col cols="12" sm="6" md="4">
                                     <v-text-field
                                         label="タイトル"
                                         required
+                                        v-model="title"
                                     ></v-text-field>
-                                </v-col> -->
+                                </v-col>
                                 <v-col cols="12" sm="6" md="4">
                                     <input
                                         @change="onFileChange"
@@ -78,7 +79,8 @@ export default {
         return {
             dialog: false,
             voice: null, // 投稿用
-            voices: {} // 一覧表示用
+            voices: {}, // 一覧表示用
+            title: "" // タイトル投稿用
         };
     },
     computed: {
@@ -111,6 +113,7 @@ export default {
         async submit() {
             const formData = new FormData();
             formData.append("voice", this.voice);
+            formData.append("title", this.title);
             const response = await axios.post("/api/voices", formData);
 
             this.reset();

@@ -4,6 +4,9 @@
             <div>
                 {{ voice.owner.name }}
             </div>
+            <div>
+                {{ voice.title }}
+            </div>
             <audio
                 :src="voice.url"
                 controls

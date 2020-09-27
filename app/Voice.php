@@ -13,7 +13,7 @@ class Voice extends Model
 
     /** JSONに含める属性 */
     protected $visible = [
-        'id', 'owner', 'url', 'comments',
+        'id', 'owner', 'url', 'comments','title'
     ];
 
     /** JSONに含める属性（アクセサ） */
