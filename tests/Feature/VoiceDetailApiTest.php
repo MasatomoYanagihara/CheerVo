@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Comment;
 use App\Voice;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -16,7 +17,9 @@ class VoiceDetailApiTest extends TestCase
      */
     public function should_正しい構造のJSONを返却する()
     {
-        factory(Voice::class)->create();
+        factory(Voice::class)->create()->each(function ($voice) {
+            $voice->comments()->saveMany(factory(Comment::class, 3)->make());
+        });
         $voice = Voice::first();
 
         $response = $this->json('GET', route('voice.show', [
@@ -30,6 +33,17 @@ class VoiceDetailApiTest extends TestCase
                 'owner' => [
                     'name' => $voice->owner->name,
                 ],
+                'comments' => $voice->comments
+                    ->sortByDesc('id')
+                    ->map(function ($comment) {
+                        return [
+                            'author' => [
+                                'name' => $comment->author->name,
+                            ],
+                            'content' => $comment->content,
+                        ];
+                    })
+                    ->all(),
             ]);
     }
 }

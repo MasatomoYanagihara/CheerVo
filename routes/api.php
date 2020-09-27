@@ -20,6 +20,9 @@ Route::post('/voices', 'VoiceController@create')->name('voice.create');
 // ボイス詳細
 Route::get('/voices/{id}', 'VoiceController@show')->name('voice.show');
 
+// コメント
+Route::post('/voices/{voice}/comments', 'VoiceController@addComment')->name('voice.comment');
+
 // ログインユーザー
 Route::get('/user', function () {
     return Auth::user();

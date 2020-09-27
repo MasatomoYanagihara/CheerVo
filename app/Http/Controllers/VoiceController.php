@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreVoice;
 use App\Voice;
+use App\Comment;
+use App\Http\Requests\StoreVoice;
+use App\Http\Requests\StoreComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -76,8 +78,29 @@ class VoiceController extends Controller
      */
     public function show(string $id)
     {
-        $photo = Voice::where('id', $id)->with(['owner'])->first();
+        $voice = Voice::where('id', $id)
+        ->with(['owner', 'comments.author'])->first();
 
-        return $photo ?? abort(404);
+        return $voice ?? abort(404);
+    }
+
+    
+    /**
+     * コメント投稿
+     * @param Voice $voice
+     * @param StoreComment $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addComment(Voice $voice, StoreComment $request)
+    {
+        $comment = new Comment();
+        $comment->content = $request->get('content');
+        $comment->user_id = Auth::user()->id;
+        $voice->comments()->save($comment);
+
+        // authorリレーションをロードするためにコメントを取得しなおす
+        $new_comment = Comment::where('id', $comment->id)->with('author')->first();
+
+        return response($new_comment, 201);
     }
 }

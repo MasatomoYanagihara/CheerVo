@@ -13,7 +13,7 @@ class Voice extends Model
 
     /** JSONに含める属性 */
     protected $visible = [
-        'id', 'owner', 'url',
+        'id', 'owner', 'url', 'comments',
     ];
 
     /** JSONに含める属性（アクセサ） */
@@ -81,5 +81,14 @@ class Voice extends Model
     public function owner()
     {
         return $this->belongsTo('App\User', 'user_id', 'id', 'users');
+    }
+
+    /**
+     * リレーションシップ - commentsテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment')->orderBy('id', 'desc');
     }
 }
