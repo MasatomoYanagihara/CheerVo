@@ -2,7 +2,7 @@
     <div class="grobal_wrapper">
         <v-app>
             <Navbar />
-            <v-main>
+            <v-main class="v-main">
                 <RouterView />
             </v-main>
             <Footer />
@@ -50,5 +50,9 @@ a {
 .grobal_wrapper {
     max-width: 1600px;
     margin: 0 auto;
+}
+.v-main {
+    margin-top: 40px;
+    margin-bottom: 36px;
 }
 </style>

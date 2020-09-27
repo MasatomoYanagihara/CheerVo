@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app-bar color="white" dense fixed>
+        <v-app-bar color="white" fixed>
             <Router-link :to="{ name: 'home' }">
                 <v-toolbar-title class="black--text"
                     >Page title</v-toolbar-title
@@ -13,7 +13,7 @@
                 {{ username }}
             </div>
             <div v-if="isLogin">
-                <v-btn outlined small @click="logout" class="font-weight-bold">
+                <v-btn outlined small @click="logout" class="logout_btn font-weight-bold">
                     ログアウト
                 </v-btn>
             </div>
@@ -116,3 +116,9 @@ export default {
     }
 };
 </script>
+<style lang="scss" scoped>
+.logout_btn {
+    width: 68px;
+    margin-left: 14px;
+}
+</style>

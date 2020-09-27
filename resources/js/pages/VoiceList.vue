@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <h1>Voice List</h1>
+    <div class="wrapper_1">
         <v-container>
             <v-row>
                 <Voice
@@ -42,11 +41,6 @@
                                     ></v-text-field>
                                 </v-col> -->
                                 <v-col cols="12" sm="6" md="4">
-                                    <!-- <v-file-input
-                                        accept="audio/*"
-                                        label="File input"
-                                        @change="onFileChange"
-                                    ></v-file-input> -->
                                     <input
                                         @change="onFileChange"
                                         type="file"
@@ -144,6 +138,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.wrapper_1 {
+    background-color: yellow;
+    padding-top: 40px;
+    height: 100%;
+}
 .plus_btn {
     position: fixed;
     bottom: 60px;

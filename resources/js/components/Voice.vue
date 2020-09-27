@@ -1,17 +1,22 @@
 <template>
-    <v-col cols="12" lg="4" md="6" xs="12">
-        <div class="wrapper_1 rounded-xl">
-            <div>
-                {{ item.owner.name }}
-                <RouterLink :to="`/voices/${item.id}`">
-                    <i class="icon ion-md-chatboxes"></i>
-                </RouterLink>
+    <v-card width="340px" class="mx-auto" height="160px">
+        <v-col cols="12" lg="4" md="6" xs="12">
+            <div class="wrapper_1 rounded-xl">
+                <div>
+                    {{ item.owner.name }}
+                    <RouterLink :to="`/voices/${item.id}`">
+                        <i class="icon ion-md-chatboxes"></i>
+                    </RouterLink>
+                </div>
+                <audio
+                    :src="item.url"
+                    controls
+                    controlslist="nodownload"
+                    class="audio"
+                ></audio>
             </div>
-            <audio controls controlslist="nodownload" class="audio">
-                <source :src="item.url" />
-            </audio>
-        </div>
-    </v-col>
+        </v-col>
+    </v-card>
 </template>
 
 <script>
@@ -25,10 +30,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.wrapper_1 {
-    background-color: beige;
-}
 .audio {
-    margin-left: 24px;
+    margin-left: 8px;
+    margin-top: 50px;
 }
 </style>

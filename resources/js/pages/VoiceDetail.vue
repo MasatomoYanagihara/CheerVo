@@ -1,12 +1,15 @@
 <template>
-    <div>
-        <div v-if="voice">
+    <div class="wrapper_1">
+        <v-card v-if="voice" class="mx-auto" width="340px">
             <div>
                 {{ voice.owner.name }}
             </div>
-            <audio controls controlslist="nodownload" class="audio">
-                <source :src="voice.url" />
-            </audio>
+            <audio
+                :src="voice.url"
+                controls
+                controlslist="nodownload"
+                class="audio"
+            ></audio>
             <div>
                 <h2><i class="icon ion-md-chatboxes"></i>コメント</h2>
                 <!-- コメント投稿フォーム（ログイン中のみ表示） -->
@@ -44,7 +47,7 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </v-card>
     </div>
 </template>
 
@@ -118,3 +121,13 @@ export default {
     }
 };
 </script>
+<style lang="scss" scoped>
+.wrapper_1 {
+    background-color: yellow;
+    padding-top: 40px;
+    height: 100%;
+}
+.audio {
+    margin-left: 20px;
+}
+</style>
