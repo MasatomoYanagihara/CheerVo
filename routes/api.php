@@ -17,6 +17,9 @@ Route::get('/voices', 'VoiceController@index')->name('voice.index');
 // ボイス投稿
 Route::post('/voices', 'VoiceController@create')->name('voice.create');
 
+// ボイス詳細
+Route::get('/voices/{id}', 'VoiceController@show')->name('voice.show');
+
 // ログインユーザー
 Route::get('/user', function () {
     return Auth::user();

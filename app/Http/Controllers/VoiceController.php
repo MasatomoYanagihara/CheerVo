@@ -14,8 +14,8 @@ class VoiceController extends Controller
     public function __construct()
     {
         // 認証が必要
-        // indexメソッド（ボイス一覧）は認証せずに閲覧させたいので除外
-        $this->middleware('auth')->except(['index']);
+        // indexメソッド（ボイス一覧）、showメソッド（ボイス詳細）は認証せずに閲覧させたいので除外
+        $this->middleware('auth')->except(['index','show']);
     }
 
     /**
@@ -67,5 +67,17 @@ class VoiceController extends Controller
         // リソースの新規作成なので
         // レスポンスコードは201(CREATED)を返却する
         return response($voice, 201);
+    }
+
+    /**
+     * ボイス詳細
+     * @param string $id
+     * @return Voice
+     */
+    public function show(string $id)
+    {
+        $photo = Voice::where('id', $id)->with(['owner'])->first();
+
+        return $photo ?? abort(404);
     }
 }

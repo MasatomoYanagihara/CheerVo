@@ -20,6 +20,7 @@
                     dark
                     v-bind="attrs"
                     v-on="on"
+                    v-if="isLogin"
                 >
                     <v-icon dark>mdi-plus</v-icon>
                 </v-btn>
@@ -86,6 +87,12 @@ export default {
             voices: {} // 一覧表示用
         };
     },
+    computed: {
+        // ログインチェック
+        isLogin() {
+            return this.$store.getters["auth/check"];
+        }
+    },
     methods: {
         // フォームでファイルが選択されたら実行される
         onFileChange(event) {
@@ -139,7 +146,7 @@ export default {
 <style lang="scss" scoped>
 .plus_btn {
     position: fixed;
-    bottom: 80px;
+    bottom: 60px;
     right: 40px;
 }
 </style>

@@ -3,10 +3,8 @@
         <div class="wrapper_1 rounded-xl">
             <div>
                 {{ item.owner.name }}
-                <RouterLink :to="`/voices/${item.id}`"
-                    ><p>
-                        詳細
-                    </p>
+                <RouterLink :to="`/voices/${item.id}`">
+                    <i class="icon ion-md-chatboxes"></i>
                 </RouterLink>
             </div>
             <audio controls controlslist="nodownload" class="audio">

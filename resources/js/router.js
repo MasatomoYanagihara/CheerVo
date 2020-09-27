@@ -6,7 +6,7 @@ import Login from "./pages/Login.vue";
 import Register from "./pages/Register.vue";
 import store from "./store";
 import SystemError from "./pages/errors/System.vue";
-import VoiceDetail from './pages/VoiceDetail.vue'
+import VoiceDetail from "./pages/VoiceDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -48,6 +48,9 @@ const routes = [
 
 const router = new VueRouter({
     mode: "history",
+    scrollBehavior() {
+        return { x: 0, y: 0 };
+    },
     routes
 });
 
