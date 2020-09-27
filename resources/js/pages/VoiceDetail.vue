@@ -8,11 +8,9 @@
                 <source :src="voice.url" />
             </audio>
             <div>
-                <h2 class="photo-detail__title">
-                    <i class="icon ion-md-chatboxes"></i>コメント
-                </h2>
-                <!-- コメント投稿フォーム -->
-                <form @submit.prevent="addComment" class="form">
+                <h2><i class="icon ion-md-chatboxes"></i>コメント</h2>
+                <!-- コメント投稿フォーム（ログイン中のみ表示） -->
+                <form v-if="isLogin" @submit.prevent="addComment" class="form">
                     <!-- エラー表示 -->
                     <div v-if="commentErrors" class="errors">
                         <ul v-if="commentErrors.content">
@@ -31,6 +29,20 @@
                         </button>
                     </div>
                 </form>
+                <!-- コメント表示 -->
+                <ul v-if="voice.comments.length > 0">
+                    <li
+                        v-for="comment in voice.comments"
+                        :key="comment.content"
+                    >
+                        <p>
+                            {{ comment.author.name }}
+                        </p>
+                        <p>
+                            {{ comment.content }}
+                        </p>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -52,6 +64,11 @@ export default {
             commentContent: "", // コメント投稿用
             commentErrors: null // エラー用
         };
+    },
+    computed: {
+        isLogin() {
+            return this.$store.getters["auth/check"];
+        }
     },
     methods: {
         async fetchVoice() {
@@ -87,6 +104,8 @@ export default {
                 this.$store.commit("error/setCode", response.status);
                 return false;
             }
+
+            this.voice.comments = [response.data, ...this.voice.comments];
         }
     },
     watch: {

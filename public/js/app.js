@@ -2516,10 +2516,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
 
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2575,6 +2599,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       commentErrors: null // エラー用
 
     };
+  },
+  computed: {
+    isLogin: function isLogin() {
+      return this.$store.getters["auth/check"];
+    }
   },
   methods: {
     fetchVoice: function fetchVoice() {
@@ -2644,6 +2673,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", false);
 
               case 11:
+                _this2.voice.comments = [response.data].concat(_toConsumableArray(_this2.voice.comments));
+
+              case 12:
               case "end":
                 return _context2.stop();
             }
@@ -5784,62 +5816,92 @@ var render = function() {
           _c("div", [
             _vm._m(0),
             _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "form",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.addComment($event)
-                  }
-                }
-              },
-              [
-                _vm.commentErrors
-                  ? _c("div", { staticClass: "errors" }, [
-                      _vm.commentErrors.content
-                        ? _c(
-                            "ul",
-                            _vm._l(_vm.commentErrors.content, function(msg) {
-                              return _c("li", { key: msg }, [
-                                _vm._v(
-                                  "\n                            " +
-                                    _vm._s(msg) +
-                                    "\n                        "
-                                )
-                              ])
-                            }),
-                            0
-                          )
-                        : _vm._e()
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.commentContent,
-                      expression: "commentContent"
-                    }
-                  ],
-                  staticClass: "form__item",
-                  domProps: { value: _vm.commentContent },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+            _vm.isLogin
+              ? _c(
+                  "form",
+                  {
+                    staticClass: "form",
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.addComment($event)
                       }
-                      _vm.commentContent = $event.target.value
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _vm._m(1)
-              ]
-            )
+                  },
+                  [
+                    _vm.commentErrors
+                      ? _c("div", { staticClass: "errors" }, [
+                          _vm.commentErrors.content
+                            ? _c(
+                                "ul",
+                                _vm._l(_vm.commentErrors.content, function(
+                                  msg
+                                ) {
+                                  return _c("li", { key: msg }, [
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(msg) +
+                                        "\n                        "
+                                    )
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.commentContent,
+                          expression: "commentContent"
+                        }
+                      ],
+                      staticClass: "form__item",
+                      domProps: { value: _vm.commentContent },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.commentContent = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(1)
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.voice.comments.length > 0
+              ? _c(
+                  "ul",
+                  _vm._l(_vm.voice.comments, function(comment) {
+                    return _c("li", { key: comment.content }, [
+                      _c("p", [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(comment.author.name) +
+                            "\n                    "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(comment.content) +
+                            "\n                    "
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              : _vm._e()
           ])
         ])
       : _vm._e()
@@ -5850,9 +5912,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h2", { staticClass: "photo-detail__title" }, [
+    return _c("h2", [
       _c("i", { staticClass: "icon ion-md-chatboxes" }),
-      _vm._v("コメント\n            ")
+      _vm._v("コメント")
     ])
   },
   function() {
