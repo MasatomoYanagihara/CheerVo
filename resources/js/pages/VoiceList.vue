@@ -2,14 +2,10 @@
   <div class="wrapper_1">
     <v-container>
       <v-row>
-        <Voice
-          class="grid__item"
-          v-for="voice in voices"
-          :key="voice.id"
-          :item="voice"
-        />
+        <Voice v-for="voice in voices" :key="voice.id" :item="voice" />
       </v-row>
     </v-container>
+    <!-- ダイアログ -->
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -20,18 +16,23 @@
           v-bind="attrs"
           v-on="on"
           v-if="isLogin"
+          v-show="!fileUploading"
         >
           <v-icon dark>mdi-plus</v-icon>
         </v-btn>
+        <!-- アップロード中のみ表示 -->
+        <v-progress-circular
+          class="progress_circular"
+          indeterminate
+          color="black"
+          size="58"
+          width="6"
+          v-show="fileUploading"
+        ></v-progress-circular>
       </template>
 
       <!-- 投稿フォーム -->
       <v-form @submit.prevent="submit">
-        <!-- <ul v-if="voicePostErrors.password">
-            <li v-for="msg in voicePostErrors.password" :key="msg">
-              {{ msg }}
-            </li>
-          </ul> -->
         <v-card>
           <v-card-title>
             <span class="headline">ボイスを投稿する</span>
@@ -40,7 +41,7 @@
             <v-container>
               <v-row>
                 <v-col cols="12" sm="6" md="4">
-                  ＊タイトルは20文字以内
+                  <h4>＊タイトルは20文字以内</h4>
                   <!-- タイトルバリデーションエラー表示 -->
                   <div v-if="voicePostErrors">
                     <ul v-if="voicePostErrors.title" class="errorMessage">
@@ -56,6 +57,7 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
+                  <h4>＊3分程度の音声ファイル（mp3）</h4>
                   <!-- ファイルバリデーションエラー表示 -->
                   <div v-if="voicePostErrors">
                     <ul v-if="voicePostErrors.voice" class="errorMessage">
@@ -64,15 +66,25 @@
                       </li>
                     </ul>
                   </div>
-                  <!-- accept属性は、ファイル指定するか検討要 -->
-                  <input @change="onFileChange" type="file" accept="audio/*" />
+                  <input
+                    @change="onFileChange"
+                    type="file"
+                    accept="audio/mp3"
+                    capture="microphone"
+                  />
                 </v-col>
               </v-row>
             </v-container>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="dialog = false"
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="
+                dialog = false;
+                clearError();
+              "
               >閉じる</v-btn
             >
             <v-btn color="blue darken-1" text @click="submit">投稿する</v-btn>
@@ -80,6 +92,15 @@
         </v-card>
       </v-form>
     </v-dialog>
+    <!-- スナックバー -->
+    <v-snackbar v-model="snackbar" :timeout="timeout">
+      投稿が完了しました
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          閉じる
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -96,6 +117,9 @@ export default {
       voice: null, // 投稿用
       voices: {}, // 一覧表示用
       title: "", // タイトル投稿用
+      snackbar: false, // スナックバー表示用
+      timeout: 5000,
+      fileUploading: false,
     };
   },
   computed: {
@@ -105,7 +129,7 @@ export default {
     },
     // ボイス投稿バリデーションエラー
     voicePostErrors() {
-      return this.$store.state.voicePost.voicePostErrorMessage;
+      return this.$store.state.voicePost.voicePostErrorMessages;
     },
   },
   methods: {
@@ -125,28 +149,36 @@ export default {
 
       this.voice = event.target.files[0];
     },
+    // 投稿ファイルリセット
     reset() {
       this.voice = null;
       //   this.$el.querySelector('input[type="file"]').value = null;
+    },
+    clearError() {
+      this.$store.commit("voicePost/setVoicePostErrorMessages", null);
     },
     async submit() {
       const formData = new FormData();
       formData.append("voice", this.voice);
       formData.append("title", this.title);
+
+      this.dialog = false;
+      this.fileUploading = true;
       const response = await axios.post("/api/voices", formData);
 
       // バリデーションエラー
       if (response.status === UNPROCESSABLE_ENTITY) {
         this.$store.commit(
-          "voicePost/setVoicePostErrorMessage",
+          "voicePost/setVoicePostErrorMessages",
           response.data.errors
         );
-        console.log(this.$store.state.voicePost.voicePostErrorMessage);
+        this.dialog = true;
         return false;
       }
 
       this.reset();
-      this.dialog = false;
+      this.snackbar = true;
+      this.fileUploading = false;
     },
     async fetchVoices() {
       const response = await axios.get("/api/voices");
@@ -167,11 +199,13 @@ export default {
       immediate: true,
     },
   },
+  created() {
+    this.clearError();
+  },
 };
 </script>
 <style lang="scss" scoped>
 .wrapper_1 {
-  background-color: yellow;
   padding-top: 40px;
   height: 100%;
 }
@@ -179,6 +213,11 @@ export default {
   position: fixed;
   bottom: 60px;
   right: 40px;
+}
+.progress_circular {
+  position: fixed;
+  bottom: 59px;
+  right: 39px;
 }
 .errorMessage {
   color: red;

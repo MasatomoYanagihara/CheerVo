@@ -126,7 +126,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .wrapper_1 {
-    background-color: yellow;
     padding-top: 40px;
     height: 100%;
 }

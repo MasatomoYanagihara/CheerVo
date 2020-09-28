@@ -1,10 +1,10 @@
 const state = {
-    voicePostErrorMessage: null
+    voicePostErrorMessages: null
 };
 
 const mutations = {
-    setVoicePostErrorMessage(state, messages) {
-        state.voicePostErrorMessage = messages;
+    setVoicePostErrorMessages(state, messages) {
+        state.voicePostErrorMessages = messages;
     }
 };
 
