@@ -1,154 +1,186 @@
 <template>
-    <div class="wrapper_1">
-        <v-container>
-            <v-row>
-                <Voice
-                    class="grid__item"
-                    v-for="voice in voices"
-                    :key="voice.id"
-                    :item="voice"
-                />
-            </v-row>
-        </v-container>
-        <v-dialog v-model="dialog" persistent max-width="600px">
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    class="plus_btn"
-                    color="black"
-                    fab
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                    v-if="isLogin"
-                >
-                    <v-icon dark>mdi-plus</v-icon>
-                </v-btn>
-            </template>
+  <div class="wrapper_1">
+    <v-container>
+      <v-row>
+        <Voice
+          class="grid__item"
+          v-for="voice in voices"
+          :key="voice.id"
+          :item="voice"
+        />
+      </v-row>
+    </v-container>
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          class="plus_btn"
+          color="black"
+          fab
+          dark
+          v-bind="attrs"
+          v-on="on"
+          v-if="isLogin"
+        >
+          <v-icon dark>mdi-plus</v-icon>
+        </v-btn>
+      </template>
 
-            <!-- 投稿フォーム -->
-            <v-form @submit.prevent="submit">
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">ボイスを投稿する</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-container>
-                            <v-row>
-                                <v-col cols="12" sm="6" md="4">
-                                    <v-text-field
-                                        label="タイトル"
-                                        required
-                                        v-model="title"
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="4">
-                                    <input
-                                        @change="onFileChange"
-                                        type="file"
-                                        accept="audio/*"
-                                    />
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                            color="blue darken-1"
-                            text
-                            @click="dialog = false"
-                            >閉じる</v-btn
-                        >
-                        <v-btn color="blue darken-1" text @click="submit"
-                            >投稿する</v-btn
-                        >
-                    </v-card-actions>
-                </v-card>
-            </v-form>
-        </v-dialog>
-    </div>
+      <!-- 投稿フォーム -->
+      <v-form @submit.prevent="submit">
+        <!-- <ul v-if="voicePostErrors.password">
+            <li v-for="msg in voicePostErrors.password" :key="msg">
+              {{ msg }}
+            </li>
+          </ul> -->
+        <v-card>
+          <v-card-title>
+            <span class="headline">ボイスを投稿する</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12" sm="6" md="4">
+                  ＊タイトルは20文字以内
+                  <!-- タイトルバリデーションエラー表示 -->
+                  <div v-if="voicePostErrors">
+                    <ul v-if="voicePostErrors.title" class="errorMessage">
+                      <li v-for="msg in voicePostErrors.title" :key="msg">
+                        {{ msg }}
+                      </li>
+                    </ul>
+                  </div>
+                  <v-text-field
+                    label="タイトル"
+                    required
+                    v-model="title"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <!-- ファイルバリデーションエラー表示 -->
+                  <div v-if="voicePostErrors">
+                    <ul v-if="voicePostErrors.voice" class="errorMessage">
+                      <li v-for="msg in voicePostErrors.voice" :key="msg">
+                        {{ msg }}
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- accept属性は、ファイル指定するか検討要 -->
+                  <input @change="onFileChange" type="file" accept="audio/*" />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="dialog = false"
+              >閉じる</v-btn
+            >
+            <v-btn color="blue darken-1" text @click="submit">投稿する</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-form>
+    </v-dialog>
+  </div>
 </template>
 <script>
 import Voice from "../components/Voice.vue";
+import { UNPROCESSABLE_ENTITY } from "../util"; // 422 バリデーションエラー
 
 export default {
-    components: {
-        Voice
+  components: {
+    Voice,
+  },
+  data() {
+    return {
+      dialog: false,
+      voice: null, // 投稿用
+      voices: {}, // 一覧表示用
+      title: "", // タイトル投稿用
+    };
+  },
+  computed: {
+    // ログインチェック
+    isLogin() {
+      return this.$store.getters["auth/check"];
     },
-    data() {
-        return {
-            dialog: false,
-            voice: null, // 投稿用
-            voices: {}, // 一覧表示用
-            title: "" // タイトル投稿用
-        };
+    // ボイス投稿バリデーションエラー
+    voicePostErrors() {
+      return this.$store.state.voicePost.voicePostErrorMessage;
     },
-    computed: {
-        // ログインチェック
-        isLogin() {
-            return this.$store.getters["auth/check"];
-        }
+  },
+  methods: {
+    // フォームでファイルが選択されたら実行される
+    onFileChange(event) {
+      // 何も選択されていなかったら処理中断
+      // if (event.target.files.length === 0) {
+      //     this.reset();
+      //     return false;
+      // }
+
+      // ファイルがaudioではなかったら処理中断
+      // if (!event.target.files[0].type.match("audio.*")) {
+      //     this.reset();
+      //     return false;
+      // }
+
+      this.voice = event.target.files[0];
     },
-    methods: {
-        // フォームでファイルが選択されたら実行される
-        onFileChange(event) {
-            // 何も選択されていなかったら処理中断
-            // if (event.target.files.length === 0) {
-            //     this.reset();
-            //     return false;
-            // }
-
-            // ファイルがaudioではなかったら処理中断
-            // if (!event.target.files[0].type.match("audio.*")) {
-            //     this.reset();
-            //     return false;
-            // }
-
-            this.voice = event.target.files[0];
-        },
-        reset() {
-            this.voice = null;
-            // this.$el.querySelector('input[type="file"]').value = null;
-        },
-        async submit() {
-            const formData = new FormData();
-            formData.append("voice", this.voice);
-            formData.append("title", this.title);
-            const response = await axios.post("/api/voices", formData);
-
-            this.reset();
-            this.dialog = false;
-        },
-        async fetchVoices() {
-            const response = await axios.get("/api/voices");
-
-            // if (response.status !== OK) {
-            //     this.$store.commit("error/setCode", response.status);
-            //     return false;
-            // }
-
-            this.voices = response.data.data;
-        }
+    reset() {
+      this.voice = null;
+      //   this.$el.querySelector('input[type="file"]').value = null;
     },
-    watch: {
-        $route: {
-            async handler() {
-                await this.fetchVoices();
-            },
-            immediate: true
-        }
-    }
+    async submit() {
+      const formData = new FormData();
+      formData.append("voice", this.voice);
+      formData.append("title", this.title);
+      const response = await axios.post("/api/voices", formData);
+
+      // バリデーションエラー
+      if (response.status === UNPROCESSABLE_ENTITY) {
+        this.$store.commit(
+          "voicePost/setVoicePostErrorMessage",
+          response.data.errors
+        );
+        console.log(this.$store.state.voicePost.voicePostErrorMessage);
+        return false;
+      }
+
+      this.reset();
+      this.dialog = false;
+    },
+    async fetchVoices() {
+      const response = await axios.get("/api/voices");
+
+      // if (response.status !== OK) {
+      //     this.$store.commit("error/setCode", response.status);
+      //     return false;
+      // }
+
+      this.voices = response.data.data;
+    },
+  },
+  watch: {
+    $route: {
+      async handler() {
+        await this.fetchVoices();
+      },
+      immediate: true,
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
 .wrapper_1 {
-    background-color: yellow;
-    padding-top: 40px;
-    height: 100%;
+  background-color: yellow;
+  padding-top: 40px;
+  height: 100%;
 }
 .plus_btn {
-    position: fixed;
-    bottom: 60px;
-    right: 40px;
+  position: fixed;
+  bottom: 60px;
+  right: 40px;
+}
+.errorMessage {
+  color: red;
 }
 </style>

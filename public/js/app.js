@@ -2322,6 +2322,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2744,6 +2747,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_Voice_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Voice.vue */ "./resources/js/components/Voice.vue");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2820,6 +2824,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+ // 422 バリデーションエラー
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2840,6 +2860,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     // ログインチェック
     isLogin: function isLogin() {
       return this.$store.getters["auth/check"];
+    },
+    // ボイス投稿バリデーションエラー
+    voicePostErrors: function voicePostErrors() {
+      return this.$store.state.voicePost.voicePostErrorMessage;
     }
   },
   methods: {
@@ -2858,7 +2882,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.voice = event.target.files[0];
     },
     reset: function reset() {
-      this.voice = null; // this.$el.querySelector('input[type="file"]').value = null;
+      this.voice = null; //   this.$el.querySelector('input[type="file"]').value = null;
     },
     submit: function submit() {
       var _this = this;
@@ -2878,11 +2902,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 5:
                 response = _context.sent;
 
+                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_2__["UNPROCESSABLE_ENTITY"])) {
+                  _context.next = 10;
+                  break;
+                }
+
+                _this.$store.commit("voicePost/setVoicePostErrorMessage", response.data.errors);
+
+                console.log(_this.$store.state.voicePost.voicePostErrorMessage);
+                return _context.abrupt("return", false);
+
+              case 10:
                 _this.reset();
 
                 _this.dialog = false;
 
-              case 8:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -3035,7 +3070,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".login_btn[data-v-3b6adb30] {\n  display: block;\n  margin: 0 0 0 auto;\n}", ""]);
+exports.push([module.i, ".login_btn[data-v-3b6adb30] {\n  display: block;\n  margin: 0 0 0 auto;\n}\n.errorMessage[data-v-3b6adb30] {\n  color: red;\n}", ""]);
 
 // exports
 
@@ -3054,7 +3089,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".register_btn[data-v-364a2fac] {\n  display: block;\n  margin: 0 0 0 auto;\n}", ""]);
+exports.push([module.i, ".register_btn[data-v-364a2fac] {\n  display: block;\n  margin: 0 0 0 auto;\n}\n.errorMessage[data-v-364a2fac] {\n  color: red;\n}", ""]);
 
 // exports
 
@@ -3092,7 +3127,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".wrapper_1[data-v-e7b90492] {\n  background-color: yellow;\n  padding-top: 40px;\n  height: 100%;\n}\n.plus_btn[data-v-e7b90492] {\n  position: fixed;\n  bottom: 60px;\n  right: 40px;\n}", ""]);
+exports.push([module.i, ".wrapper_1[data-v-e7b90492] {\n  background-color: yellow;\n  padding-top: 40px;\n  height: 100%;\n}\n.plus_btn[data-v-e7b90492] {\n  position: fixed;\n  bottom: 60px;\n  right: 40px;\n}\n.errorMessage[data-v-e7b90492] {\n  color: red;\n}", ""]);
 
 // exports
 
@@ -5790,32 +5825,17 @@ var render = function() {
                 },
                 [
                   _vm.loginErrors
-                    ? _c("div", { staticClass: "errors" }, [
+                    ? _c("div", [
                         _vm.loginErrors.email
                           ? _c(
                               "ul",
+                              { staticClass: "errorMessage" },
                               _vm._l(_vm.loginErrors.email, function(msg) {
                                 return _c("li", { key: msg }, [
                                   _vm._v(
-                                    "\n                            " +
+                                    "\n              " +
                                       _vm._s(msg) +
-                                      "\n                        "
-                                  )
-                                ])
-                              }),
-                              0
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.loginErrors.password
-                          ? _c(
-                              "ul",
-                              _vm._l(_vm.loginErrors.password, function(msg) {
-                                return _c("li", { key: msg }, [
-                                  _vm._v(
-                                    "\n                            " +
-                                      _vm._s(msg) +
-                                      "\n                        "
+                                      "\n            "
                                   )
                                 ])
                               }),
@@ -5826,7 +5846,10 @@ var render = function() {
                     : _vm._e(),
                   _vm._v(" "),
                   _c("v-text-field", {
-                    attrs: { "prepend-icon": "mdi-email", label: "E-mail" },
+                    attrs: {
+                      "prepend-icon": "mdi-email",
+                      label: "メールアドレス"
+                    },
                     model: {
                       value: _vm.loginForm.email,
                       callback: function($$v) {
@@ -5836,11 +5859,32 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
+                  _vm.loginErrors
+                    ? _c("div", [
+                        _vm.loginErrors.password
+                          ? _c(
+                              "ul",
+                              { staticClass: "errorMessage" },
+                              _vm._l(_vm.loginErrors.password, function(msg) {
+                                return _c("li", { key: msg }, [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(msg) +
+                                      "\n            "
+                                  )
+                                ])
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c("v-text-field", {
                     attrs: {
                       "prepend-icon": "mdi-lock",
                       type: "password",
-                      label: "Password"
+                      label: "パスワード"
                     },
                     model: {
                       value: _vm.loginForm.password,
@@ -5923,50 +5967,16 @@ var render = function() {
                 },
                 [
                   _vm.registerErrors
-                    ? _c("div", { staticClass: "errors" }, [
+                    ? _c("div", { staticClass: "errorMessage" }, [
                         _vm.registerErrors.name
                           ? _c(
                               "ul",
                               _vm._l(_vm.registerErrors.name, function(msg) {
                                 return _c("li", { key: msg }, [
                                   _vm._v(
-                                    "\n                            " +
+                                    "\n              " +
                                       _vm._s(msg) +
-                                      "\n                        "
-                                  )
-                                ])
-                              }),
-                              0
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.registerErrors.email
-                          ? _c(
-                              "ul",
-                              _vm._l(_vm.registerErrors.email, function(msg) {
-                                return _c("li", { key: msg }, [
-                                  _vm._v(
-                                    "\n                            " +
-                                      _vm._s(msg) +
-                                      "\n                        "
-                                  )
-                                ])
-                              }),
-                              0
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.registerErrors.password
-                          ? _c(
-                              "ul",
-                              _vm._l(_vm.registerErrors.password, function(
-                                msg
-                              ) {
-                                return _c("li", { key: msg }, [
-                                  _vm._v(
-                                    "\n                            " +
-                                      _vm._s(msg) +
-                                      "\n                        "
+                                      "\n            "
                                   )
                                 ])
                               }),
@@ -5979,7 +5989,7 @@ var render = function() {
                   _c("v-text-field", {
                     attrs: {
                       "prepend-icon": "mdi-account-circle",
-                      label: "Name"
+                      label: "名前（15文字以内）"
                     },
                     model: {
                       value: _vm.registerForm.name,
@@ -5990,8 +6000,31 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
+                  _vm.registerErrors
+                    ? _c("div", { staticClass: "errorMessage" }, [
+                        _vm.registerErrors.email
+                          ? _c(
+                              "ul",
+                              _vm._l(_vm.registerErrors.email, function(msg) {
+                                return _c("li", { key: msg }, [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(msg) +
+                                      "\n            "
+                                  )
+                                ])
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c("v-text-field", {
-                    attrs: { "prepend-icon": "mdi-email", label: "E-mail" },
+                    attrs: {
+                      "prepend-icon": "mdi-email",
+                      label: "メールアドレス"
+                    },
                     model: {
                       value: _vm.registerForm.email,
                       callback: function($$v) {
@@ -6001,11 +6034,33 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
+                  _vm.registerErrors
+                    ? _c("div", { staticClass: "errorMessage" }, [
+                        _vm.registerErrors.password
+                          ? _c(
+                              "ul",
+                              _vm._l(_vm.registerErrors.password, function(
+                                msg
+                              ) {
+                                return _c("li", { key: msg }, [
+                                  _vm._v(
+                                    "\n              " +
+                                      _vm._s(msg) +
+                                      "\n            "
+                                  )
+                                ])
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c("v-text-field", {
                     attrs: {
                       "prepend-icon": "mdi-lock",
                       type: "password",
-                      label: "Password"
+                      label: "パスワード"
                     },
                     model: {
                       value: _vm.registerForm.password,
@@ -6020,7 +6075,7 @@ var render = function() {
                     attrs: {
                       "prepend-icon": "mdi-lock",
                       type: "password",
-                      label: "Password (confirm)"
+                      label: "パスワード (再入力)"
                     },
                     model: {
                       value: _vm.registerForm.password_confirmation,
@@ -6335,6 +6390,38 @@ var render = function() {
                                 "v-col",
                                 { attrs: { cols: "12", sm: "6", md: "4" } },
                                 [
+                                  _vm._v(
+                                    "\n                ＊タイトルは20文字以内\n                "
+                                  ),
+                                  _vm._v(" "),
+                                  _vm.voicePostErrors
+                                    ? _c("div", [
+                                        _vm.voicePostErrors.title
+                                          ? _c(
+                                              "ul",
+                                              { staticClass: "errorMessage" },
+                                              _vm._l(
+                                                _vm.voicePostErrors.title,
+                                                function(msg) {
+                                                  return _c(
+                                                    "li",
+                                                    { key: msg },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                      " +
+                                                          _vm._s(msg) +
+                                                          "\n                    "
+                                                      )
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                              0
+                                            )
+                                          : _vm._e()
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
                                   _c("v-text-field", {
                                     attrs: { label: "タイトル", required: "" },
                                     model: {
@@ -6353,6 +6440,34 @@ var render = function() {
                                 "v-col",
                                 { attrs: { cols: "12", sm: "6", md: "4" } },
                                 [
+                                  _vm.voicePostErrors
+                                    ? _c("div", [
+                                        _vm.voicePostErrors.voice
+                                          ? _c(
+                                              "ul",
+                                              { staticClass: "errorMessage" },
+                                              _vm._l(
+                                                _vm.voicePostErrors.voice,
+                                                function(msg) {
+                                                  return _c(
+                                                    "li",
+                                                    { key: msg },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                      " +
+                                                          _vm._s(msg) +
+                                                          "\n                    "
+                                                      )
+                                                    ]
+                                                  )
+                                                }
+                                              ),
+                                              0
+                                            )
+                                          : _vm._e()
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
                                   _c("input", {
                                     attrs: { type: "file", accept: "audio/*" },
                                     on: { change: _vm.onFileChange }
@@ -67401,15 +67516,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./resources/js/pages/VoiceList.vue ***!
   \******************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _VoiceList_vue_vue_type_template_id_e7b90492_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VoiceList.vue?vue&type=template&id=e7b90492&scoped=true& */ "./resources/js/pages/VoiceList.vue?vue&type=template&id=e7b90492&scoped=true&");
 /* harmony import */ var _VoiceList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VoiceList.vue?vue&type=script&lang=js& */ "./resources/js/pages/VoiceList.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _VoiceList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _VoiceList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _VoiceList_vue_vue_type_style_index_0_id_e7b90492_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./VoiceList.vue?vue&type=style&index=0&id=e7b90492&lang=scss&scoped=true& */ "./resources/js/pages/VoiceList.vue?vue&type=style&index=0&id=e7b90492&lang=scss&scoped=true&");
+/* empty/unused harmony star reexport *//* harmony import */ var _VoiceList_vue_vue_type_style_index_0_id_e7b90492_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./VoiceList.vue?vue&type=style&index=0&id=e7b90492&lang=scss&scoped=true& */ "./resources/js/pages/VoiceList.vue?vue&type=style&index=0&id=e7b90492&lang=scss&scoped=true&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -67441,7 +67555,7 @@ component.options.__file = "resources/js/pages/VoiceList.vue"
 /*!*******************************************************************!*\
   !*** ./resources/js/pages/VoiceList.vue?vue&type=script&lang=js& ***!
   \*******************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67953,6 +68067,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./resources/js/store/auth.js");
 /* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./error */ "./resources/js/store/error.js");
+/* harmony import */ var _voicePost__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./voicePost */ "./resources/js/store/voicePost.js");
+
 
 
 
@@ -67961,10 +68077,36 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
     auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"],
-    error: _error__WEBPACK_IMPORTED_MODULE_3__["default"]
+    error: _error__WEBPACK_IMPORTED_MODULE_3__["default"],
+    voicePost: _voicePost__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (store);
+
+/***/ }),
+
+/***/ "./resources/js/store/voicePost.js":
+/*!*****************************************!*\
+  !*** ./resources/js/store/voicePost.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  voicePostErrorMessage: null
+};
+var mutations = {
+  setVoicePostErrorMessage: function setVoicePostErrorMessage(state, messages) {
+    state.voicePostErrorMessage = messages;
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: state,
+  mutations: mutations
+});
 
 /***/ }),
 

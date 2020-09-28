@@ -24,6 +24,7 @@ class StoreVoice extends FormRequest
     public function rules()
     {
         return [
+            'title' => 'required|max:20',
             'voice' => 'required|file|mimes:mp3'
         ];
     }
