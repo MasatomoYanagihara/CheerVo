@@ -2236,9 +2236,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     item: {
@@ -2585,18 +2582,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2849,8 +2834,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
  // 422 バリデーションエラー
 
@@ -2869,7 +2852,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // タイトル投稿用
       snackbar: false,
       // スナックバー表示用
-      timeout: 5000,
+      timeout: 3000,
+      // スナックバー表示時間
       fileUploading: false
     };
   },
@@ -2926,22 +2910,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_2__["UNPROCESSABLE_ENTITY"])) {
-                  _context.next = 12;
+                  _context.next = 13;
                   break;
                 }
 
                 _this.$store.commit("voicePost/setVoicePostErrorMessages", response.data.errors);
 
                 _this.dialog = true;
+                _this.fileUploading = false;
                 return _context.abrupt("return", false);
 
-              case 12:
+              case 13:
                 _this.reset();
 
                 _this.snackbar = true;
                 _this.fileUploading = false;
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -3135,7 +3120,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".wrapper_1[data-v-e7b90492] {\n  padding-top: 40px;\n  height: 100%;\n}\n.plus_btn[data-v-e7b90492] {\n  position: fixed;\n  bottom: 60px;\n  right: 40px;\n}\n.progress_circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 59px;\n  right: 39px;\n}\n.errorMessage[data-v-e7b90492] {\n  color: red;\n}", ""]);
+exports.push([module.i, ".wrapper_1[data-v-e7b90492] {\n  padding-top: 30px;\n  height: 100%;\n}\n.plus_btn[data-v-e7b90492] {\n  position: fixed;\n  bottom: 60px;\n  right: 40px;\n}\n.progress_circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 59px;\n  right: 39px;\n}\n.errorMessage[data-v-e7b90492] {\n  color: red;\n}", ""]);
 
 // exports
 
@@ -5721,10 +5706,18 @@ var render = function() {
         [
           _c("v-card-title", [_vm._v(_vm._s(_vm.item.owner.name))]),
           _vm._v(" "),
-          _c("v-card-text", [_vm._v(_vm._s(_vm.item.title))]),
+          _c(
+            "v-card-text",
+            [
+              _vm._v(_vm._s(_vm.item.title) + "\n      "),
+              _c("RouterLink", { attrs: { to: "/voices/" + _vm.item.id } }, [
+                _c("i", { staticClass: "icon ion-md-chatboxes" })
+              ])
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("audio", {
-            staticClass: "audio",
             attrs: {
               src: _vm.item.url,
               controls: "",
@@ -6101,126 +6094,128 @@ var render = function() {
     { staticClass: "wrapper_1" },
     [
       _vm.voice
-        ? _c("v-card", { staticClass: "mx-auto", attrs: { width: "340px" } }, [
-            _c("div", [
-              _vm._v(
-                "\n            " + _vm._s(_vm.voice.owner.name) + "\n        "
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _vm._v("\n            " + _vm._s(_vm.voice.title) + "\n        ")
-            ]),
-            _vm._v(" "),
-            _c("audio", {
-              staticClass: "audio",
-              attrs: {
-                src: _vm.voice.url,
-                controls: "",
-                controlslist: "nodownload"
-              }
-            }),
-            _vm._v(" "),
-            _c("div", [
-              _c("h2", [
-                _c("i", { staticClass: "icon ion-md-chatboxes" }),
-                _vm._v("コメント")
-              ]),
+        ? _c(
+            "v-card",
+            { staticClass: "mx-auto", attrs: { width: "340px", outlined: "" } },
+            [
+              _c("v-card-title", [_vm._v(_vm._s(_vm.voice.owner.name))]),
               _vm._v(" "),
-              _vm.isLogin
-                ? _c(
-                    "form",
-                    {
-                      staticClass: "form",
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.addComment($event)
-                        }
-                      }
-                    },
-                    [
-                      _vm.commentErrors
-                        ? _c("div", { staticClass: "errors" }, [
-                            _vm.commentErrors.content
-                              ? _c(
-                                  "ul",
-                                  _vm._l(_vm.commentErrors.content, function(
-                                    msg
-                                  ) {
-                                    return _c("li", { key: msg }, [
-                                      _vm._v(
-                                        "\n                            " +
-                                          _vm._s(msg) +
-                                          "\n                        "
-                                      )
-                                    ])
-                                  }),
-                                  0
-                                )
-                              : _vm._e()
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.commentContent,
-                            expression: "commentContent"
-                          }
-                        ],
-                        staticClass: "form__item",
-                        domProps: { value: _vm.commentContent },
+              _c("v-card-text", [_vm._v(_vm._s(_vm.voice.title) + " ")]),
+              _vm._v(" "),
+              _c("audio", {
+                staticClass: "audio",
+                attrs: {
+                  src: _vm.voice.url,
+                  controls: "",
+                  controlslist: "nodownload"
+                }
+              }),
+              _vm._v(" "),
+              _c("div", [
+                _c("h2", [
+                  _c("i", { staticClass: "icon ion-md-chatboxes" }),
+                  _vm._v("コメント")
+                ]),
+                _vm._v(" "),
+                _vm.isLogin
+                  ? _c(
+                      "form",
+                      {
+                        staticClass: "form",
                         on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.commentContent = $event.target.value
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.addComment($event)
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form__button" }, [
-                        _c("button", { attrs: { type: "submit" } }, [
-                          _vm._v(
-                            "\n                        投稿する\n                    "
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.voice.comments.length > 0
-                ? _c(
-                    "ul",
-                    _vm._l(_vm.voice.comments, function(comment) {
-                      return _c("li", { key: comment.content }, [
-                        _c("p", [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(comment.author.name) +
-                              "\n                    "
-                          )
-                        ]),
+                      },
+                      [
+                        _vm.commentErrors
+                          ? _c("div", { staticClass: "errors" }, [
+                              _vm.commentErrors.content
+                                ? _c(
+                                    "ul",
+                                    _vm._l(_vm.commentErrors.content, function(
+                                      msg
+                                    ) {
+                                      return _c("li", { key: msg }, [
+                                        _vm._v(
+                                          "\n              " +
+                                            _vm._s(msg) +
+                                            "\n            "
+                                        )
+                                      ])
+                                    }),
+                                    0
+                                  )
+                                : _vm._e()
+                            ])
+                          : _vm._e(),
                         _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(comment.content) +
-                              "\n                    "
-                          )
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.commentContent,
+                              expression: "commentContent"
+                            }
+                          ],
+                          staticClass: "form__item",
+                          domProps: { value: _vm.commentContent },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.commentContent = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form__button" },
+                          [
+                            _c("v-btn", { attrs: { type: "submit" } }, [
+                              _vm._v("投稿する")
+                            ])
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.voice.comments.length > 0
+                  ? _c(
+                      "ul",
+                      _vm._l(_vm.voice.comments, function(comment) {
+                        return _c("li", { key: comment.content }, [
+                          _c("p", [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(comment.author.name) +
+                                "\n          "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(comment.content) +
+                                "\n          "
+                            )
+                          ])
                         ])
-                      ])
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ])
-          ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ],
+            1
+          )
         : _vm._e()
     ],
     1
@@ -6481,7 +6476,6 @@ var render = function() {
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "blue darken-1", text: "" },
                           on: {
                             click: function($event) {
                               _vm.dialog = false
@@ -6492,14 +6486,9 @@ var render = function() {
                         [_vm._v("閉じる")]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { color: "blue darken-1", text: "" },
-                          on: { click: _vm.submit }
-                        },
-                        [_vm._v("投稿する")]
-                      )
+                      _c("v-btn", { on: { click: _vm.submit } }, [
+                        _vm._v("投稿する")
+                      ])
                     ],
                     1
                   )

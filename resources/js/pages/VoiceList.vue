@@ -79,15 +79,13 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
-              color="blue darken-1"
-              text
               @click="
                 dialog = false;
                 clearError();
               "
               >閉じる</v-btn
             >
-            <v-btn color="blue darken-1" text @click="submit">投稿する</v-btn>
+            <v-btn @click="submit">投稿する</v-btn>
           </v-card-actions>
         </v-card>
       </v-form>
@@ -118,7 +116,7 @@ export default {
       voices: {}, // 一覧表示用
       title: "", // タイトル投稿用
       snackbar: false, // スナックバー表示用
-      timeout: 5000,
+      timeout: 3000, // スナックバー表示時間
       fileUploading: false,
     };
   },
@@ -173,6 +171,7 @@ export default {
           response.data.errors
         );
         this.dialog = true;
+        this.fileUploading = false;
         return false;
       }
 
@@ -206,7 +205,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .wrapper_1 {
-  padding-top: 40px;
+  padding-top: 30px;
   height: 100%;
 }
 .plus_btn {
