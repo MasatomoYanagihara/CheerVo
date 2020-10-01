@@ -5,7 +5,6 @@
         <Voice v-for="voice in voices" :key="voice.id" :item="voice" />
       </v-row>
     </v-container>
-    <!-- ダイアログ -->
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -20,7 +19,6 @@
         >
           <v-icon dark>mdi-plus</v-icon>
         </v-btn>
-        <!-- アップロード中のみ表示 -->
         <v-progress-circular
           class="progress_circular"
           indeterminate
@@ -31,7 +29,6 @@
         ></v-progress-circular>
       </template>
 
-      <!-- 投稿フォーム -->
       <v-form @submit.prevent="submit">
         <v-card>
           <v-card-title>
@@ -42,9 +39,8 @@
               <v-row>
                 <v-col cols="12" sm="6" md="4">
                   <h4>＊タイトルは20文字以内</h4>
-                  <!-- タイトルバリデーションエラー表示 -->
                   <div v-if="voicePostErrors">
-                    <ul v-if="voicePostErrors.title" class="errorMessage">
+                    <ul v-if="voicePostErrors.title" class="titleErrorMessage">
                       <li v-for="msg in voicePostErrors.title" :key="msg">
                         {{ msg }}
                       </li>
@@ -57,10 +53,8 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <h4>＊3分程度の音声ファイル（mp3）</h4>
-                  <!-- ファイルバリデーションエラー表示 -->
                   <div v-if="voicePostErrors">
-                    <ul v-if="voicePostErrors.voice" class="errorMessage">
+                    <ul v-if="voicePostErrors.voice" class="fileErrorMessage">
                       <li v-for="msg in voicePostErrors.voice" :key="msg">
                         {{ msg }}
                       </li>
@@ -90,7 +84,6 @@
         </v-card>
       </v-form>
     </v-dialog>
-    <!-- スナックバー -->
     <v-snackbar v-model="snackbar" :timeout="timeout">
       投稿が完了しました
       <template v-slot:action="{ attrs }">
@@ -103,7 +96,7 @@
 </template>
 <script>
 import Voice from "../components/Voice.vue";
-import { UNPROCESSABLE_ENTITY } from "../util"; // 422 バリデーションエラー
+import { OK, UNPROCESSABLE_ENTITY } from "../util";
 
 export default {
   components: {
@@ -121,11 +114,9 @@ export default {
     };
   },
   computed: {
-    // ログインチェック
     isLogin() {
       return this.$store.getters["auth/check"];
     },
-    // ボイス投稿バリデーションエラー
     voicePostErrors() {
       return this.$store.state.voicePost.voicePostErrorMessages;
     },
@@ -133,24 +124,11 @@ export default {
   methods: {
     // フォームでファイルが選択されたら実行される
     onFileChange(event) {
-      // 何も選択されていなかったら処理中断
-      // if (event.target.files.length === 0) {
-      //     this.reset();
-      //     return false;
-      // }
-
-      // ファイルがaudioではなかったら処理中断
-      // if (!event.target.files[0].type.match("audio.*")) {
-      //     this.reset();
-      //     return false;
-      // }
-
       this.voice = event.target.files[0];
     },
-    // 投稿ファイルリセット
     reset() {
       this.voice = null;
-      //   this.$el.querySelector('input[type="file"]').value = null;
+      this.$el.querySelector('input[type="file"]').value = null;
     },
     clearError() {
       this.$store.commit("voicePost/setVoicePostErrorMessages", null);
@@ -164,7 +142,6 @@ export default {
       this.fileUploading = true;
       const response = await axios.post("/api/voices", formData);
 
-      // バリデーションエラー
       if (response.status === UNPROCESSABLE_ENTITY) {
         this.$store.commit(
           "voicePost/setVoicePostErrorMessages",
@@ -182,10 +159,10 @@ export default {
     async fetchVoices() {
       const response = await axios.get("/api/voices");
 
-      // if (response.status !== OK) {
-      //     this.$store.commit("error/setCode", response.status);
-      //     return false;
-      // }
+      if (response.status !== OK) {
+        this.$store.commit("error/setCode", response.status);
+        return false;
+      }
 
       this.voices = response.data.data;
     },
@@ -218,7 +195,14 @@ export default {
   bottom: 59px;
   right: 39px;
 }
-.errorMessage {
+.titleErrorMessage {
   color: red;
+  list-style: none;
+  padding: 0;
+}
+.fileErrorMessage {
+  color: red;
+  list-style: none;
+  padding: 0;
 }
 </style>

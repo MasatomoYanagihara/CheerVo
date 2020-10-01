@@ -2827,15 +2827,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
- // 422 バリデーションエラー
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2858,11 +2850,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   computed: {
-    // ログインチェック
     isLogin: function isLogin() {
       return this.$store.getters["auth/check"];
     },
-    // ボイス投稿バリデーションエラー
     voicePostErrors: function voicePostErrors() {
       return this.$store.state.voicePost.voicePostErrorMessages;
     }
@@ -2870,21 +2860,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     // フォームでファイルが選択されたら実行される
     onFileChange: function onFileChange(event) {
-      // 何も選択されていなかったら処理中断
-      // if (event.target.files.length === 0) {
-      //     this.reset();
-      //     return false;
-      // }
-      // ファイルがaudioではなかったら処理中断
-      // if (!event.target.files[0].type.match("audio.*")) {
-      //     this.reset();
-      //     return false;
-      // }
       this.voice = event.target.files[0];
     },
-    // 投稿ファイルリセット
     reset: function reset() {
-      this.voice = null; //   this.$el.querySelector('input[type="file"]').value = null;
+      this.voice = null;
+      this.$el.querySelector('input[type="file"]').value = null;
     },
     clearError: function clearError() {
       this.$store.commit("voicePost/setVoicePostErrorMessages", null);
@@ -2948,13 +2928,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context2.sent;
-                // if (response.status !== OK) {
-                //     this.$store.commit("error/setCode", response.status);
-                //     return false;
-                // }
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                _this2.$store.commit("error/setCode", response.status);
+
+                return _context2.abrupt("return", false);
+
+              case 6:
                 _this2.voices = response.data.data;
 
-              case 4:
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -3120,7 +3107,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".wrapper_1[data-v-e7b90492] {\n  padding-top: 30px;\n  height: 100%;\n}\n.plus_btn[data-v-e7b90492] {\n  position: fixed;\n  bottom: 60px;\n  right: 40px;\n}\n.progress_circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 59px;\n  right: 39px;\n}\n.errorMessage[data-v-e7b90492] {\n  color: red;\n}", ""]);
+exports.push([module.i, ".wrapper_1[data-v-e7b90492] {\n  padding-top: 30px;\n  height: 100%;\n}\n.plus_btn[data-v-e7b90492] {\n  position: fixed;\n  bottom: 60px;\n  right: 40px;\n}\n.progress_circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 59px;\n  right: 39px;\n}\n.titleErrorMessage[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.fileErrorMessage[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}", ""]);
 
 // exports
 
@@ -6375,7 +6362,9 @@ var render = function() {
                                         _vm.voicePostErrors.title
                                           ? _c(
                                               "ul",
-                                              { staticClass: "errorMessage" },
+                                              {
+                                                staticClass: "titleErrorMessage"
+                                              },
                                               _vm._l(
                                                 _vm.voicePostErrors.title,
                                                 function(msg) {
@@ -6416,16 +6405,14 @@ var render = function() {
                                 "v-col",
                                 { attrs: { cols: "12", sm: "6", md: "4" } },
                                 [
-                                  _c("h4", [
-                                    _vm._v("＊3分程度の音声ファイル（mp3）")
-                                  ]),
-                                  _vm._v(" "),
                                   _vm.voicePostErrors
                                     ? _c("div", [
                                         _vm.voicePostErrors.voice
                                           ? _c(
                                               "ul",
-                                              { staticClass: "errorMessage" },
+                                              {
+                                                staticClass: "fileErrorMessage"
+                                              },
                                               _vm._l(
                                                 _vm.voicePostErrors.voice,
                                                 function(msg) {
