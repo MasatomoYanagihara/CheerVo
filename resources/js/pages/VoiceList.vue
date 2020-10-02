@@ -60,12 +60,29 @@
                       </li>
                     </ul>
                   </div>
-                  <input
+                  <!-- <input
                     @change="onFileChange"
                     type="file"
                     accept="audio/mp3"
                     capture="microphone"
-                  />
+                  /> -->
+                  <div>
+                    <v-btn
+                      type="button"
+                      v-if="status == 'ready'"
+                      @click="startRecording"
+                    >
+                      録音を開始する
+                    </v-btn>
+                    <v-btn
+                      type="button"
+                      v-if="status == 'recording'"
+                      @click="stopRecording"
+                    >
+                      録音を終了する
+                    </v-btn>
+                    <div id="result"></div>
+                  </div>
                 </v-col>
               </v-row>
             </v-container>
@@ -111,6 +128,10 @@ export default {
       snackbar: false, // スナックバー表示用
       timeout: 3000, // スナックバー表示時間
       fileUploading: false,
+      status: "ready", // 状況（init:ページ読み込んだ時, ready:録音ができる状態, recording:録音中）
+      recorder: null, // 音声にアクセスする "MediaRecorder" のインスタンス
+      audioData: [], // 入力された音声データ
+      audioExtension: "", // 音声ファイルの拡張子
     };
   },
   computed: {
@@ -166,6 +187,30 @@ export default {
 
       this.voices = response.data.data;
     },
+    // 録音開始メソッド
+    startRecording() {
+      this.status = "recording";
+      this.audioData = [];
+      this.recorder.start();
+      console.log("録音開始");
+    },
+    // 録音終了メソッド
+    stopRecording() {
+      this.recorder.stop();
+      this.status = "ready";
+      console.log("録音終了");
+    },
+    // 音声ファイルの拡張子取得メソッド
+    getExtension(audioType) {
+      let extension = "wav";
+      const matches = audioType.match(/audio\/([^;]+)/);
+
+      if (matches) {
+        extension = matches[1];
+      }
+
+      return "." + extension;
+    },
   },
   watch: {
     $route: {
@@ -177,6 +222,22 @@ export default {
   },
   created() {
     this.clearError();
+
+    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+      this.recorder = new MediaRecorder(stream);
+      this.recorder.addEventListener("dataavailable", (e) => {
+        this.audioData.push(e.data);
+        this.audioExtension = this.getExtension(e.data.type);
+      });
+      this.recorder.addEventListener("stop", () => {
+        console.log(this.audioData);
+        const audioBlob = new Blob(this.audioData);
+        this.voice = audioBlob;
+        console.log(audioBlob);
+        const url = URL.createObjectURL(audioBlob);
+      });
+      this.status = "ready";
+    });
   },
 };
 </script>
