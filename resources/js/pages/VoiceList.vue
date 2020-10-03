@@ -2,7 +2,12 @@
   <div class="wrapper_1">
     <v-container>
       <v-row>
-        <Voice v-for="voice in voices" :key="voice.id" :item="voice" />
+        <Voice
+          v-for="voice in voices"
+          :key="voice.id"
+          :voice="voice"
+          @like="onLikeClick"
+        />
       </v-row>
     </v-container>
     <v-dialog v-model="dialog" persistent max-width="600px">
@@ -148,8 +153,9 @@ export default {
       this.voice = event.target.files[0];
     },
     reset() {
+      this.title = "";
       this.voice = null;
-      this.$el.querySelector('input[type="file"]').value = null;
+      // this.$el.querySelector('input[type="file"]').value = null;
     },
     clearError() {
       this.$store.commit("voicePost/setVoicePostErrorMessages", null);
@@ -176,6 +182,7 @@ export default {
       this.reset();
       this.snackbar = true;
       this.fileUploading = false;
+      this.fetchVoices();
     },
     async fetchVoices() {
       const response = await axios.get("/api/voices");
@@ -211,6 +218,51 @@ export default {
 
       return "." + extension;
     },
+    // いいねクリックメソッド（子コンポーネントから$emit）
+    onLikeClick({ id, liked }) {
+      // if (!this.$store.getters["auth/check"]) {
+      //   alert("いいね機能を使うにはログインしてください。");
+      //   return false;
+      // }
+
+      if (liked) {
+        this.unlike(id);
+      } else {
+        this.like(id);
+      }
+    },
+    async like(id) {
+      const response = await axios.put(`/api/voices/${id}/like`);
+
+      if (response.status !== OK) {
+        this.$store.commit("error/setCode", response.status);
+        return false;
+      }
+
+      this.voices = this.voices.map((voice) => {
+        if (voice.id === response.data.voice_id) {
+          voice.likes_count += 1;
+          voice.liked_by_user = true;
+        }
+        return voice;
+      });
+    },
+    async unlike(id) {
+      const response = await axios.delete(`/api/voices/${id}/like`);
+
+      if (response.status !== OK) {
+        this.$store.commit("error/setCode", response.status);
+        return false;
+      }
+
+      this.voices = this.voices.map((voice) => {
+        if (voice.id === response.data.voice_id) {
+          voice.likes_count -= 1;
+          voice.liked_by_user = false;
+        }
+        return voice;
+      });
+    },
   },
   watch: {
     $route: {
@@ -230,7 +282,6 @@ export default {
         this.audioExtension = this.getExtension(e.data.type);
       });
       this.recorder.addEventListener("stop", () => {
-        console.log(this.audioData);
         const audioBlob = new Blob(this.audioData);
         this.voice = audioBlob;
         console.log(audioBlob);

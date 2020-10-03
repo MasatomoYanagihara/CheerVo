@@ -2236,11 +2236,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    item: {
+    voice: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    like: function like() {
+      this.$emit("like", {
+        id: this.voice.id,
+        liked: this.voice.liked_by_user
+      });
     }
   }
 });
@@ -2931,6 +2948,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2975,8 +2997,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.voice = event.target.files[0];
     },
     reset: function reset() {
-      this.voice = null;
-      this.$el.querySelector('input[type="file"]').value = null;
+      this.title = "";
+      this.voice = null; // this.$el.querySelector('input[type="file"]').value = null;
     },
     clearError: function clearError() {
       this.$store.commit("voicePost/setVoicePostErrorMessages", null);
@@ -3018,7 +3040,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.snackbar = true;
                 _this.fileUploading = false;
 
-              case 16:
+                _this.fetchVoices();
+
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -3084,56 +3108,154 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return "." + extension;
+    },
+    // いいねクリックメソッド（子コンポーネントから$emit）
+    onLikeClick: function onLikeClick(_ref) {
+      var id = _ref.id,
+          liked = _ref.liked;
+
+      // if (!this.$store.getters["auth/check"]) {
+      //   alert("いいね機能を使うにはログインしてください。");
+      //   return false;
+      // }
+      if (liked) {
+        this.unlike(id);
+      } else {
+        this.like(id);
+      }
+    },
+    like: function like(id) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.put("/api/voices/".concat(id, "/like"));
+
+              case 2:
+                response = _context3.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
+                  _context3.next = 6;
+                  break;
+                }
+
+                _this3.$store.commit("error/setCode", response.status);
+
+                return _context3.abrupt("return", false);
+
+              case 6:
+                _this3.voices = _this3.voices.map(function (voice) {
+                  if (voice.id === response.data.voice_id) {
+                    voice.likes_count += 1;
+                    voice.liked_by_user = true;
+                  }
+
+                  return voice;
+                });
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    unlike: function unlike(id) {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios["delete"]("/api/voices/".concat(id, "/like"));
+
+              case 2:
+                response = _context4.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
+                  _context4.next = 6;
+                  break;
+                }
+
+                _this4.$store.commit("error/setCode", response.status);
+
+                return _context4.abrupt("return", false);
+
+              case 6:
+                _this4.voices = _this4.voices.map(function (voice) {
+                  if (voice.id === response.data.voice_id) {
+                    voice.likes_count -= 1;
+                    voice.liked_by_user = false;
+                  }
+
+                  return voice;
+                });
+
+              case 7:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     }
   },
   watch: {
     $route: {
       handler: function handler() {
-        var _this3 = this;
+        var _this5 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context5.prev = _context5.next) {
                 case 0:
-                  _context3.next = 2;
-                  return _this3.fetchVoices();
+                  _context5.next = 2;
+                  return _this5.fetchVoices();
 
                 case 2:
                 case "end":
-                  return _context3.stop();
+                  return _context5.stop();
               }
             }
-          }, _callee3);
+          }, _callee5);
         }))();
       },
       immediate: true
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this6 = this;
 
     this.clearError();
     navigator.mediaDevices.getUserMedia({
       audio: true
     }).then(function (stream) {
-      _this4.recorder = new MediaRecorder(stream);
+      _this6.recorder = new MediaRecorder(stream);
 
-      _this4.recorder.addEventListener("dataavailable", function (e) {
-        _this4.audioData.push(e.data);
+      _this6.recorder.addEventListener("dataavailable", function (e) {
+        _this6.audioData.push(e.data);
 
-        _this4.audioExtension = _this4.getExtension(e.data.type);
+        _this6.audioExtension = _this6.getExtension(e.data.type);
       });
 
-      _this4.recorder.addEventListener("stop", function () {
-        console.log(_this4.audioData);
-        var audioBlob = new Blob(_this4.audioData);
-        _this4.voice = audioBlob;
+      _this6.recorder.addEventListener("stop", function () {
+        var audioBlob = new Blob(_this6.audioData);
+        _this6.voice = audioBlob;
         console.log(audioBlob);
         var url = URL.createObjectURL(audioBlob);
       });
 
-      _this4.status = "ready";
+      _this6.status = "ready";
     });
   }
 });
@@ -5899,22 +6021,58 @@ var render = function() {
           attrs: { width: "340px", height: "160px", outlined: "" }
         },
         [
-          _c("v-card-title", [_vm._v(_vm._s(_vm.item.owner.name))]),
+          _c("v-card-title", [_vm._v(_vm._s(_vm.voice.owner.name))]),
           _vm._v(" "),
           _c(
             "v-card-text",
+            { staticClass: "pb-0" },
             [
-              _vm._v(_vm._s(_vm.item.title) + "\n      "),
-              _c("RouterLink", { attrs: { to: "/voices/" + _vm.item.id } }, [
-                _c("i", { staticClass: "icon ion-md-chatboxes" })
-              ])
+              _vm._v(_vm._s(_vm.voice.title) + "\n\n      "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { icon: "", color: "grey darken-1" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.like($event)
+                    }
+                  }
+                },
+                [
+                  _c("v-icon", [_vm._v("mdi-thumb-up-outline")]),
+                  _vm._v(_vm._s(_vm.voice.likes_count) + "\n      ")
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                { attrs: { icon: "", color: "grey darken-1" } },
+                [_c("v-icon", [_vm._v("mdi-thumb-down-outline")])],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "RouterLink",
+                { attrs: { to: "/voices/" + _vm.voice.id } },
+                [
+                  _c(
+                    "v-btn",
+                    { attrs: { icon: "", color: "grey darken-1" } },
+                    [_c("v-icon", [_vm._v("mdi-comment-multiple-outline")])],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           ),
           _vm._v(" "),
           _c("audio", {
             attrs: {
-              src: _vm.item.url,
+              src: _vm.voice.url,
               controls: "",
               controlslist: "nodownload"
             }
@@ -6495,7 +6653,11 @@ var render = function() {
           _c(
             "v-row",
             _vm._l(_vm.voices, function(voice) {
-              return _c("Voice", { key: voice.id, attrs: { item: voice } })
+              return _c("Voice", {
+                key: voice.id,
+                attrs: { voice: voice },
+                on: { like: _vm.onLikeClick }
+              })
             }),
             1
           )
