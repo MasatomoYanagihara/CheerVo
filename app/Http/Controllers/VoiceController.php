@@ -25,7 +25,7 @@ class VoiceController extends Controller
      */
     public function index()
     {
-        $voices = Voice::with(['owner'])
+        $voices = Voice::with(['owner', 'likes'])
         ->orderBy(Voice::CREATED_AT, 'desc')->paginate();
 
         return $voices;
@@ -83,7 +83,7 @@ class VoiceController extends Controller
     public function show(string $id)
     {
         $voice = Voice::where('id', $id)
-        ->with(['owner', 'comments.author'])->first();
+        ->with(['owner', 'comments.author', 'likes'])->first();
 
         return $voice ?? abort(404);
     }
@@ -106,5 +106,42 @@ class VoiceController extends Controller
         $new_comment = Comment::where('id', $comment->id)->with('author')->first();
 
         return response($new_comment, 201);
+    }
+
+    /**
+     * いいね
+     * @param string $id
+     * @return array
+     */
+    public function like(string $id)
+    {
+        $voice = Voice::where('id', $id)->with('likes')->first();
+
+        if (! $voice) {
+            abort(404);
+        }
+
+        $voice->likes()->detach(Auth::user()->id);
+        $voice->likes()->attach(Auth::user()->id);
+
+        return ["voice_id" => $id];
+    }
+
+    /**
+     * いいね解除
+     * @param string $id
+     * @return array
+     */
+    public function unlike(string $id)
+    {
+        $voice = Voice::where('id', $id)->with('likes')->first();
+
+        if (! $voice) {
+            abort(404);
+        }
+
+        $voice->likes()->detach(Auth::user()->id);
+
+        return ["voice_id" => $id];
     }
 }

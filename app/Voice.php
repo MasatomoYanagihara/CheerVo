@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class Voice extends Model
 {
@@ -13,12 +14,12 @@ class Voice extends Model
 
     /** JSONに含める属性 */
     protected $visible = [
-        'id', 'owner', 'url', 'comments','title'
+        'id', 'owner', 'url', 'comments', 'title','likes_count', 'liked_bay_user'
     ];
 
     /** JSONに含める属性（アクセサ） */
     protected $appends = [
-        'url',
+        'url', 'likes_count', 'liked_by_user',
     ];
 
     /** IDの桁数 */
@@ -75,6 +76,31 @@ class Voice extends Model
     }
 
     /**
+     * アクセサ - likes_count
+     * @return int
+     */
+    public function getLikesCountAttribute()
+    {
+        return $this->likes->count();
+    }
+
+    /**
+     * アクセサ - liked_by_user
+     * @return boolean
+     */
+    public function getLikedByUserAttribute()
+    {
+        if (Auth::guest()) {
+            return false;
+        }
+
+        // contains()でログインユーザーのIDと一致するいいねが含まれるか調べる
+        return $this->likes->contains(function ($user) {
+            return $user->id === Auth::user()->id;
+        });
+    }
+
+    /**
      * リレーションシップ - usersテーブル
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -90,5 +116,14 @@ class Voice extends Model
     public function comments()
     {
         return $this->hasMany('App\Comment')->orderBy('id', 'desc');
+    }
+
+    /**
+     * リレーションシップ - usersテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function likes()
+    {
+        return $this->belongsToMany('App\User', 'likes')->withTimestamps();
     }
 }

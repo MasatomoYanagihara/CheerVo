@@ -23,6 +23,12 @@ Route::get('/voices/{id}', 'VoiceController@show')->name('voice.show');
 // コメント
 Route::post('/voices/{voice}/comments', 'VoiceController@addComment')->name('voice.comment');
 
+// いいね
+Route::put('/voices/{id}/like', 'VoiceController@like')->name('voice.like');
+
+// いいね解除
+Route::delete('/voices/{id}/like', 'VoiceController@unlike');
+
 // ログインユーザー
 Route::get('/user', function () {
     return Auth::user();
