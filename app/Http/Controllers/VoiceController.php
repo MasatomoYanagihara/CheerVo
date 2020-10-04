@@ -25,7 +25,7 @@ class VoiceController extends Controller
      */
     public function index()
     {
-        $voices = Voice::with(['owner', 'likes'])
+        $voices = Voice::with(['owner', 'likes', 'unlikes'])
         ->orderBy(Voice::CREATED_AT, 'desc')->paginate();
 
         return $voices;
@@ -73,7 +73,7 @@ class VoiceController extends Controller
         // リソースの新規作成なので
         // レスポンスコードは201(CREATED)を返却する
         return response($voice, 201);
-    }
+    } 
 
     /**
      * ボイス詳細
@@ -83,7 +83,7 @@ class VoiceController extends Controller
     public function show(string $id)
     {
         $voice = Voice::where('id', $id)
-        ->with(['owner', 'comments.author', 'likes'])->first();
+        ->with(['owner', 'comments.author', 'likes', 'unlikes'])->first();
 
         return $voice ?? abort(404);
     }
@@ -132,7 +132,7 @@ class VoiceController extends Controller
      * @param string $id
      * @return array
      */
-    public function unlike(string $id)
+    public function notlike(string $id)
     {
         $voice = Voice::where('id', $id)->with('likes')->first();
 
@@ -141,6 +141,43 @@ class VoiceController extends Controller
         }
 
         $voice->likes()->detach(Auth::user()->id);
+
+        return ["voice_id" => $id];
+    }
+
+    /**
+     * unlike
+     * @param string $id
+     * @return array
+     */
+    public function unlike(string $id)
+    {
+        $voice = Voice::where('id', $id)->with('unlikes')->first();
+
+        if (! $voice) {
+            abort(404);
+        }
+
+        $voice->unlikes()->detach(Auth::user()->id);
+        $voice->unlikes()->attach(Auth::user()->id);
+
+        return ["voice_id" => $id];
+    }
+
+    /**
+     * unlike解除
+     * @param string $id
+     * @return array
+     */
+    public function notunlike(string $id)
+    {
+        $voice = Voice::where('id', $id)->with('unlikes')->first();
+
+        if (! $voice) {
+            abort(404);
+        }
+
+        $voice->unlikes()->detach(Auth::user()->id);
 
         return ["voice_id" => $id];
     }

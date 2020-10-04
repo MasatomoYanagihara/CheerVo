@@ -27,7 +27,13 @@ Route::post('/voices/{voice}/comments', 'VoiceController@addComment')->name('voi
 Route::put('/voices/{id}/like', 'VoiceController@like')->name('voice.like');
 
 // いいね解除
-Route::delete('/voices/{id}/like', 'VoiceController@unlike');
+Route::delete('/voices/{id}/like', 'VoiceController@notlike');
+
+// unlike
+Route::put('/voices/{id}/unlike', 'VoiceController@unlike')->name('voice.unlike');
+
+// unlike解除
+Route::delete('/voices/{id}/notunlike', 'VoiceController@notunlike');
 
 // ログインユーザー
 Route::get('/user', function () {

@@ -2258,6 +2258,12 @@ __webpack_require__.r(__webpack_exports__);
         id: this.voice.id,
         liked: this.voice.liked_by_user
       });
+    },
+    unlike: function unlike() {
+      this.$emit("unlike", {
+        id: this.voice.id,
+        unliked: this.voice.unliked_by_user
+      });
     }
   }
 });
@@ -2953,6 +2959,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3114,14 +3121,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var id = _ref.id,
           liked = _ref.liked;
 
-      // if (!this.$store.getters["auth/check"]) {
-      //   alert("いいね機能を使うにはログインしてください。");
-      //   return false;
-      // }
       if (liked) {
-        this.unlike(id);
+        this.notlike(id);
       } else {
         this.like(id);
+      }
+    },
+    // unlikeクリックメソッド（子コンポーネントから$emit）
+    onUnLikeClick: function onUnLikeClick(_ref2) {
+      var id = _ref2.id,
+          unliked = _ref2.unliked;
+
+      if (unliked) {
+        this.notUnlike(id);
+      } else {
+        this.unlike(id);
       }
     },
     like: function like(id) {
@@ -3166,7 +3180,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
-    unlike: function unlike(id) {
+    notlike: function notlike(id) {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
@@ -3207,55 +3221,139 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee4);
       }))();
+    },
+    unlike: function unlike(id) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios.put("/api/voices/".concat(id, "/unlike"));
+
+              case 2:
+                response = _context5.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
+                  _context5.next = 6;
+                  break;
+                }
+
+                _this5.$store.commit("error/setCode", response.status);
+
+                return _context5.abrupt("return", false);
+
+              case 6:
+                _this5.voices = _this5.voices.map(function (voice) {
+                  if (voice.id === response.data.voice_id) {
+                    voice.unlikes_count += 1;
+                    voice.unliked_by_user = true;
+                  }
+
+                  return voice;
+                });
+
+              case 7:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+    notUnlike: function notUnlike(id) {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return axios["delete"]("/api/voices/".concat(id, "/notunlike"));
+
+              case 2:
+                response = _context6.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
+                  _context6.next = 6;
+                  break;
+                }
+
+                _this6.$store.commit("error/setCode", response.status);
+
+                return _context6.abrupt("return", false);
+
+              case 6:
+                _this6.voices = _this6.voices.map(function (voice) {
+                  if (voice.id === response.data.voice_id) {
+                    voice.unlikes_count -= 1;
+                    voice.unliked_by_user = false;
+                  }
+
+                  return voice;
+                });
+
+              case 7:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
     }
   },
   watch: {
     $route: {
       handler: function handler() {
-        var _this5 = this;
+        var _this7 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
             while (1) {
-              switch (_context5.prev = _context5.next) {
+              switch (_context7.prev = _context7.next) {
                 case 0:
-                  _context5.next = 2;
-                  return _this5.fetchVoices();
+                  _context7.next = 2;
+                  return _this7.fetchVoices();
 
                 case 2:
                 case "end":
-                  return _context5.stop();
+                  return _context7.stop();
               }
             }
-          }, _callee5);
+          }, _callee7);
         }))();
       },
       immediate: true
     }
   },
   created: function created() {
-    var _this6 = this;
+    var _this8 = this;
 
     this.clearError();
     navigator.mediaDevices.getUserMedia({
       audio: true
     }).then(function (stream) {
-      _this6.recorder = new MediaRecorder(stream);
+      _this8.recorder = new MediaRecorder(stream);
 
-      _this6.recorder.addEventListener("dataavailable", function (e) {
-        _this6.audioData.push(e.data);
+      _this8.recorder.addEventListener("dataavailable", function (e) {
+        _this8.audioData.push(e.data);
 
-        _this6.audioExtension = _this6.getExtension(e.data.type);
+        _this8.audioExtension = _this8.getExtension(e.data.type);
       });
 
-      _this6.recorder.addEventListener("stop", function () {
-        var audioBlob = new Blob(_this6.audioData);
-        _this6.voice = audioBlob;
+      _this8.recorder.addEventListener("stop", function () {
+        var audioBlob = new Blob(_this8.audioData);
+        _this8.voice = audioBlob;
         console.log(audioBlob);
         var url = URL.createObjectURL(audioBlob);
       });
 
-      _this6.status = "ready";
+      _this8.status = "ready";
     });
   }
 });
@@ -6048,8 +6146,19 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-btn",
-                { attrs: { icon: "", color: "grey darken-1" } },
-                [_c("v-icon", [_vm._v("mdi-thumb-down-outline")])],
+                {
+                  attrs: { icon: "", color: "grey darken-1" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.unlike($event)
+                    }
+                  }
+                },
+                [
+                  _c("v-icon", [_vm._v("mdi-thumb-down-outline")]),
+                  _vm._v(_vm._s(_vm.voice.unlikes_count) + "\n      ")
+                ],
                 1
               ),
               _vm._v(" "),
@@ -6656,7 +6765,7 @@ var render = function() {
               return _c("Voice", {
                 key: voice.id,
                 attrs: { voice: voice },
-                on: { like: _vm.onLikeClick }
+                on: { like: _vm.onLikeClick, unlike: _vm.onUnLikeClick }
               })
             }),
             1

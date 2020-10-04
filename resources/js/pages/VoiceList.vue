@@ -7,6 +7,7 @@
           :key="voice.id"
           :voice="voice"
           @like="onLikeClick"
+          @unlike="onUnLikeClick"
         />
       </v-row>
     </v-container>
@@ -220,15 +221,18 @@ export default {
     },
     // いいねクリックメソッド（子コンポーネントから$emit）
     onLikeClick({ id, liked }) {
-      // if (!this.$store.getters["auth/check"]) {
-      //   alert("いいね機能を使うにはログインしてください。");
-      //   return false;
-      // }
-
       if (liked) {
-        this.unlike(id);
+        this.notlike(id);
       } else {
         this.like(id);
+      }
+    },
+    // unlikeクリックメソッド（子コンポーネントから$emit）
+    onUnLikeClick({ id, unliked }) {
+      if (unliked) {
+        this.notUnlike(id);
+      } else {
+        this.unlike(id);
       }
     },
     async like(id) {
@@ -247,7 +251,7 @@ export default {
         return voice;
       });
     },
-    async unlike(id) {
+    async notlike(id) {
       const response = await axios.delete(`/api/voices/${id}/like`);
 
       if (response.status !== OK) {
@@ -259,6 +263,38 @@ export default {
         if (voice.id === response.data.voice_id) {
           voice.likes_count -= 1;
           voice.liked_by_user = false;
+        }
+        return voice;
+      });
+    },
+    async unlike(id) {
+      const response = await axios.put(`/api/voices/${id}/unlike`);
+
+      if (response.status !== OK) {
+        this.$store.commit("error/setCode", response.status);
+        return false;
+      }
+
+      this.voices = this.voices.map((voice) => {
+        if (voice.id === response.data.voice_id) {
+          voice.unlikes_count += 1;
+          voice.unliked_by_user = true;
+        }
+        return voice;
+      });
+    },
+    async notUnlike(id) {
+      const response = await axios.delete(`/api/voices/${id}/notunlike`);
+
+      if (response.status !== OK) {
+        this.$store.commit("error/setCode", response.status);
+        return false;
+      }
+
+      this.voices = this.voices.map((voice) => {
+        if (voice.id === response.data.voice_id) {
+          voice.unlikes_count -= 1;
+          voice.unliked_by_user = false;
         }
         return voice;
       });

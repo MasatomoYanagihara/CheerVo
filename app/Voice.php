@@ -14,12 +14,12 @@ class Voice extends Model
 
     /** JSONに含める属性 */
     protected $visible = [
-        'id', 'owner', 'url', 'comments', 'title','likes_count', 'liked_bay_user'
+        'id', 'owner', 'url', 'comments', 'title', 'likes_count', 'liked_by_user', 'unlikes_count', 'unliked_by_user'
     ];
 
     /** JSONに含める属性（アクセサ） */
     protected $appends = [
-        'url', 'likes_count', 'liked_by_user',
+        'url', 'likes_count', 'liked_by_user', 'unlikes_count', 'unliked_by_user',
     ];
 
     /** IDの桁数 */
@@ -101,6 +101,30 @@ class Voice extends Model
     }
 
     /**
+     * アクセサ - unlikes_count
+     * @return int
+     */
+    public function getunLikesCountAttribute()
+    {
+        return $this->unlikes->count();
+    }
+
+    /**
+     * アクセサ - unliked_by_user
+     * @return boolean
+     */
+    public function getunLikedByUserAttribute()
+    {
+        if (Auth::guest()) {
+            return false;
+        }
+
+        return $this->unlikes->contains(function ($user) {
+            return $user->id === Auth::user()->id;
+        });
+    }
+
+    /**
      * リレーションシップ - usersテーブル
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -125,5 +149,14 @@ class Voice extends Model
     public function likes()
     {
         return $this->belongsToMany('App\User', 'likes')->withTimestamps();
+    }
+
+    /**
+     * リレーションシップ - usersテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function unlikes()
+    {
+        return $this->belongsToMany('App\User', 'unlikes')->withTimestamps();
     }
 }

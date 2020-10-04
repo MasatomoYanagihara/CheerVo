@@ -8,8 +8,8 @@
         <v-btn icon color="grey darken-1" @click.prevent="like">
           <v-icon>mdi-thumb-up-outline</v-icon>{{ voice.likes_count }}
         </v-btn>
-        <v-btn icon color="grey darken-1">
-          <v-icon>mdi-thumb-down-outline</v-icon>
+        <v-btn icon color="grey darken-1" @click.prevent="unlike">
+          <v-icon>mdi-thumb-down-outline</v-icon>{{ voice.unlikes_count }}
         </v-btn>
         <RouterLink :to="`/voices/${voice.id}`">
           <v-btn icon color="grey darken-1">
@@ -37,7 +37,12 @@ export default {
         liked: this.voice.liked_by_user,
       });
     },
+    unlike() {
+      this.$emit("unlike", {
+        id: this.voice.id,
+        unliked: this.voice.unliked_by_user,
+      });
+    },
   },
 };
 </script>
-
