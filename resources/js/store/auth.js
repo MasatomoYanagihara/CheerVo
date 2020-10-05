@@ -26,7 +26,9 @@ const getters = {
     // ログインチェック
     check: state => !!state.user,
     // ユーザーネーム取得
-    username: state => (state.user ? state.user.name : "")
+    username: state => (state.user ? state.user.name : ""),
+    // ユーザーID取得
+    userId: state => (state.user ? state.user.id : "")
 };
 
 const actions = {

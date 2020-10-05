@@ -48,7 +48,7 @@
         </router-link>
 
         <!-- マイページ -->
-        <RouterLink :to="`/users/${username}`">
+        <RouterLink :to="`/users/${userId}`">
           <div v-if="isLogin">
             <v-list-item link class="menu-item-1">
               <v-list-item-action>
@@ -106,6 +106,10 @@ export default {
     // ユーザーネーム取得
     username() {
       return this.$store.getters["auth/username"];
+    },
+    // ユーザーID取得
+    userId() {
+      return this.$store.getters["auth/userId"];
     },
     ...mapState({
       apiStatus: (state) => state.auth.apiStatus,

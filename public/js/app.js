@@ -2183,6 +2183,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // ユーザーネーム取得
     username: function username() {
       return this.$store.getters["auth/username"];
+    },
+    // ユーザーID取得
+    userId: function userId() {
+      return this.$store.getters["auth/userId"];
     }
   }, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     apiStatus: function apiStatus(state) {
@@ -5967,7 +5971,7 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("RouterLink", { attrs: { to: "/users/" + _vm.username } }, [
+              _c("RouterLink", { attrs: { to: "/users/" + _vm.userId } }, [
                 _vm.isLogin
                   ? _c(
                       "div",
@@ -68445,6 +68449,10 @@ var getters = {
   // ユーザーネーム取得
   username: function username(state) {
     return state.user ? state.user.name : "";
+  },
+  // ユーザーID取得
+  userId: function userId(state) {
+    return state.user ? state.user.id : "";
   }
 };
 var actions = {
