@@ -32,6 +32,20 @@ class VoiceController extends Controller
     }
 
     /**
+     * マイボイス
+     * @param string $id
+     * @return Voice
+     */
+     public function myVoice(string $id)
+     {
+         $voices = Voice::with(['owner'])
+         ->where('user_id', $id)
+         ->get();
+ 
+         return $voices;
+     }
+
+    /**
      * ボイス投稿
      * @param StoreVoice $request
      * @return \Illuminate\Http\Response
@@ -73,7 +87,7 @@ class VoiceController extends Controller
         // リソースの新規作成なので
         // レスポンスコードは201(CREATED)を返却する
         return response($voice, 201);
-    } 
+    }
 
     /**
      * ボイス詳細
