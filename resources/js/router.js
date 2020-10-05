@@ -8,7 +8,7 @@ import store from "./store";
 import SystemError from "./pages/errors/System.vue";
 import VoiceDetail from "./pages/VoiceDetail.vue";
 import NotFound from "./pages/errors/NotFound.vue";
-import Test from "./pages/Test.vue";
+import Users from "./pages/User.vue";
 
 Vue.use(VueRouter);
 
@@ -43,9 +43,9 @@ const routes = [
         component: Register
     },
     {
-        path: "/test",
-        name: "test",
-        component: Test
+        path: "/users/:id",
+        name: "users",
+        component: Users
     },
     {
         path: "/500",

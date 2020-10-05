@@ -68464,16 +68464,15 @@ var actions = {
               response = _context.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
-                _context.next = 9;
+                _context.next = 8;
                 break;
               }
 
               context.commit("setApiStatus", true);
               context.commit("setUser", response.data);
-              console.log("会員登録response.data：" + response.data);
               return _context.abrupt("return", false);
 
-            case 9:
+            case 8:
               context.commit("setApiStatus", false);
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
@@ -68484,7 +68483,7 @@ var actions = {
                 });
               }
 
-            case 11:
+            case 10:
             case "end":
               return _context.stop();
           }
@@ -68511,16 +68510,15 @@ var actions = {
               response = _context2.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context2.next = 9;
+                _context2.next = 8;
                 break;
               }
 
               context.commit("setApiStatus", true);
               context.commit("setUser", response.data);
-              console.log(response);
               return _context2.abrupt("return", false);
 
-            case 9:
+            case 8:
               // 失敗
               context.commit("setApiStatus", false);
 
@@ -68532,7 +68530,7 @@ var actions = {
                 });
               }
 
-            case 11:
+            case 10:
             case "end":
               return _context2.stop();
           }
