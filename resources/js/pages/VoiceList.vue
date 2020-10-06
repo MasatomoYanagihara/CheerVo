@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper_1">
+  <div class="wrapper_1 blue-grey lighten-1">
     <v-container>
       <v-row>
         <Voice
@@ -15,7 +15,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           class="plus_btn"
-          color="black"
+          color="cyan lighten-1"
           fab
           dark
           v-bind="attrs"
@@ -95,6 +95,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn @click="submit" color="cyan lighten-1">投稿する</v-btn>
             <v-btn
               @click="
                 dialog = false;
@@ -102,7 +103,6 @@
               "
               >閉じる</v-btn
             >
-            <v-btn @click="submit">投稿する</v-btn>
           </v-card-actions>
         </v-card>
       </v-form>
@@ -331,6 +331,7 @@ export default {
 <style lang="scss" scoped>
 .wrapper_1 {
   padding-top: 30px;
+  padding-bottom:20px;
   height: 100%;
 }
 .plus_btn {

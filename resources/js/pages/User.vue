@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="blue-grey lighten-1">
     <h1>$route.params.id: {{ $route.params.id }}</h1>
     <v-container>
       <v-row>
@@ -32,7 +32,6 @@ export default {
       }
 
       this.voices = response.data ;
-      console.log(response.data);
     },
   },
   created() {

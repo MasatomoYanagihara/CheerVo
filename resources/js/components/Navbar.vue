@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-app-bar color="white" fixed>
+    <v-app-bar color="grey lighten-4" fixed>
       <Router-link :to="{ name: 'home' }">
-        <v-toolbar-title class="black--text">Page title</v-toolbar-title>
+        <v-toolbar-title class="black--text">Voice</v-toolbar-title>
       </Router-link>
 
       <v-spacer></v-spacer>
@@ -14,6 +14,7 @@
         <v-btn
           outlined
           small
+          rounded
           @click="logout"
           class="logout_btn font-weight-bold"
         >
@@ -22,10 +23,10 @@
       </div>
       <div v-else>
         <Router-link :to="{ name: 'login' }">
-          <v-btn outlined small> ログイン </v-btn>
+          <v-btn outlined small rounded> ログイン </v-btn>
         </Router-link>
         <Router-link :to="{ name: 'register' }">
-          <v-btn outlined small class="register_btn"> 会員登録 </v-btn>
+          <v-btn outlined small rounded class="register_btn"> 会員登録 </v-btn>
         </Router-link>
       </div>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
