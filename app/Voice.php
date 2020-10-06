@@ -14,12 +14,12 @@ class Voice extends Model
 
     /** JSONに含める属性 */
     protected $visible = [
-        'id', 'owner', 'url', 'comments', 'title', 'likes_count', 'liked_by_user', 'unlikes_count', 'unliked_by_user'
+        'id', 'owner', 'url', 'comments', 'title', 'likes_count', 'liked_by_user', 'unlikes_count', 'unliked_by_user', 'comments_count'
     ];
 
     /** JSONに含める属性（アクセサ） */
     protected $appends = [
-        'url', 'likes_count', 'liked_by_user', 'unlikes_count', 'unliked_by_user',
+        'url', 'likes_count', 'liked_by_user', 'unlikes_count', 'unliked_by_user', 'comments_count'
     ];
 
     /** IDの桁数 */
@@ -123,6 +123,15 @@ class Voice extends Model
             return $user->id === Auth::user()->id;
         });
     }
+
+    /**
+     * アクセサ - comments_count
+     * @return int
+     */
+     public function getCommentsCountAttribute()
+     {
+         return $this->comments->count();
+     }
 
     /**
      * リレーションシップ - usersテーブル
