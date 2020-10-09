@@ -1,6 +1,6 @@
 <template>
   <v-col cols="12" lg="4" md="6" xs="12">
-    <v-card :to="`/voices/${voice.id}`" width="340px" class="mx-auto blue-grey lighten-3" height="200px" outlined>
+    <v-card :to="`/voices/${voice.id}`" width="340px" class="mx-auto blue-grey lighten-3" height="200px" outlined :ripple="false">
       <v-card-actions>
         <v-list-item class="grow">
           <v-list-item-avatar color="grey darken-3">

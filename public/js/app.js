@@ -2977,24 +2977,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3014,15 +2996,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // スナックバー表示用
       timeout: 3000,
       // スナックバー表示時間
-      fileUploading: false,
-      status: "ready",
-      // 状況（init:ページ読み込んだ時, ready:録音ができる状態, recording:録音中）
-      recorder: null,
-      // 音声にアクセスする "MediaRecorder" のインスタンス
-      audioData: [],
-      // 入力された音声データ
-      audioExtension: "" // 音声ファイルの拡張子
-
+      fileUploading: false
     };
   },
   computed: {
@@ -3040,7 +3014,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     reset: function reset() {
       this.title = "";
-      this.voice = null; // this.$el.querySelector('input[type="file"]').value = null;
+      this.voice = null; // this.$el.querySelector('input[type="file"]').value = null; なぜかエラーでる
     },
     clearError: function clearError() {
       this.$store.commit("voicePost/setVoicePostErrorMessages", null);
@@ -3126,30 +3100,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
-    },
-    // 録音開始メソッド
-    startRecording: function startRecording() {
-      this.status = "recording";
-      this.audioData = [];
-      this.recorder.start();
-      console.log("録音開始");
-    },
-    // 録音終了メソッド
-    stopRecording: function stopRecording() {
-      this.recorder.stop();
-      this.status = "ready";
-      console.log("録音終了");
-    },
-    // 音声ファイルの拡張子取得メソッド
-    getExtension: function getExtension(audioType) {
-      var extension = "wav";
-      var matches = audioType.match(/audio\/([^;]+)/);
-
-      if (matches) {
-        extension = matches[1];
-      }
-
-      return "." + extension;
     },
     // いいねクリックメソッド（子コンポーネントから$emit）
     onLikeClick: function onLikeClick(_ref) {
@@ -3367,29 +3317,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
-    var _this8 = this;
-
     this.clearError();
-    navigator.mediaDevices.getUserMedia({
-      audio: true
-    }).then(function (stream) {
-      _this8.recorder = new MediaRecorder(stream);
-
-      _this8.recorder.addEventListener("dataavailable", function (e) {
-        _this8.audioData.push(e.data);
-
-        _this8.audioExtension = _this8.getExtension(e.data.type);
-      });
-
-      _this8.recorder.addEventListener("stop", function () {
-        var audioBlob = new Blob(_this8.audioData);
-        _this8.voice = audioBlob;
-        console.log(audioBlob);
-        var url = URL.createObjectURL(audioBlob);
-      });
-
-      _this8.status = "ready";
-    });
   }
 });
 
@@ -6181,7 +6109,8 @@ var render = function() {
             to: "/voices/" + _vm.voice.id,
             width: "340px",
             height: "200px",
-            outlined: ""
+            outlined: "",
+            ripple: false
           }
         },
         [
@@ -6715,12 +6644,15 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "wrapper_1" },
+    { staticClass: "wrapper_1 blue-grey lighten-1" },
     [
       _vm.voice
         ? _c(
             "v-card",
-            { staticClass: "mx-auto", attrs: { width: "340px", outlined: "" } },
+            {
+              staticClass: "mx-auto blue-grey lighten-3",
+              attrs: { width: "340px", outlined: "" }
+            },
             [
               _c("v-card-title", [_vm._v(_vm._s(_vm.voice.owner.name))]),
               _vm._v(" "),
@@ -6980,9 +6912,10 @@ var render = function() {
             [
               _c(
                 "v-card",
+                { staticClass: "blue-grey lighten-5" },
                 [
                   _c("v-card-title", [
-                    _c("span", { staticClass: "headline" }, [
+                    _c("span", { staticClass: "headline mx-auto" }, [
                       _vm._v("ボイスを投稿する")
                     ])
                   ]),
@@ -7080,43 +7013,13 @@ var render = function() {
                                       ])
                                     : _vm._e(),
                                   _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    [
-                                      _vm.status == "ready"
-                                        ? _c(
-                                            "v-btn",
-                                            {
-                                              attrs: { type: "button" },
-                                              on: { click: _vm.startRecording }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                    録音を開始する\n                  "
-                                              )
-                                            ]
-                                          )
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _vm.status == "recording"
-                                        ? _c(
-                                            "v-btn",
-                                            {
-                                              attrs: { type: "button" },
-                                              on: { click: _vm.stopRecording }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                    録音を終了する\n                  "
-                                              )
-                                            ]
-                                          )
-                                        : _vm._e(),
-                                      _vm._v(" "),
-                                      _c("div", { attrs: { id: "result" } })
-                                    ],
-                                    1
-                                  )
+                                  _c("input", {
+                                    attrs: {
+                                      type: "file",
+                                      accept: "audio/mp3, audio/m4a, audio/wav"
+                                    },
+                                    on: { change: _vm.onFileChange }
+                                  })
                                 ]
                               )
                             ],

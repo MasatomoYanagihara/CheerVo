@@ -59,8 +59,8 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4', // localでは'utf8mb3'、AWSでは'utf8'にする（エラーでる）
-            'collation' => 'utf8mb4_unicode_ci',
+            'charset' => 'utf8mb4', // localでは'utf8mb4'、AWSでは'utf8'にする（エラーでる）
+            'collation' => 'utf8mb4_unicode_ci', // localでは'utf8mb4_unicode_ci'、AWSでは'utf8_unicode_ci'
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,

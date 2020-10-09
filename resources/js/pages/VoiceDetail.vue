@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper_1">
-    <v-card v-if="voice" class="mx-auto" width="340px" outlined>
+  <div class="wrapper_1 blue-grey lighten-1">
+    <v-card v-if="voice" class="mx-auto blue-grey lighten-3" width="340px" outlined>
       <v-card-title>{{ voice.owner.name }}</v-card-title>
       <v-card-text>{{ voice.title }} </v-card-text>
       <audio
