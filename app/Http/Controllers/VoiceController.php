@@ -26,7 +26,7 @@ class VoiceController extends Controller
     public function index()
     {
         $voices = Voice::with(['owner', 'likes', 'unlikes'])
-        ->orderBy(Voice::CREATED_AT, 'desc')->paginate();
+        ->orderBy(Voice::CREATED_AT, 'desc')->paginate(10);
 
         return $voices;
     }

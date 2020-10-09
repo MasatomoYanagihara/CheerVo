@@ -4,11 +4,19 @@
       <v-row>
         <Voice
           v-for="voice in voices"
-          :key="voice.id"
+          :key="voice.filename"
           :voice="voice"
           @like="onLikeClick"
           @unlike="onUnLikeClick"
         />
+        <infinite-loading 
+          class="infinite-loading"
+          ref="infiniteLoading" 
+          spinner="spiral"
+          @infinite="infiniteHandler">
+          <span slot="no-more"></span>
+          <span slot="no-results"></span>
+        </infinite-loading>
       </v-row>
     </v-container>
     <v-dialog v-model="dialog" persistent max-width="600px">
@@ -111,11 +119,12 @@ export default {
     return {
       dialog: false,
       voice: null, // 投稿用
-      voices: {}, // 一覧表示用
+      voices: [], // 一覧表示用
       title: "", // タイトル投稿用
       snackbar: false, // スナックバー表示用
       timeout: 3000, // スナックバー表示時間
-      fileUploading: false
+      fileUploading: false,
+      page:1 // 無限スクロール用
     };
   },
   computed: {
@@ -171,7 +180,6 @@ export default {
         return false;
       }
 
-      console.log(response.data.data);
       this.voices = response.data.data;
     },
     // いいねクリックメソッド（子コンポーネントから$emit）
@@ -254,6 +262,26 @@ export default {
         return voice;
       });
     },
+    infiniteHandler($state) {
+      axios.get('/api/voices', {
+          params: {
+              page: this.page,
+              per_page: 1
+          },
+      }).then(({ data }) => {
+          setTimeout(() => {
+              if (this.page < data.data.length) {
+                  this.page += 1
+                  this.voices.push(...data.data)
+                  $state.loaded()
+              } else {
+                  $state.complete()
+              }
+          }, 1500)
+      }).catch((err) => {
+          $state.complete()
+      })
+    }
   },
   watch: {
     $route: {
@@ -293,5 +321,8 @@ export default {
   color: red;
   list-style: none;
   padding: 0;
+}
+.infinite-loading {
+  margin: 0 auto;
 }
 </style>
