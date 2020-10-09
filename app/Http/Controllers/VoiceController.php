@@ -40,6 +40,7 @@ class VoiceController extends Controller
      {
          $voices = Voice::with(['owner'])
          ->where('user_id', $id)
+         ->orderBy(Voice::CREATED_AT, 'desc')
          ->get();
  
          return $voices;
