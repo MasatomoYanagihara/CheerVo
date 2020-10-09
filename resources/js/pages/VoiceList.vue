@@ -171,6 +171,7 @@ export default {
         return false;
       }
 
+      console.log(response.data.data);
       this.voices = response.data.data;
     },
     // いいねクリックメソッド（子コンポーネントから$emit）

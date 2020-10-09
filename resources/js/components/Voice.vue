@@ -10,15 +10,18 @@
               src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
             ></v-img>
           </v-list-item-avatar>
-
-          <v-list-item-content>
+          <v-list-item-content class="py-0">
             <v-list-item-title>{{ voice.owner.name }}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title>{{ voice.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-card-actions>
+
+          <v-list-item-content class="py-0">
+            <v-list-item-title>{{ voice.title }}</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content class="py-0">
+            <v-list-item-title>{{ voice.created_at | moment }}</v-list-item-title>
+          </v-list-item-content>
 
       <v-list-item-content class="px-6">
         <audio :src="voice.url" controls controlslist="nodownload"></audio>
@@ -45,6 +48,8 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   props: {
     voice: {
@@ -66,6 +71,11 @@ export default {
       });
     },
   },
+  filters: {
+    moment: function(date) {
+      return moment(date).format('YYYY/MM/DD HH:mm');
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
