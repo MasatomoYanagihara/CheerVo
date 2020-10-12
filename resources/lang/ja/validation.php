@@ -108,7 +108,8 @@ return [
         'email' => 'メールアドレス',
         'password' => 'パスワード',
         'title' => 'タイトル',
-        'voice' => 'ファイル'
+        'voice' => 'ファイル',
+        'content' => 'コメント'
     ],
 
 ];

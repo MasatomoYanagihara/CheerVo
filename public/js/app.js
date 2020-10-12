@@ -2676,6 +2676,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -2738,6 +2740,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2862,6 +2896,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }))();
       },
       immediate: true
+    }
+  },
+  filters: {
+    moment: function moment(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).format('YYYY/MM/DD HH:mm');
     }
   }
 });
@@ -3509,7 +3548,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".wrapper_1[data-v-06ad10ac] {\n  padding-top: 40px;\n  height: 100%;\n}\n.audio[data-v-06ad10ac] {\n  margin-left: 20px;\n}", ""]);
+exports.push([module.i, "li[data-v-06ad10ac] {\n  list-style: none;\n}\n.ul[data-v-06ad10ac] {\n  padding-left: 0;\n}\n.wrapper_1[data-v-06ad10ac] {\n  padding-top: 40px;\n  height: 100%;\n}\n.audio[data-v-06ad10ac] {\n  margin-left: 20px;\n}\n.errors[data-v-06ad10ac] {\n  color: red;\n}\n.comment_container[data-v-06ad10ac] {\n  width: 366px;\n}", ""]);
 
 // exports
 
@@ -28312,116 +28351,221 @@ var render = function() {
               attrs: { width: "340px", outlined: "" }
             },
             [
-              _c("v-card-title", [_vm._v(_vm._s(_vm.voice.owner.name))]),
+              _c(
+                "v-card-actions",
+                [
+                  _c(
+                    "v-list-item",
+                    { staticClass: "grow" },
+                    [
+                      _c(
+                        "v-list-item-avatar",
+                        { attrs: { color: "grey darken-3" } },
+                        [
+                          _c("v-img", {
+                            staticClass: "elevation-6",
+                            attrs: {
+                              alt: "",
+                              src:
+                                "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-content",
+                        { staticClass: "py-0" },
+                        [
+                          _c("v-list-item-title", [
+                            _vm._v(_vm._s(_vm.voice.owner.name))
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("v-card-text", [_vm._v(_vm._s(_vm.voice.title) + " ")]),
+              _c(
+                "v-list-item-content",
+                { staticClass: "py-0" },
+                [_c("v-list-item-title", [_vm._v(_vm._s(_vm.voice.title))])],
+                1
+              ),
               _vm._v(" "),
-              _c("audio", {
-                staticClass: "audio",
-                attrs: {
-                  src: _vm.voice.url,
-                  controls: "",
-                  controlslist: "nodownload"
-                }
-              }),
+              _c(
+                "v-list-item-content",
+                { staticClass: "py-0" },
+                [
+                  _c("v-list-item-title", [
+                    _vm._v(_vm._s(_vm._f("moment")(_vm.voice.created_at)))
+                  ])
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("div", [
-                _c("h2", [
-                  _c("i", { staticClass: "icon ion-md-chatboxes" }),
-                  _vm._v("コメント")
-                ]),
-                _vm._v(" "),
-                _vm.isLogin
-                  ? _c(
-                      "form",
-                      {
-                        staticClass: "form",
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.addComment($event)
+              _c("v-list-item-content", { staticClass: "px-6" }, [
+                _c("audio", {
+                  attrs: {
+                    src: _vm.voice.url,
+                    controls: "",
+                    controlslist: "nodownload"
+                  }
+                })
+              ])
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        { staticClass: "commet_container" },
+        [
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                { attrs: { cols: "12", sm: "12" } },
+                [
+                  _vm.isLogin
+                    ? _c(
+                        "v-form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.addComment($event)
+                            }
                           }
-                        }
-                      },
-                      [
-                        _vm.commentErrors
-                          ? _c("div", { staticClass: "errors" }, [
-                              _vm.commentErrors.content
-                                ? _c(
-                                    "ul",
-                                    _vm._l(_vm.commentErrors.content, function(
-                                      msg
-                                    ) {
-                                      return _c("li", { key: msg }, [
-                                        _vm._v(
-                                          "\n              " +
-                                            _vm._s(msg) +
-                                            "\n            "
-                                        )
-                                      ])
-                                    }),
-                                    0
-                                  )
-                                : _vm._e()
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
+                        },
+                        [
+                          _vm.commentErrors
+                            ? _c("div", { staticClass: "errors" }, [
+                                _vm.commentErrors.content
+                                  ? _c(
+                                      "ul",
+                                      _vm._l(
+                                        _vm.commentErrors.content,
+                                        function(msg) {
+                                          return _c("li", { key: msg }, [
+                                            _vm._v(
+                                              "\n                " +
+                                                _vm._s(msg) +
+                                                "\n              "
+                                            )
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  : _vm._e()
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("v-textarea", {
+                            attrs: {
+                              "background-color": "grey lighten-2",
+                              label: "コメントを入力",
+                              rows: "3",
+                              outlined: ""
+                            },
+                            model: {
                               value: _vm.commentContent,
+                              callback: function($$v) {
+                                _vm.commentContent = $$v
+                              },
                               expression: "commentContent"
                             }
-                          ],
-                          staticClass: "form__item",
-                          domProps: { value: _vm.commentContent },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.commentContent = $event.target.value
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "form__button" },
-                          [
-                            _c("v-btn", { attrs: { type: "submit" } }, [
-                              _vm._v("投稿する")
-                            ])
-                          ],
-                          1
-                        )
-                      ]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "text-center" },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    type: "submit",
+                                    color: "cyan lighten-1"
+                                  }
+                                },
+                                [_vm._v("投稿する")]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-container",
+        [
+          _c("h2", { staticClass: "text-center" }, [_vm._v("コメント一覧")]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            [
+              _c("v-col", { attrs: { cols: "12", sm: "12" } }, [
                 _vm.voice.comments.length > 0
                   ? _c(
                       "ul",
+                      { staticClass: "ul" },
                       _vm._l(_vm.voice.comments, function(comment) {
-                        return _c("li", { key: comment.content }, [
-                          _c("p", [
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(comment.author.name) +
-                                "\n          "
+                        return _c(
+                          "li",
+                          { key: comment.content },
+                          [
+                            _c(
+                              "v-card",
+                              {
+                                staticClass: "mx-auto mb-2 blue-grey lighten-4",
+                                attrs: {
+                                  width: "340px",
+                                  height: "100px",
+                                  tile: ""
+                                }
+                              },
+                              [
+                                _c("v-card-title", { staticClass: "pb-2" }, [
+                                  _vm._v(
+                                    "\n                  " +
+                                      _vm._s(comment.author.name) +
+                                      "\n                "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("v-card-text", { staticClass: "pl-8" }, [
+                                  _vm._v(
+                                    "\n                  " +
+                                      _vm._s(comment.content) +
+                                      "\n                "
+                                  )
+                                ])
+                              ],
+                              1
                             )
-                          ]),
-                          _vm._v(" "),
-                          _c("p", [
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(comment.content) +
-                                "\n          "
-                            )
-                          ])
-                        ])
+                          ],
+                          1
+                        )
                       }),
                       0
                     )
@@ -28430,7 +28574,9 @@ var render = function() {
             ],
             1
           )
-        : _vm._e()
+        ],
+        1
+      )
     ],
     1
   )

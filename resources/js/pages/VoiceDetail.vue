@@ -1,49 +1,81 @@
 <template>
   <div class="wrapper_1 blue-grey lighten-1">
     <v-card v-if="voice" class="mx-auto blue-grey lighten-3" width="340px" outlined>
-      <v-card-title>{{ voice.owner.name }}</v-card-title>
-      <v-card-text>{{ voice.title }} </v-card-text>
-      <audio
-        :src="voice.url"
-        controls
-        controlslist="nodownload"
-        class="audio"
-      ></audio>
-      <div>
-        <h2><i class="icon ion-md-chatboxes"></i>コメント</h2>
-        <!-- コメント投稿フォーム（ログイン中のみ表示） -->
-        <form v-if="isLogin" @submit.prevent="addComment" class="form">
-          <!-- エラー表示 -->
-          <div v-if="commentErrors" class="errors">
-            <ul v-if="commentErrors.content">
-              <li v-for="msg in commentErrors.content" :key="msg">
-                {{ msg }}
+     <v-card-actions>
+        <v-list-item class="grow">
+          <v-list-item-avatar color="grey darken-3">
+            <v-img
+              class="elevation-6"
+              alt=""
+              src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+            ></v-img>
+          </v-list-item-avatar>
+          <v-list-item-content class="py-0">
+            <v-list-item-title>{{ voice.owner.name }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-card-actions>
+
+      <v-list-item-content class="py-0">
+            <v-list-item-title>{{ voice.title }}</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content class="py-0">
+            <v-list-item-title>{{ voice.created_at | moment }}</v-list-item-title>
+          </v-list-item-content>
+      <v-list-item-content class="px-6">
+        <audio :src="voice.url" controls controlslist="nodownload"></audio>
+      </v-list-item-content>
+    </v-card>
+
+    <!-- コメント投稿フォーム（ログイン中のみ表示） -->
+    <v-container class="commet_container">
+      <v-row>
+        <v-col cols="12" sm="12">
+          <v-form v-if="isLogin" @submit.prevent="addComment" >
+            <!-- エラー表示 -->
+            <div v-if="commentErrors" class="errors">
+              <ul v-if="commentErrors.content">
+                <li v-for="msg in commentErrors.content" :key="msg">
+                  {{ msg }}
+                </li>
+              </ul>
+            </div>
+            <v-textarea background-color="grey lighten-2" label="コメントを入力" rows="3" outlined v-model="commentContent"></v-textarea>
+            <div class="text-center">
+              <v-btn type="submit" color="cyan lighten-1">投稿する</v-btn>
+            </div>
+          </v-form>
+        </v-col>
+      </v-row>
+    </v-container>
+    
+    <!-- コメント表示 -->
+    <v-container>
+      <h2 class="text-center">コメント一覧</h2>
+      <v-row>
+        <v-col cols="12" sm="12">
+            <ul class="ul" v-if="voice.comments.length > 0">
+              <li v-for="comment in voice.comments" :key="comment.content">
+                <v-card class="mx-auto mb-2 blue-grey lighten-4" width="340px" height="100px" tile>
+                  <v-card-title class="pb-2">
+                    {{ comment.author.name }}
+                  </v-card-title>
+                  <v-card-text class="pl-8">
+                    {{ comment.content }}
+                  </v-card-text>
+                </v-card>
               </li>
             </ul>
-          </div>
-          <textarea class="form__item" v-model="commentContent"></textarea>
-          <div class="form__button">
-            <v-btn type="submit">投稿する</v-btn>
-          </div>
-        </form>
-        <!-- コメント表示 -->
-        <ul v-if="voice.comments.length > 0">
-          <li v-for="comment in voice.comments" :key="comment.content">
-            <p>
-              {{ comment.author.name }}
-            </p>
-            <p>
-              {{ comment.content }}
-            </p>
-          </li>
-        </ul>
-      </div>
-    </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+
   </div>
 </template>
 
 <script>
 import { OK, CREATED, UNPROCESSABLE_ENTITY } from "../util";
+import moment from 'moment';
 
 export default {
   props: {
@@ -87,7 +119,6 @@ export default {
       }
 
       this.commentContent = "";
-
       this.commentErrors = null;
 
       // その他のエラー
@@ -107,14 +138,31 @@ export default {
       immediate: true,
     },
   },
+  filters: {
+    moment: function(date) {
+      return moment(date).format('YYYY/MM/DD HH:mm');
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
+li {
+  list-style: none;
+}
+.ul {
+  padding-left: 0;
+}
 .wrapper_1 {
   padding-top: 40px;
   height: 100%;
 }
 .audio {
   margin-left: 20px;
+}
+.errors {
+  color: red;
+}
+.comment_container {
+  width: 366px;
 }
 </style>
