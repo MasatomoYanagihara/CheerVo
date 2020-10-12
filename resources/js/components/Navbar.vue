@@ -10,7 +10,7 @@
             <div v-if="isLogin">
                 {{ username }}
             </div>
-            <div v-if="isLogin">
+            <div v-if="isLogin" class="d-none d-sm-flex">
                 <v-btn
                     outlined
                     small

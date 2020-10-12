@@ -1,5 +1,5 @@
 <template>
-    <v-bottom-navigation fixed>
+    <v-bottom-navigation class="d-sm-none" fixed>
         <v-btn @click="moveToTop">
             <v-icon>mdi-home</v-icon>
         </v-btn>
@@ -13,7 +13,7 @@
         </v-btn>
         <v-btn>
             <RouterLink :to="`/users/${userId}`">
-                <v-icon>mdi-account-circle</v-icon>
+                <v-icon color="rgba(0,0,0,0.54)">mdi-account-circle</v-icon>
             </RouterLink>
         </v-btn>
     </v-bottom-navigation>

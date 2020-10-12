@@ -2672,8 +2672,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_Voice_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Voice.vue */ "./resources/js/components/Voice.vue");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
+/* harmony import */ var _components_Voice_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Voice.vue */ "./resources/js/components/Voice.vue");
+/* harmony import */ var _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/BottomNavigation */ "./resources/js/components/BottomNavigation.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2690,11 +2691,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Voice: _components_Voice_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Voice: _components_Voice_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    BottomNavigation: _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -2713,12 +2717,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/api/voices/users/' + _this.$route.params.id);
+                return axios.get("/api/voices/users/" + _this.$route.params.id);
 
               case 2:
                 response = _context.sent;
 
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
                   _context.next = 6;
                   break;
                 }
@@ -27690,7 +27694,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-bottom-navigation",
-    { attrs: { fixed: "" } },
+    { staticClass: "d-sm-none", attrs: { fixed: "" } },
     [
       _c(
         "v-btn",
@@ -27709,7 +27713,11 @@ var render = function() {
           _c(
             "RouterLink",
             { attrs: { to: "/users/" + _vm.userId } },
-            [_c("v-icon", [_vm._v("mdi-account-circle")])],
+            [
+              _c("v-icon", { attrs: { color: "rgba(0,0,0,0.54)" } }, [
+                _vm._v("mdi-account-circle")
+              ])
+            ],
             1
           )
         ],
@@ -27806,6 +27814,7 @@ var render = function() {
           _vm.isLogin
             ? _c(
                 "div",
+                { staticClass: "d-none d-sm-flex" },
                 [
                   _c(
                     "v-btn",
@@ -28587,7 +28596,9 @@ var render = function() {
           )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("BottomNavigation")
     ],
     1
   )
