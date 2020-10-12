@@ -60,6 +60,9 @@
                   <v-card-title class="pb-2">
                     {{ comment.author.name }}
                   </v-card-title>
+                  <v-card-subtitle>
+                    {{ comment.created_at | moment }}
+                  </v-card-subtitle>
                   <v-card-text class="pl-8">
                     {{ comment.content }}
                   </v-card-text>
@@ -134,6 +137,7 @@ export default {
     $route: {
       async handler() {
         await this.fetchVoice();
+        console.log(this.voice);
       },
       immediate: true,
     },

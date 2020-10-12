@@ -2607,7 +2607,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2696,6 +2695,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -2888,6 +2890,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return _this3.fetchVoice();
 
                 case 2:
+                  console.log(_this3.voice);
+
+                case 3:
                 case "end":
                   return _context3.stop();
               }
@@ -28298,8 +28303,6 @@ var render = function() {
     "div",
     { staticClass: "blue-grey lighten-1" },
     [
-      _c("h1", [_vm._v("$route.params.id: " + _vm._s(_vm.$route.params.id))]),
-      _vm._v(" "),
       _c(
         "v-container",
         [
@@ -28549,6 +28552,16 @@ var render = function() {
                                   _vm._v(
                                     "\n                  " +
                                       _vm._s(comment.author.name) +
+                                      "\n                "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("v-card-subtitle", [
+                                  _vm._v(
+                                    "\n                  " +
+                                      _vm._s(
+                                        _vm._f("moment")(comment.created_at)
+                                      ) +
                                       "\n                "
                                   )
                                 ]),

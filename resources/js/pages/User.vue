@@ -1,6 +1,5 @@
 <template>
   <div class="blue-grey lighten-1">
-    <h1>$route.params.id: {{ $route.params.id }}</h1>
     <v-container>
       <v-row>
         <Voice v-for="voice in voices" :key="voice.id" :voice="voice" />
