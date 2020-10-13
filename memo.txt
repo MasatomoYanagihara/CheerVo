@@ -1,0 +1,3 @@
+color
+背景 blue-grey lighten-1
+ボタン cyan lighten-1

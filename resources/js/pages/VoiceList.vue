@@ -47,7 +47,7 @@
             <v-form @submit.prevent="submit">
                 <v-card class="blue-grey lighten-5">
                     <v-card-title>
-                        <span class="headline mx-auto">ボイスを投稿する</span>
+                        <span class="headline mx-auto mt-4">ボイスを投稿する</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>

@@ -1,8 +1,17 @@
 <template>
     <div class="blue-grey lighten-1">
         <v-container>
+            <BreadCrumbs class="d-sm-none" :items="items" />
+            <div class="d-flex flex-column wrapper_1">
+                <v-avatar class="mx-auto" color="grey darken-3">
+                    <v-img
+                        alt=""
+                        src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                    ></v-img>
+                </v-avatar>
+                <h2 class="mx-auto">{{ username }}</h2>
+            </div>
             <v-row>
-                <BreadCrumbs class="d-sm-none" :items="items" />
                 <Voice v-for="voice in voices" :key="voice.id" :voice="voice" />
             </v-row>
         </v-container>
@@ -17,6 +26,12 @@ import BottomNavigation from "../components/BottomNavigation";
 import BreadCrumbs from "../components/BreadCrumbs";
 
 export default {
+    computed: {
+        // ユーザーネーム取得
+        username() {
+            return this.$store.getters["auth/username"];
+        }
+    },
     components: {
         Voice,
         BottomNavigation,
@@ -58,4 +73,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.wrapper_1 {
+    background-color: white;
+    padding-top: 14%;
+    padding-bottom: 8%;
+}
+</style>
