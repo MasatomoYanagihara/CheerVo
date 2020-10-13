@@ -59,7 +59,7 @@ export default {
                     }
                 }, interval);
             } else {
-                this.$router.push({ name: "serch" });
+                this.$router.push({ name: "search" });
             }
         }
     }
