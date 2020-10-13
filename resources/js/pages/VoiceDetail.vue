@@ -176,7 +176,6 @@ export default {
         $route: {
             async handler() {
                 await this.fetchVoice();
-                console.log(this.voice);
             },
             immediate: true
         }

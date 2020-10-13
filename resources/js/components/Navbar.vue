@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app-bar color="grey lighten-4" fixed>
+        <v-app-bar fixed>
             <Router-link :to="{ name: 'home' }">
                 <v-toolbar-title class="black--text">Voice</v-toolbar-title>
             </Router-link>

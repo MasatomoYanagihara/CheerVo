@@ -9,6 +9,7 @@ import SystemError from "./pages/errors/System.vue";
 import VoiceDetail from "./pages/VoiceDetail.vue";
 import NotFound from "./pages/errors/NotFound.vue";
 import Users from "./pages/User.vue";
+import Serch from "./pages/Serch.vue";
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,11 @@ const routes = [
         path: "/register",
         name: "register",
         component: Register
+    },
+    {
+        path: "/serch",
+        name: "serch",
+        component: Serch
     },
     {
         path: "/users/:id",
