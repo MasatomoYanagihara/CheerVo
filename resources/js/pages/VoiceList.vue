@@ -20,6 +20,7 @@
                 </infinite-loading>
             </v-row>
         </v-container>
+        
         <v-dialog v-model="dialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -112,6 +113,7 @@
                 </v-card>
             </v-form>
         </v-dialog>
+
         <v-snackbar v-model="snackbar" :timeout="timeout">
             投稿が完了しました
             <template v-slot:action="{ attrs }">

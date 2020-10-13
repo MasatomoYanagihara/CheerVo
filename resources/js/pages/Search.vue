@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="wrapper_1 blue-grey lighten-1">
         <h1>serch</h1>
         <v-form @submit.prevent="searchKeyword">
             <div v-if="requiredMessage == true">
@@ -13,9 +13,32 @@
                 v-model="keyword"
                 label="タイトル検索"
                 outlined
+                background-color="white"
             ></v-text-field>
-            <v-btn type="submit">検索</v-btn>
+            <v-btn color="cyan lighten-1" type="submit">検索</v-btn>
         </v-form>
+
+        <v-container>
+            <v-row>
+                <Voice
+                    v-for="voice in searchResultData"
+                    :key="voice.filename"
+                    :voice="voice"
+                    @like="onLikeClick"
+                    @unlike="onUnLikeClick"
+                />
+                <infinite-loading
+                    class="infinite-loading"
+                    ref="infiniteLoading"
+                    spinner="spiral"
+                    @infinite="infiniteHandler"
+                >
+                    <span slot="no-more"></span>
+                    <span slot="no-results"></span>
+                </infinite-loading>
+            </v-row>
+        </v-container>
+
         <v-snackbar v-model="snackbar" :timeout="timeout">
             検索結果は0件です
             <template v-slot:action="{ attrs }">
@@ -29,25 +52,29 @@
                 </v-btn>
             </template>
         </v-snackbar>
+
         <BottomNavigation />
     </div>
 </template>
 
 <script>
+import Voice from "../components/Voice.vue";
 import BottomNavigation from "../components/BottomNavigation";
 
 export default {
+    components: {
+        Voice,
+        BottomNavigation
+    },
     data() {
         return {
             keyword: "",
             searchResultData: [],
             snackbar: false,
             timeout: 3000,
-            requiredMessage: false
+            requiredMessage: false,
+            page: 1
         };
-    },
-    components: {
-        BottomNavigation
     },
     methods: {
         async searchKeyword() {
@@ -60,19 +87,65 @@ export default {
                     this.snackbar = true;
                 }
 
-                this.searchResultData = response.data;
-                this.keyword = "";
+                this.searchResultData = response.data.data;
             } else {
                 this.requiredMessage = true;
             }
+        },
+        // いいねクリックメソッド（子コンポーネントから$emit）
+        onLikeClick({ id, liked }) {
+            if (liked) {
+                this.notlike(id);
+            } else {
+                this.like(id);
+            }
+        },
+        // unlikeクリックメソッド（子コンポーネントから$emit）
+        onUnLikeClick({ id, unliked }) {
+            if (unliked) {
+                this.notUnlike(id);
+            } else {
+                this.unlike(id);
+            }
+        },
+        infiniteHandler($state) {
+            axios
+                .get(`/api/voices/search?keyword=${this.keyword}`, {
+                    params: {
+                        page: this.page,
+                        per_page: 1
+                    }
+                })
+                .then(({ data }) => {
+                    setTimeout(() => {
+                        if (this.page < data.data.length) {
+                            this.page += 1;
+                            this.searchResultData.push(...data.data);
+                            $state.loaded();
+                        } else {
+                            $state.complete();
+                        }
+                    }, 1500);
+                })
+                .catch(err => {
+                    $state.complete();
+                });
         }
     }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.wrapper_1 {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    height: 100%;
+}
 .errorMessage {
     list-style: none;
     color: red;
     padding-left: 0;
+}
+.infinite-loading {
+    margin: 0 auto;
 }
 </style>

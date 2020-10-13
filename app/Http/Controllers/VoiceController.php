@@ -26,7 +26,8 @@ class VoiceController extends Controller
     public function index()
     {
         $voices = Voice::with(['owner', 'likes', 'unlikes'])
-        ->orderBy(Voice::CREATED_AT, 'desc')->paginate(10);
+        ->orderBy(Voice::CREATED_AT, 'desc')
+        ->paginate(10);
 
         return $voices;
     }
@@ -39,14 +40,13 @@ class VoiceController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->keyword;
-        $query = Voice::with(['owner']);
  
         if (!empty($keyword)) {
-            $query->where('title', 'LIKE', "%{$keyword}%")
-            ->orderBy(Voice::CREATED_AT, 'desc')->paginate(10);
+            $voices = Voice::with(['owner'])
+            ->where('title', 'LIKE', "%{$keyword}%")
+            ->orderBy(Voice::CREATED_AT, 'desc')
+            ->paginate(5);
         };
- 
-        $voices = $query->get();
  
         return $voices;
     }
