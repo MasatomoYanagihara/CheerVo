@@ -32,19 +32,39 @@ class VoiceController extends Controller
     }
 
     /**
+     * ボイス検索
+     * @param string $request
+     * @return Voice
+     */
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword;
+        $query = Voice::with(['owner']);
+ 
+        if (!empty($keyword)) {
+            $query->where('title', 'LIKE', "%{$keyword}%")
+            ->orderBy(Voice::CREATED_AT, 'desc')->paginate(10);
+        };
+ 
+        $voices = $query->get();
+ 
+        return $voices;
+    }
+
+    /**
      * マイボイス
      * @param string $id
      * @return Voice
      */
-     public function myVoice(string $id)
-     {
-         $voices = Voice::with(['owner'])
+    public function myVoice(string $id)
+    {
+        $voices = Voice::with(['owner'])
          ->where('user_id', $id)
          ->orderBy(Voice::CREATED_AT, 'desc')
          ->get();
  
-         return $voices;
-     }
+        return $voices;
+    }
 
     /**
      * ボイス投稿

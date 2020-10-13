@@ -14,6 +14,9 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 // ボイス一覧取得
 Route::get('/voices', 'VoiceController@index')->name('voice.index');
 
+// ボイス検索
+Route::get('/voices/search', 'VoiceController@search')->name('voice.search');
+
 // 自分が投稿したボイス取得
 Route::get('/voices/users/{id}', 'VoiceController@myVoice')->name('voice.myVoice');
 

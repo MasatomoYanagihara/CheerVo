@@ -28332,7 +28332,6 @@ var render = function() {
             [
               _c(
                 "v-list-item",
-                { staticClass: "grow" },
                 [
                   _c(
                     "v-list-item-avatar",
