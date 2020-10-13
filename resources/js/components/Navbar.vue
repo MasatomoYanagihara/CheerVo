@@ -22,13 +22,18 @@
                 </v-btn>
             </div>
             <div v-else>
+                <Router-link :to="{ name: 'register' }">
+                    <v-btn
+                        class="cyan lighten-1 register_btn"
+                        outlined
+                        small
+                        rounded
+                    >
+                        <span class="white--text">会員登録</span>
+                    </v-btn>
+                </Router-link>
                 <Router-link :to="{ name: 'login' }">
                     <v-btn outlined small rounded> ログイン </v-btn>
-                </Router-link>
-                <Router-link :to="{ name: 'register' }">
-                    <v-btn outlined small rounded class="register_btn">
-                        会員登録
-                    </v-btn>
                 </Router-link>
             </div>
             <v-app-bar-nav-icon
@@ -38,10 +43,7 @@
         <!-- サイドナビゲーションメニュー -->
         <v-navigation-drawer v-model="drawer" app right>
             <v-list dense>
-                <v-list-item-title style="padding-left: 12px"
-                    >MENU</v-list-item-title
-                >
-
+                <v-list-item-title class="pl-2">MENU</v-list-item-title>
                 <!-- ホーム -->
                 <router-link to="/">
                     <v-list-item link class="menu-item-1">
@@ -70,7 +72,8 @@
                     </div>
                 </RouterLink>
 
-                <v-list-item link class="menu-item-1">
+                <!-- ヘルプ -->
+                <v-list-item link class="menu-item-2">
                     <v-list-item-action>
                         <v-icon>mdi-help</v-icon>
                     </v-list-item-action>

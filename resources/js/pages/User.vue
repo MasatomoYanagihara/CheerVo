@@ -2,6 +2,7 @@
     <div class="blue-grey lighten-1">
         <v-container>
             <v-row>
+                <BreadCrumbs class="d-sm-none" :items="items" />
                 <Voice v-for="voice in voices" :key="voice.id" :voice="voice" />
             </v-row>
         </v-container>
@@ -13,15 +14,28 @@
 import { OK, UNPROCESSABLE_ENTITY } from "../util";
 import Voice from "../components/Voice.vue";
 import BottomNavigation from "../components/BottomNavigation";
+import BreadCrumbs from "../components/BreadCrumbs";
 
 export default {
     components: {
         Voice,
-        BottomNavigation
+        BottomNavigation,
+        BreadCrumbs
     },
     data() {
         return {
-            voices: {} //一覧表示用
+            voices: {}, //一覧表示用
+            items: [
+                {
+                    text: "ホーム",
+                    disabled: false,
+                    href: "/"
+                },
+                {
+                    text: "マイページ",
+                    disabled: false
+                }
+            ]
         };
     },
     methods: {

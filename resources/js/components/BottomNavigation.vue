@@ -1,6 +1,6 @@
 <template>
     <v-bottom-navigation class="d-sm-none" fixed>
-        <v-btn @click="moveToTop">
+        <v-btn @click="moveToTopOrHomepage">
             <v-icon>mdi-home</v-icon>
         </v-btn>
 
@@ -22,9 +22,15 @@
 import { mapState, mapGetters } from "vuex";
 
 export default {
+    computed: {
+        // ユーザーID取得
+        userId() {
+            return this.$store.getters["auth/userId"];
+        }
+    },
     methods: {
         // ホーム画面なら一番上までスクロール、その他のページならホーム画面に移動
-        moveToTop() {
+        moveToTopOrHomepage() {
             if (this.$route.path === "/") {
                 const duration = 300; // 移動速度（0.3秒で終了）
                 const interval = 20; // 0.020秒ごとに移動
@@ -39,12 +45,6 @@ export default {
             } else {
                 this.$router.push({ name: "home" });
             }
-        }
-    },
-    computed: {
-        // ユーザーID取得
-        userId() {
-            return this.$store.getters["auth/userId"];
         }
     }
 };
