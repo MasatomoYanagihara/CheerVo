@@ -9,7 +9,7 @@ import SystemError from "./pages/errors/System.vue";
 import VoiceDetail from "./pages/VoiceDetail.vue";
 import NotFound from "./pages/errors/NotFound.vue";
 import Users from "./pages/User.vue";
-import Serch from "./pages/Serch.vue";
+import Search from "./pages/Search.vue";
 
 Vue.use(VueRouter);
 
@@ -44,9 +44,9 @@ const routes = [
         component: Register
     },
     {
-        path: "/serch",
-        name: "serch",
-        component: Serch
+        path: "/search",
+        name: "search",
+        component: Search
     },
     {
         path: "/users/:id",
