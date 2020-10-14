@@ -2820,6 +2820,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2848,7 +2854,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 if (!(!_this.keyword == "")) {
-                  _context.next = 8;
+                  _context.next = 9;
                   break;
                 }
 
@@ -2860,18 +2866,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 response = _context.sent;
 
-                if (response.data.length === 0) {
+                if (response.data.data.length === 0) {
                   _this.snackbar = true;
                 }
 
                 _this.searchResultData = response.data.data;
-                _context.next = 9;
+                _this.requiredMessage = false;
+                _context.next = 10;
                 break;
 
-              case 8:
+              case 9:
                 _this.requiredMessage = true;
 
-              case 9:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -3393,6 +3400,11 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4088,7 +4100,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".wrapper_1[data-v-e7b90492] {\n  padding-top: 30px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #8AA8B0;\n}\n.plus_btn[data-v-e7b90492] {\n  position: fixed;\n  bottom: 80px;\n  right: 20px;\n}\n.progress_circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 59px;\n  right: 39px;\n}\n.titleErrorMessage[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.fileErrorMessage[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.infinite-loading[data-v-e7b90492] {\n  margin: 0 auto;\n}", ""]);
+exports.push([module.i, ".wrapper_1[data-v-e7b90492] {\n  padding-top: 16px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #8aa8b0;\n}\n.plus_btn[data-v-e7b90492] {\n  position: fixed;\n  bottom: 80px;\n  right: 20px;\n}\n.progress_circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 79px;\n  right: 19px;\n}\n.titleErrorMessage[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.fileErrorMessage[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.infinite-loading[data-v-e7b90492] {\n  margin: 0 auto;\n}", ""]);
 
 // exports
 
@@ -29118,8 +29130,6 @@ var render = function() {
     "div",
     { staticClass: "wrapper_1 blue-grey lighten-1" },
     [
-      _c("h1", [_vm._v("serch")]),
-      _vm._v(" "),
       _c(
         "v-form",
         {
@@ -29158,9 +29168,11 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("v-btn", { attrs: { color: "#F26101", type: "submit" } }, [
-            _c("span", { staticClass: "white--text" }, [_vm._v("検索")])
-          ])
+          _c(
+            "v-btn",
+            { attrs: { color: "#F26101", type: "submit", rounded: "" } },
+            [_c("span", { staticClass: "white--text" }, [_vm._v("検索")])]
+          )
         ],
         1
       ),
@@ -29206,7 +29218,7 @@ var render = function() {
       _c(
         "v-snackbar",
         {
-          attrs: { timeout: _vm.timeout },
+          attrs: { timeout: _vm.timeout, centered: "", color: "#313732" },
           scopedSlots: _vm._u([
             {
               key: "action",
@@ -29242,7 +29254,7 @@ var render = function() {
             expression: "snackbar"
           }
         },
-        [_vm._v("\n        検索結果は0件です\n        ")]
+        [_vm._v("\n        検索結果は０件です\n        ")]
       ),
       _vm._v(" "),
       _c("BottomNavigation")
@@ -29788,9 +29800,9 @@ var render = function() {
                     staticClass: "progress_circular",
                     attrs: {
                       indeterminate: "",
-                      color: "black",
+                      color: "#F26101",
                       size: "58",
-                      width: "6"
+                      width: "5"
                     }
                   })
                 ]
@@ -29820,7 +29832,7 @@ var render = function() {
             [
               _c(
                 "v-card",
-                { staticClass: "blue-grey lighten-5" },
+                { attrs: { color: "#FFFFFF" } },
                 [
                   _c("v-card-title", [
                     _c("span", { staticClass: "headline mx-auto mt-4" }, [
@@ -29921,6 +29933,12 @@ var render = function() {
                                       ])
                                     : _vm._e(),
                                   _vm._v(" "),
+                                  _c("h4", { staticClass: "mb-2" }, [
+                                    _vm._v(
+                                      "\n                                    ＊対応している拡張子：mp3/m4a/wav\n                                "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
                                   _c("input", {
                                     attrs: {
                                       type: "file",
@@ -29948,7 +29966,7 @@ var render = function() {
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "#F26101" },
+                          attrs: { color: "#F26101", rounded: "" },
                           on: { click: _vm.submit }
                         },
                         [
@@ -29961,6 +29979,8 @@ var render = function() {
                       _c(
                         "v-btn",
                         {
+                          staticClass: "px-4",
+                          attrs: { rounded: "" },
                           on: {
                             click: function($event) {
                               _vm.dialog = false

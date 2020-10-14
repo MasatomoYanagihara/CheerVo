@@ -38,15 +38,15 @@
                 <v-progress-circular
                     class="progress_circular"
                     indeterminate
-                    color="black"
+                    color="#F26101"
                     size="58"
-                    width="6"
+                    width="5"
                     v-show="fileUploading"
                 ></v-progress-circular>
             </template>
 
             <v-form @submit.prevent="submit">
-                <v-card class="blue-grey lighten-5">
+                <v-card color="#FFFFFF">
                     <v-card-title>
                         <span class="headline mx-auto mt-4"
                             >ボイスを投稿する</span
@@ -90,6 +90,9 @@
                                             </li>
                                         </ul>
                                     </div>
+                                    <h4 class="mb-2">
+                                        ＊対応している拡張子：mp3/m4a/wav
+                                    </h4>
                                     <input
                                         @change="onFileChange"
                                         type="file"
@@ -101,14 +104,16 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn @click="submit" color="#F26101"
+                        <v-btn @click="submit" color="#F26101" rounded
                             ><span class="white--text">投稿する</span></v-btn
                         >
                         <v-btn
+                            class="px-4"
                             @click="
                                 dialog = false;
                                 clearError();
                             "
+                            rounded
                             >閉じる</v-btn
                         >
                     </v-card-actions>
@@ -329,10 +334,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .wrapper_1 {
-    padding-top: 30px;
+    padding-top: 16px;
     padding-bottom: 20px;
     height: 100%;
-    background-color: #8AA8B0;
+    background-color: #8aa8b0;
 }
 .plus_btn {
     position: fixed;
@@ -341,8 +346,8 @@ export default {
 }
 .progress_circular {
     position: fixed;
-    bottom: 59px;
-    right: 39px;
+    bottom: 79px;
+    right: 19px;
 }
 .titleErrorMessage {
     color: red;

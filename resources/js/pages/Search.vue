@@ -1,6 +1,5 @@
 <template>
     <div class="wrapper_1 blue-grey lighten-1">
-        <h1>serch</h1>
         <v-form @submit.prevent="searchKeyword">
             <div v-if="requiredMessage == true">
                 <ul class="errorMessage">
@@ -15,7 +14,9 @@
                 outlined
                 background-color="white"
             ></v-text-field>
-            <v-btn color="#F26101" type="submit"><span class="white--text">検索</span></v-btn>
+            <v-btn color="#F26101" type="submit" rounded
+                ><span class="white--text">検索</span>
+            </v-btn>
         </v-form>
 
         <v-container>
@@ -39,8 +40,13 @@
             </v-row>
         </v-container>
 
-        <v-snackbar v-model="snackbar" :timeout="timeout">
-            検索結果は0件です
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="timeout"
+            centered
+            color="#313732"
+        >
+            検索結果は０件です
             <template v-slot:action="{ attrs }">
                 <v-btn
                     color="blue"
@@ -83,11 +89,12 @@ export default {
                     .get(`/api/voices/search?keyword=${this.keyword}`)
                     .catch(err => err.response || err);
 
-                if (response.data.length === 0) {
+                if (response.data.data.length === 0) {
                     this.snackbar = true;
                 }
 
                 this.searchResultData = response.data.data;
+                this.requiredMessage = false;
             } else {
                 this.requiredMessage = true;
             }
