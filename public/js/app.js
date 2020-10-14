@@ -2114,7 +2114,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     moveToTopOrSerchPage: function moveToTopOrSerchPage() {
-      if (this.$route.path === "/serch") {
+      if (this.$route.path === "/search") {
         var duration = 300; // 移動速度（0.3秒で終了）
 
         var interval = 20; // 0.020秒ごとに移動
@@ -2187,6 +2187,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -2417,6 +2418,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2441,7 +2462,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   filters: {
     moment: function moment(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format('YYYY/MM/DD HH:mm');
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format("YYYY/MM/DD HH:mm");
     }
   }
 });
@@ -3171,6 +3192,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3269,7 +3317,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 11:
                 _this2.voice.comments = [response.data].concat(_toConsumableArray(_this2.voice.comments));
 
-              case 12:
+                _this2.fetchVoice();
+
+              case 13:
               case "end":
                 return _context2.stop();
             }
@@ -3343,6 +3393,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -3922,7 +3974,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".logout_btn[data-v-6dde423b] {\n  width: 68px;\n  margin-left: 14px;\n}", ""]);
+exports.push([module.i, ".logout_btn[data-v-6dde423b] {\n  width: 68px;\n  margin-left: 14px;\n}\n.register_btn[data-v-6dde423b] {\n  background-color: #F26101;\n}", ""]);
 
 // exports
 
@@ -3960,7 +4012,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".login_btn[data-v-3b6adb30] {\n  display: block;\n  margin: 0 0 0 auto;\n}\n.errorMessage[data-v-3b6adb30] {\n  color: red;\n}", ""]);
+exports.push([module.i, ".login_btn[data-v-3b6adb30] {\n  display: block;\n  margin: 0 0 0 auto;\n}\n.errorMessage[data-v-3b6adb30] {\n  color: red;\n  list-style-type: none;\n}", ""]);
 
 // exports
 
@@ -4017,7 +4069,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "li[data-v-06ad10ac] {\n  list-style: none;\n}\n.ul[data-v-06ad10ac] {\n  padding-left: 0;\n}\n.wrapper_1[data-v-06ad10ac] {\n  padding-top: 40px;\n  height: 100%;\n}\n.audio[data-v-06ad10ac] {\n  margin-left: 20px;\n}\n.errors[data-v-06ad10ac] {\n  color: red;\n}\n.comment_container[data-v-06ad10ac] {\n  width: 366px;\n}", ""]);
+exports.push([module.i, "li[data-v-06ad10ac] {\n  list-style: none;\n}\n.ul[data-v-06ad10ac] {\n  padding-left: 0;\n}\n.wrapper_1[data-v-06ad10ac] {\n  padding-top: 40px;\n  height: 100%;\n  background-color: #8aa8b0;\n}\n.audio[data-v-06ad10ac] {\n  margin-left: 20px;\n}\n.errors[data-v-06ad10ac] {\n  color: red;\n}\n.comment_container[data-v-06ad10ac] {\n  width: 366px;\n}", ""]);
 
 // exports
 
@@ -4036,7 +4088,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".wrapper_1[data-v-e7b90492] {\n  padding-top: 30px;\n  padding-bottom: 20px;\n  height: 100%;\n}\n.plus_btn[data-v-e7b90492] {\n  position: fixed;\n  bottom: 80px;\n  right: 20px;\n}\n.progress_circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 59px;\n  right: 39px;\n}\n.titleErrorMessage[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.fileErrorMessage[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.infinite-loading[data-v-e7b90492] {\n  margin: 0 auto;\n}", ""]);
+exports.push([module.i, ".wrapper_1[data-v-e7b90492] {\n  padding-top: 30px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #8AA8B0;\n}\n.plus_btn[data-v-e7b90492] {\n  position: fixed;\n  bottom: 80px;\n  right: 20px;\n}\n.progress_circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 59px;\n  right: 39px;\n}\n.titleErrorMessage[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.fileErrorMessage[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.infinite-loading[data-v-e7b90492] {\n  margin: 0 auto;\n}", ""]);
 
 // exports
 
@@ -4152,7 +4204,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.wrapper_1[data-v-99948d58] {\n    background-color: white;\n    padding-top: 14%;\n    padding-bottom: 8%;\n}\n", ""]);
+exports.push([module.i, "\n.wrapper_1[data-v-99948d58] {\n    background-color: #8aa8b0;\n}\n.wrapper_2[data-v-99948d58] {\n    background-color: white;\n    padding-top: 14%;\n    padding-bottom: 8%;\n}\n", ""]);
 
 // exports
 
@@ -28223,8 +28275,8 @@ var render = function() {
   return _c(
     "v-footer",
     {
-      staticClass: "font-weight-medium grey lighten-4",
-      attrs: { absolute: "" }
+      staticClass: "font-weight-medium",
+      attrs: { absolute: "", color: "#313732" }
     },
     [
       _c("v-col", { staticClass: "text-center", attrs: { cols: "12" } }, [
@@ -28261,13 +28313,16 @@ var render = function() {
     [
       _c(
         "v-app-bar",
-        { attrs: { fixed: "" } },
+        {
+          staticStyle: { "background-color": "#313732" },
+          attrs: { fixed: "", flat: "" }
+        },
         [
           _c(
             "Router-link",
             { attrs: { to: { name: "home" } } },
             [
-              _c("v-toolbar-title", { staticClass: "black--text" }, [
+              _c("v-toolbar-title", { staticClass: "white--text" }, [
                 _vm._v("Voice")
               ])
             ],
@@ -28277,7 +28332,7 @@ var render = function() {
           _c("v-spacer"),
           _vm._v(" "),
           _vm.isLogin
-            ? _c("div", [
+            ? _c("div", { staticClass: "white--text" }, [
                 _vm._v("\n            " + _vm._s(_vm.username) + "\n        ")
               ])
             : _vm._e(),
@@ -28309,7 +28364,7 @@ var render = function() {
                       _c(
                         "v-btn",
                         {
-                          staticClass: "cyan lighten-1 register_btn",
+                          staticClass: "register_btn",
                           attrs: { outlined: "", small: "", rounded: "" }
                         },
                         [
@@ -28328,7 +28383,14 @@ var render = function() {
                     [
                       _c(
                         "v-btn",
-                        { attrs: { outlined: "", small: "", rounded: "" } },
+                        {
+                          attrs: {
+                            outlined: "",
+                            small: "",
+                            rounded: "",
+                            color: "#FFFFFF"
+                          }
+                        },
                         [_vm._v(" ログイン ")]
                       )
                     ],
@@ -28339,6 +28401,7 @@ var render = function() {
               ),
           _vm._v(" "),
           _c("v-app-bar-nav-icon", {
+            attrs: { color: "white" },
             on: {
               click: function($event) {
                 $event.stopPropagation()
@@ -28545,48 +28608,63 @@ var render = function() {
       _c(
         "v-card",
         {
-          staticClass: "mx-auto blue-grey lighten-3",
+          staticClass: "mx-auto",
           attrs: {
             to: "/voices/" + _vm.voice.id,
             width: "340px",
-            height: "200px",
+            color: "#FFFFFF",
+            height: "220px",
             outlined: "",
             ripple: false
           }
         },
         [
           _c(
-            "v-card-actions",
+            "v-list-item",
+            { attrs: { "three-line": "" } },
             [
               _c(
-                "v-list-item",
+                "v-list-item-avatar",
+                { attrs: { tile: "", size: "80", color: "grey" } },
                 [
-                  _c(
-                    "v-list-item-avatar",
-                    { attrs: { color: "grey darken-3" } },
-                    [
-                      _c("v-img", {
-                        staticClass: "elevation-6",
-                        attrs: {
-                          alt: "",
-                          src:
-                            "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                        }
-                      })
-                    ],
-                    1
-                  ),
+                  _c("v-img", {
+                    staticClass: "elevation-6",
+                    attrs: {
+                      alt: "",
+                      src:
+                        "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item-content",
+                [
+                  _c("div", { staticClass: "mb-0" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm._f("moment")(_vm.voice.created_at)) +
+                        "\n                "
+                    )
+                  ]),
                   _vm._v(" "),
-                  _c(
-                    "v-list-item-content",
-                    { staticClass: "py-0" },
-                    [
-                      _c("v-list-item-title", [
-                        _vm._v(_vm._s(_vm.voice.owner.name))
-                      ])
-                    ],
-                    1
-                  )
+                  _c("div", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.voice.owner.name) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-list-item-title", { staticClass: "headline mb-1" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.voice.title) +
+                        "\n                "
+                    )
+                  ])
                 ],
                 1
               )
@@ -28594,25 +28672,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "v-list-item-content",
-            { staticClass: "py-0" },
-            [_c("v-list-item-title", [_vm._v(_vm._s(_vm.voice.title))])],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-list-item-content",
-            { staticClass: "py-0" },
-            [
-              _c("v-list-item-title", [
-                _vm._v(_vm._s(_vm._f("moment")(_vm.voice.created_at)))
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("v-list-item-content", { staticClass: "px-6" }, [
+          _c("v-list-item-content", { staticClass: "px-6 py-0" }, [
             _c("audio", {
               attrs: {
                 src: _vm.voice.url,
@@ -28623,60 +28683,66 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c(
-            "v-row",
-            { staticClass: "px-16", attrs: { justify: "space-around" } },
+            "v-card-actions",
             [
               _c(
-                "v-btn",
-                {
-                  attrs: { icon: "", color: "grey darken-3" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.like($event)
-                    }
-                  }
-                },
+                "v-row",
+                { staticClass: "px-16", attrs: { justify: "space-around" } },
                 [
-                  _c("v-icon", [_vm._v("mdi-thumb-up-outline")]),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", color: "grey darken-3" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.like($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("v-icon", [_vm._v("mdi-thumb-up-outline")]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "subheading ml-1" }, [
+                        _vm._v(_vm._s(_vm.voice.likes_count))
+                      ])
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("span", { staticClass: "subheading ml-1" }, [
-                    _vm._v(_vm._s(_vm.voice.likes_count))
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { icon: "", color: "grey darken-3" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.unlike($event)
-                    }
-                  }
-                },
-                [
-                  _c("v-icon", [_vm._v("mdi-thumb-down-outline")]),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", color: "grey darken-3" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.unlike($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("v-icon", [_vm._v("mdi-thumb-down-outline")]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "subheading ml-1" }, [
+                        _vm._v(_vm._s(_vm.voice.unlikes_count))
+                      ])
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("span", { staticClass: "subheading ml-1" }, [
-                    _vm._v(_vm._s(_vm.voice.unlikes_count))
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                { attrs: { icon: "", color: "grey darken-3" } },
-                [
-                  _c("v-icon", [_vm._v("mdi-comment-multiple-outline")]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "subheading ml-1" }, [
-                    _vm._v(_vm._s(_vm.voice.comments_count))
-                  ])
+                  _c(
+                    "v-btn",
+                    { attrs: { icon: "", color: "grey darken-3" } },
+                    [
+                      _c("v-icon", [_vm._v("mdi-comment-multiple-outline")]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "subheading ml-1" }, [
+                        _vm._v(_vm._s(_vm.voice.comments_count))
+                      ])
+                    ],
+                    1
+                  )
                 ],
                 1
               )
@@ -29092,8 +29158,8 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("v-btn", { attrs: { color: "cyan lighten-1", type: "submit" } }, [
-            _vm._v("検索")
+          _c("v-btn", { attrs: { color: "#F26101", type: "submit" } }, [
+            _c("span", { staticClass: "white--text" }, [_vm._v("検索")])
           ])
         ],
         1
@@ -29208,7 +29274,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "blue-grey lighten-1" },
+    { staticClass: "wrapper_1" },
     [
       _c(
         "v-container",
@@ -29220,11 +29286,11 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "d-flex flex-column wrapper_1" },
+            { staticClass: "d-flex flex-column wrapper_2" },
             [
               _c(
                 "v-avatar",
-                { staticClass: "mx-auto", attrs: { color: "grey darken-3" } },
+                { staticClass: "mx-auto", attrs: { color: "grey darken-1" } },
                 [
                   _c("v-img", {
                     attrs: {
@@ -29284,87 +29350,155 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "wrapper_1 blue-grey lighten-1" },
+    { staticClass: "wrapper_1" },
     [
-      _vm.voice
-        ? _c(
-            "v-card",
-            {
-              staticClass: "mx-auto blue-grey lighten-3",
-              attrs: { width: "340px", outlined: "" }
-            },
+      _c(
+        "v-card",
+        {
+          staticClass: "mx-auto",
+          attrs: {
+            to: "/voices/" + _vm.voice.id,
+            width: "340px",
+            color: "#FFFFFF",
+            height: "220px",
+            outlined: "",
+            ripple: false
+          }
+        },
+        [
+          _c(
+            "v-list-item",
+            { attrs: { "three-line": "" } },
             [
               _c(
-                "v-card-actions",
+                "v-list-item-avatar",
+                { attrs: { tile: "", size: "80", color: "grey" } },
+                [
+                  _c("v-img", {
+                    staticClass: "elevation-6",
+                    attrs: {
+                      alt: "",
+                      src:
+                        "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-item-content",
+                [
+                  _c("div", { staticClass: "mb-0" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm._f("moment")(_vm.voice.created_at)) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.voice.owner.name) +
+                        "\n                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-list-item-title", { staticClass: "headline mb-1" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.voice.title) +
+                        "\n                "
+                    )
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-list-item-content", { staticClass: "px-6 py-0" }, [
+            _c("audio", {
+              attrs: {
+                src: _vm.voice.url,
+                controls: "",
+                controlslist: "nodownload"
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c(
+                "v-row",
+                { staticClass: "px-16", attrs: { justify: "space-around" } },
                 [
                   _c(
-                    "v-list-item",
-                    { staticClass: "grow" },
+                    "v-btn",
+                    {
+                      attrs: { icon: "", color: "grey darken-3" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.like($event)
+                        }
+                      }
+                    },
                     [
-                      _c(
-                        "v-list-item-avatar",
-                        { attrs: { color: "grey darken-3" } },
-                        [
-                          _c("v-img", {
-                            staticClass: "elevation-6",
-                            attrs: {
-                              alt: "",
-                              src:
-                                "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                            }
-                          })
-                        ],
-                        1
-                      ),
+                      _c("v-icon", [_vm._v("mdi-thumb-up-outline")]),
                       _vm._v(" "),
-                      _c(
-                        "v-list-item-content",
-                        { staticClass: "py-0" },
-                        [
-                          _c("v-list-item-title", [
-                            _vm._v(_vm._s(_vm.voice.owner.name))
-                          ])
-                        ],
-                        1
-                      )
+                      _c("span", { staticClass: "subheading ml-1" }, [
+                        _vm._v(_vm._s(_vm.voice.likes_count))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", color: "grey darken-3" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.unlike($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("v-icon", [_vm._v("mdi-thumb-down-outline")]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "subheading ml-1" }, [
+                        _vm._v(_vm._s(_vm.voice.unlikes_count))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    { attrs: { icon: "", color: "grey darken-3" } },
+                    [
+                      _c("v-icon", [_vm._v("mdi-comment-multiple-outline")]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "subheading ml-1" }, [
+                        _vm._v(_vm._s(_vm.voice.comments_count))
+                      ])
                     ],
                     1
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-list-item-content",
-                { staticClass: "py-0" },
-                [_c("v-list-item-title", [_vm._v(_vm._s(_vm.voice.title))])],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-list-item-content",
-                { staticClass: "py-0" },
-                [
-                  _c("v-list-item-title", [
-                    _vm._v(_vm._s(_vm._f("moment")(_vm.voice.created_at)))
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("v-list-item-content", { staticClass: "px-6" }, [
-                _c("audio", {
-                  attrs: {
-                    src: _vm.voice.url,
-                    controls: "",
-                    controlslist: "nodownload"
-                  }
-                })
-              ])
+              )
             ],
             1
           )
-        : _vm._e(),
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "v-container",
@@ -29434,13 +29568,12 @@ var render = function() {
                             [
                               _c(
                                 "v-btn",
-                                {
-                                  attrs: {
-                                    type: "submit",
-                                    color: "cyan lighten-1"
-                                  }
-                                },
-                                [_vm._v("投稿する")]
+                                { attrs: { type: "submit", color: "#F26101" } },
+                                [
+                                  _c("span", { staticClass: "white--text" }, [
+                                    _c("strong", [_vm._v("投稿する")])
+                                  ])
+                                ]
                               )
                             ],
                             1
@@ -29560,7 +29693,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "wrapper_1 blue-grey lighten-1" },
+    { staticClass: "wrapper_1" },
     [
       _c(
         "v-container",
@@ -29626,11 +29759,7 @@ var render = function() {
                                 }
                               ],
                               staticClass: "plus_btn",
-                              attrs: {
-                                color: "cyan lighten-1",
-                                fab: "",
-                                dark: ""
-                              }
+                              attrs: { color: "#F26101", fab: "", dark: "" }
                             },
                             "v-btn",
                             attrs,
@@ -29819,10 +29948,14 @@ var render = function() {
                       _c(
                         "v-btn",
                         {
-                          attrs: { color: "cyan lighten-1" },
+                          attrs: { color: "#F26101" },
                           on: { click: _vm.submit }
                         },
-                        [_vm._v("投稿する")]
+                        [
+                          _c("span", { staticClass: "white--text" }, [
+                            _vm._v("投稿する")
+                          ])
+                        ]
                       ),
                       _vm._v(" "),
                       _c(

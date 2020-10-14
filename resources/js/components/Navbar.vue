@@ -1,13 +1,13 @@
 <template>
     <div>
-        <v-app-bar fixed>
+        <v-app-bar fixed flat style="background-color: #313732;">
             <Router-link :to="{ name: 'home' }">
-                <v-toolbar-title class="black--text">Voice</v-toolbar-title>
+                <v-toolbar-title class="white--text">Voice</v-toolbar-title>
             </Router-link>
 
             <v-spacer></v-spacer>
 
-            <div v-if="isLogin">
+            <div v-if="isLogin" class="white--text">
                 {{ username }}
             </div>
             <div v-if="isLogin" class="d-none d-sm-flex">
@@ -24,7 +24,7 @@
             <div v-else>
                 <Router-link :to="{ name: 'register' }">
                     <v-btn
-                        class="cyan lighten-1 register_btn"
+                        class="register_btn"
                         outlined
                         small
                         rounded
@@ -33,11 +33,12 @@
                     </v-btn>
                 </Router-link>
                 <Router-link :to="{ name: 'login' }">
-                    <v-btn outlined small rounded> ログイン </v-btn>
+                    <v-btn outlined small rounded color="#FFFFFF"> ログイン </v-btn>
                 </Router-link>
             </div>
             <v-app-bar-nav-icon
                 @click.stop="drawer = !drawer"
+                color="white"
             ></v-app-bar-nav-icon>
         </v-app-bar>
         <!-- サイドナビゲーションメニュー -->
@@ -154,5 +155,8 @@ export default {
 .logout_btn {
     width: 68px;
     margin-left: 14px;
+}
+.register_btn {
+    background-color: #F26101;
 }
 </style>

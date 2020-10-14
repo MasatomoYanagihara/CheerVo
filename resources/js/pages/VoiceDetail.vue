@@ -1,43 +1,68 @@
 <template>
-    <div class="wrapper_1 blue-grey lighten-1">
+    <div class="wrapper_1">
         <v-card
-            v-if="voice"
-            class="mx-auto blue-grey lighten-3"
+            :to="`/voices/${voice.id}`"
             width="340px"
+            class="mx-auto"
+            color="#FFFFFF"
+            height="220px"
             outlined
+            :ripple="false"
         >
-            <v-card-actions>
-                <v-list-item class="grow">
-                    <v-list-item-avatar color="grey darken-3">
-                        <v-img
-                            class="elevation-6"
-                            alt=""
-                            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                        ></v-img>
-                    </v-list-item-avatar>
-                    <v-list-item-content class="py-0">
-                        <v-list-item-title>{{
-                            voice.owner.name
-                        }}</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-card-actions>
+            <v-list-item three-line>
+                <v-list-item-avatar tile size="80" color="grey"
+                    ><v-img
+                        class="elevation-6"
+                        alt=""
+                        src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                    ></v-img
+                ></v-list-item-avatar>
+                <v-list-item-content>
+                    <div class="mb-0">
+                        {{ voice.created_at | moment }}
+                    </div>
+                    <div>
+                        {{ voice.owner.name }}
+                    </div>
+                    <v-list-item-title class="headline mb-1">
+                        {{ voice.title }}
+                    </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
 
-            <v-list-item-content class="py-0">
-                <v-list-item-title>{{ voice.title }}</v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-content class="py-0">
-                <v-list-item-title>{{
-                    voice.created_at | moment
-                }}</v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-content class="px-6">
+            <v-list-item-content class="px-6 py-0">
                 <audio
                     :src="voice.url"
                     controls
                     controlslist="nodownload"
                 ></audio>
             </v-list-item-content>
+
+            <!-- goodボタン、badボタン、コメント数 -->
+            <v-card-actions>
+                <v-row class="px-16" justify="space-around">
+                    <v-btn icon color="grey darken-3" @click.prevent="like">
+                        <v-icon>mdi-thumb-up-outline</v-icon>
+                        <span class="subheading ml-1">{{
+                            voice.likes_count
+                        }}</span>
+                    </v-btn>
+
+                    <v-btn icon color="grey darken-3" @click.prevent="unlike">
+                        <v-icon>mdi-thumb-down-outline</v-icon>
+                        <span class="subheading ml-1">{{
+                            voice.unlikes_count
+                        }}</span>
+                    </v-btn>
+
+                    <v-btn icon color="grey darken-3">
+                        <v-icon>mdi-comment-multiple-outline</v-icon>
+                        <span class="subheading ml-1">{{
+                            voice.comments_count
+                        }}</span>
+                    </v-btn>
+                </v-row>
+            </v-card-actions>
         </v-card>
 
         <!-- コメント投稿フォーム（ログイン中のみ表示） -->
@@ -64,8 +89,10 @@
                             v-model="commentContent"
                         ></v-textarea>
                         <div class="text-center">
-                            <v-btn type="submit" color="cyan lighten-1"
-                                >投稿する</v-btn
+                            <v-btn type="submit" color="#F26101">
+                                <span class="white--text"
+                                    ><strong>投稿する</strong></span
+                                ></v-btn
                             >
                         </div>
                     </v-form>
@@ -170,6 +197,7 @@ export default {
             }
 
             this.voice.comments = [response.data, ...this.voice.comments];
+            this.fetchVoice();
         }
     },
     watch: {
@@ -197,6 +225,7 @@ li {
 .wrapper_1 {
     padding-top: 40px;
     height: 100%;
+    background-color: #8aa8b0;
 }
 .audio {
     margin-left: 20px;

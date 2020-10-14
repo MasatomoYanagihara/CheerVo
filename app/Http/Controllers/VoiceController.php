@@ -45,7 +45,7 @@ class VoiceController extends Controller
             $voices = Voice::with(['owner'])
             ->where('title', 'LIKE', "%{$keyword}%")
             ->orderBy(Voice::CREATED_AT, 'desc')
-            ->paginate(5);
+            ->paginate(10);
         };
  
         return $voices;

@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper_1 blue-grey lighten-1">
+    <div class="wrapper_1">
         <v-container>
             <v-row>
                 <Voice
@@ -20,12 +20,12 @@
                 </infinite-loading>
             </v-row>
         </v-container>
-        
+
         <v-dialog v-model="dialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
                     class="plus_btn"
-                    color="cyan lighten-1"
+                    color="#F26101"
                     fab
                     dark
                     v-bind="attrs"
@@ -48,7 +48,9 @@
             <v-form @submit.prevent="submit">
                 <v-card class="blue-grey lighten-5">
                     <v-card-title>
-                        <span class="headline mx-auto mt-4">ボイスを投稿する</span>
+                        <span class="headline mx-auto mt-4"
+                            >ボイスを投稿する</span
+                        >
                     </v-card-title>
                     <v-card-text>
                         <v-container>
@@ -99,8 +101,8 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn @click="submit" color="cyan lighten-1"
-                            >投稿する</v-btn
+                        <v-btn @click="submit" color="#F26101"
+                            ><span class="white--text">投稿する</span></v-btn
                         >
                         <v-btn
                             @click="
@@ -330,6 +332,7 @@ export default {
     padding-top: 30px;
     padding-bottom: 20px;
     height: 100%;
+    background-color: #8AA8B0;
 }
 .plus_btn {
     position: fixed;

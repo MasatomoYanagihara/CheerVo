@@ -1,3 +1,6 @@
 color
-背景 blue-grey lighten-1
-ボタン cyan lighten-1
+#313732 ナビゲーションバー、フッター
+#8AA8B0 背景
+#DEDEDE
+#FFFFFF カード
+#F26101 ボタン（textはwhite）

@@ -47,7 +47,7 @@ export default {
             }
         },
         moveToTopOrSerchPage() {
-            if (this.$route.path === "/serch") {
+            if (this.$route.path === "/search") {
                 const duration = 300; // 移動速度（0.3秒で終了）
                 const interval = 20; // 0.020秒ごとに移動
                 const step = -window.scrollY / Math.ceil(duration / interval); // 1回に移動する距離

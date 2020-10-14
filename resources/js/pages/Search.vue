@@ -15,7 +15,7 @@
                 outlined
                 background-color="white"
             ></v-text-field>
-            <v-btn color="cyan lighten-1" type="submit">検索</v-btn>
+            <v-btn color="#F26101" type="submit"><span class="white--text">検索</span></v-btn>
         </v-form>
 
         <v-container>

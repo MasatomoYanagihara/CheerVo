@@ -85,5 +85,6 @@ export default {
 }
 .errorMessage {
   color: red;
+  list-style-type: none;
 }
 </style>

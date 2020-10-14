@@ -1,9 +1,9 @@
 <template>
-    <div class="blue-grey lighten-1">
+    <div class="wrapper_1">
         <v-container>
             <BreadCrumbs class="d-sm-none" :items="items" />
-            <div class="d-flex flex-column wrapper_1">
-                <v-avatar class="mx-auto" color="grey darken-3">
+            <div class="d-flex flex-column wrapper_2">
+                <v-avatar class="mx-auto" color="grey darken-1">
                     <v-img
                         alt=""
                         src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
@@ -75,6 +75,9 @@ export default {
 
 <style scoped>
 .wrapper_1 {
+    background-color: #8aa8b0;
+}
+.wrapper_2 {
     background-color: white;
     padding-top: 14%;
     padding-bottom: 8%;
