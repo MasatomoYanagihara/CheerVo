@@ -2,7 +2,7 @@
     <div>
         <v-app-bar fixed flat style="background-color: #313732;">
             <Router-link :to="{ name: 'home' }">
-                <v-toolbar-title class="main-title white--text"
+                <v-toolbar-title class="product-title white--text"
                     >CheerVo</v-toolbar-title
                 >
             </Router-link>
@@ -11,6 +11,11 @@
 
             <div v-if="isLogin" class="white--text">
                 <h3>{{ username }}</h3>
+            </div>
+            <div v-if="isLogin" class="plus-btn d-none d-sm-flex">
+                <v-btn small rounded color="#F26101">
+                    <span class="white--text">投稿する</span>
+                </v-btn>
             </div>
             <div v-if="isLogin" class="d-none d-sm-flex">
                 <v-btn
@@ -31,7 +36,13 @@
                     </v-btn>
                 </Router-link>
                 <Router-link :to="{ name: 'login' }">
-                    <v-btn outlined small rounded color="#FFFFFF">
+                    <v-btn
+                        outlined
+                        small
+                        rounded
+                        color="#FFFFFF"
+                        class="login_btn"
+                    >
                         ログイン
                     </v-btn>
                 </Router-link>
@@ -165,15 +176,22 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.main-title {
+.product-title {
     font-size: 30px;
     font-family: "Poppins", sans-serif;
 }
+.login_btn {
+    margin-left: 8px;
+}
 .logout_btn {
     width: 84px;
-    margin-left: 14px;
+    margin-left: 8px;
 }
 .register_btn {
     background-color: #f26101;
+}
+.plus-btn {
+    width: 84px;
+    margin-left: 14px;
 }
 </style>
