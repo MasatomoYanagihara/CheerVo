@@ -216,19 +216,31 @@ export default {
             this.voices = response.data.data;
         },
         // いいねクリックメソッド（子コンポーネントから$emit）
-        onLikeClick({ id, liked }) {
+        onLikeClick({ id, liked, unliked }) {
             if (liked) {
+                // Goodしている
                 this.notlike(id);
-            } else {
+            } else if (!liked && !unliked) {
+                // Goodしてない かつ Badしてない
                 this.like(id);
+            } else if (!liked && unliked) {
+                // Goodしてない かつ Badしている
+                this.like(id);
+                this.notUnlike(id);
             }
         },
         // unlikeクリックメソッド（子コンポーネントから$emit）
-        onUnLikeClick({ id, unliked }) {
+        onUnLikeClick({ id, liked, unliked }) {
             if (unliked) {
+                // Badしている
                 this.notUnlike(id);
-            } else {
+            } else if (!unliked && !liked) {
+                // Badしてない かつ Goodしてない
                 this.unlike(id);
+            } else if (!unliked && liked) {
+                // Badしてない かつ Goodしている
+                this.unlike(id);
+                this.notlike(id);
             }
         },
         async like(id) {
