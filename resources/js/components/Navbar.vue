@@ -2,38 +2,38 @@
     <div>
         <v-app-bar fixed flat style="background-color: #313732;">
             <Router-link :to="{ name: 'home' }">
-                <v-toolbar-title class="white--text">Voice</v-toolbar-title>
+                <v-toolbar-title class="main-title white--text"
+                    >CheerVo</v-toolbar-title
+                >
             </Router-link>
 
             <v-spacer></v-spacer>
 
             <div v-if="isLogin" class="white--text">
-                {{ username }}
+                <h3>{{ username }}</h3>
             </div>
             <div v-if="isLogin" class="d-none d-sm-flex">
                 <v-btn
                     outlined
                     small
                     rounded
+                    color="#FFFFFF"
                     @click="logout"
                     class="logout_btn font-weight-bold"
                 >
                     ログアウト
                 </v-btn>
             </div>
-            <div v-else>
+            <div v-else class="d-none d-sm-flex">
                 <Router-link :to="{ name: 'register' }">
-                    <v-btn
-                        class="register_btn"
-                        outlined
-                        small
-                        rounded
-                    >
+                    <v-btn class="register_btn" outlined small rounded>
                         <span class="white--text">会員登録</span>
                     </v-btn>
                 </Router-link>
                 <Router-link :to="{ name: 'login' }">
-                    <v-btn outlined small rounded color="#FFFFFF"> ログイン </v-btn>
+                    <v-btn outlined small rounded color="#FFFFFF">
+                        ログイン
+                    </v-btn>
                 </Router-link>
             </div>
             <v-app-bar-nav-icon
@@ -83,6 +83,19 @@
                     </v-list-item-content>
                 </v-list-item>
 
+                <!-- 会員登録 -->
+                <div v-if="!isLogin">
+                    <router-link to="/register">
+                        <v-list-item link class="menu-item">
+                            <v-list-item-action>
+                                <v-icon>mdi-account</v-icon>
+                            </v-list-item-action>
+                            <v-list-item-content>
+                                <v-list-item-title>会員登録</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </router-link>
+                </div>
                 <!-- ログイン -->
                 <div v-if="!isLogin">
                     <router-link to="/login">
@@ -152,11 +165,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.main-title {
+    font-size: 30px;
+    font-family: "Poppins", sans-serif;
+}
 .logout_btn {
-    width: 68px;
+    width: 84px;
     margin-left: 14px;
 }
 .register_btn {
-    background-color: #F26101;
+    background-color: #f26101;
 }
 </style>
