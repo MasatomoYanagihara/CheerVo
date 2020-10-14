@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper_1">
+    <div class="wrapper-1">
         <v-card
             :to="`/voices/${voice.id}`"
             width="340px"
@@ -104,7 +104,6 @@
 
         <!-- コメント表示 -->
         <v-container>
-            <h2 class="text-center">コメント一覧</h2>
             <v-row>
                 <v-col cols="12" sm="12">
                     <ul class="ul" v-if="voice.comments.length > 0">
@@ -113,20 +112,22 @@
                             :key="comment.content"
                         >
                             <v-card
-                                class="mx-auto mb-2 blue-grey lighten-4"
+                                class="mx-auto mb-2"
                                 width="340px"
                                 height="100px"
                                 tile
                             >
-                                <v-card-title class="pb-2">
-                                    {{ comment.author.name }}
-                                </v-card-title>
-                                <v-card-subtitle>
-                                    {{ comment.created_at | moment }}
-                                </v-card-subtitle>
-                                <v-card-text class="pl-8">
-                                    {{ comment.content }}
-                                </v-card-text>
+                                <v-list-item-content>
+                                    <div class="mb-0">
+                                        {{ comment.created_at | moment }}
+                                    </div>
+                                    <v-list-item-title class="mb-1">
+                                        {{ comment.author.name }}
+                                    </v-list-item-title>
+                                    <div>
+                                        {{ comment.content }}
+                                    </div>
+                                </v-list-item-content>
                             </v-card>
                         </li>
                     </ul>
@@ -224,7 +225,7 @@ li {
 .ul {
     padding-left: 0;
 }
-.wrapper_1 {
+.wrapper-1 {
     padding-top: 40px;
     height: 100%;
     background-color: #8aa8b0;
@@ -234,8 +235,5 @@ li {
 }
 .errors {
     color: red;
-}
-.comment_container {
-    width: 366px;
 }
 </style>

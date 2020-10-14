@@ -1,5 +1,9 @@
 <template>
-    <v-footer absolute class="font-weight-medium" color="#313732">
+    <v-footer
+        absolute
+        class="font-weight-medium d-none d-sm-flex"
+        color="#313732"
+    >
         <v-col class="text-center" cols="12">
             <span class="product-title white--text">
                 CheerVo

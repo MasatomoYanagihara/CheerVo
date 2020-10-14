@@ -8,7 +8,7 @@
         <v-form @submit.prevent="login">
           <!-- メールアドレスエラーメッセージ表示 -->
           <div v-if="loginErrors">
-            <ul v-if="loginErrors.email" class="errorMessage">
+            <ul v-if="loginErrors.email" class="error-message">
               <li v-for="msg in loginErrors.email" :key="msg">
                 {{ msg }}
               </li>
@@ -21,7 +21,7 @@
           />
           <!-- パスワードエラーメッセージ表示 -->
           <div v-if="loginErrors">
-            <ul v-if="loginErrors.password" class="errorMessage">
+            <ul v-if="loginErrors.password" class="error-message">
               <li v-for="msg in loginErrors.password" :key="msg">
                 {{ msg }}
               </li>
@@ -34,7 +34,7 @@
             v-model="loginForm.password"
           />
           <v-card-actions>
-            <v-btn class="login_btn" type="submit">ログイン</v-btn>
+            <v-btn class="login-button" type="submit">ログイン</v-btn>
           </v-card-actions>
         </v-form>
       </v-card-text>
@@ -79,11 +79,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.login_btn {
+.login-button {
   display: block;
   margin: 0 0 0 auto;
 }
-.errorMessage {
+.error-message {
   color: red;
   list-style-type: none;
 }

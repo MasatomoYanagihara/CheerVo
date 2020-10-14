@@ -1,8 +1,8 @@
 <template>
-    <div class="wrapper_1 blue-grey lighten-1">
+    <div class="wrapper-1 blue-grey lighten-1">
         <v-form @submit.prevent="searchKeyword">
             <div v-if="requiredMessage == true">
-                <ul class="errorMessage">
+                <ul class="error-message">
                     <li>
                         検索したいタイトルを入力してください
                     </li>
@@ -142,12 +142,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.wrapper_1 {
+.wrapper-1 {
     padding-top: 30px;
     padding-bottom: 20px;
     height: 100%;
 }
-.errorMessage {
+.error-message {
     list-style: none;
     color: red;
     padding-left: 0;

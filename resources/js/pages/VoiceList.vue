@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper_1">
+    <div class="wrapper-1">
         <v-container>
             <v-row>
                 <Voice
@@ -24,24 +24,23 @@
         <v-dialog v-model="dialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                    class="plus_btn d-flex d-sm-none"
+                    class="plus-button d-flex d-sm-none"
                     color="#F26101"
                     fab
                     dark
                     v-bind="attrs"
                     v-on="on"
-                    v-if="isLogin"
-                    v-show="!fileUploading"
+                    v-if="isLogin && !fileUploading"
                 >
                     <v-icon dark>mdi-plus</v-icon>
                 </v-btn>
                 <v-progress-circular
-                    class="progress_circular"
+                    class="progress-circular"
                     indeterminate
                     color="#F26101"
                     size="58"
                     width="5"
-                    v-show="fileUploading"
+                    v-if="fileUploading"
                 ></v-progress-circular>
             </template>
 
@@ -60,7 +59,7 @@
                                     <div v-if="voicePostErrors">
                                         <ul
                                             v-if="voicePostErrors.title"
-                                            class="titleErrorMessage"
+                                            class="title-error-message"
                                         >
                                             <li
                                                 v-for="msg in voicePostErrors.title"
@@ -80,7 +79,7 @@
                                     <div v-if="voicePostErrors">
                                         <ul
                                             v-if="voicePostErrors.voice"
-                                            class="fileErrorMessage"
+                                            class="file-error-message"
                                         >
                                             <li
                                                 v-for="msg in voicePostErrors.voice"
@@ -345,28 +344,28 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.wrapper_1 {
+.wrapper-1 {
     padding-top: 16px;
     padding-bottom: 20px;
     height: 100%;
     background-color: #8aa8b0;
 }
-.plus_btn {
+.plus-button {
     position: fixed;
     bottom: 80px;
     right: 20px;
 }
-.progress_circular {
+.progress-circular {
     position: fixed;
     bottom: 79px;
     right: 19px;
 }
-.titleErrorMessage {
+.title-error-message {
     color: red;
     list-style: none;
     padding: 0;
 }
-.fileErrorMessage {
+.file-error-message {
     color: red;
     list-style: none;
     padding: 0;

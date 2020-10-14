@@ -12,7 +12,7 @@
             <div v-if="isLogin" class="white--text">
                 <h3>{{ username }}</h3>
             </div>
-            <div v-if="isLogin" class="plus-btn d-none d-sm-flex">
+            <div v-if="isLogin" class="plus-button d-none d-sm-flex">
                 <v-btn small rounded color="#F26101">
                     <span class="white--text">投稿する</span>
                 </v-btn>
@@ -24,14 +24,14 @@
                     rounded
                     color="#FFFFFF"
                     @click="logout"
-                    class="logout_btn font-weight-bold"
+                    class="logout-button font-weight-bold"
                 >
                     ログアウト
                 </v-btn>
             </div>
             <div v-else class="d-none d-sm-flex">
                 <Router-link :to="{ name: 'register' }">
-                    <v-btn class="register_btn" outlined small rounded>
+                    <v-btn class="register-button" outlined small rounded>
                         <span class="white--text">会員登録</span>
                     </v-btn>
                 </Router-link>
@@ -41,7 +41,7 @@
                         small
                         rounded
                         color="#FFFFFF"
-                        class="login_btn"
+                        class="login-button"
                     >
                         ログイン
                     </v-btn>
@@ -180,17 +180,17 @@ export default {
     font-size: 30px;
     font-family: "Poppins", sans-serif;
 }
-.login_btn {
+.login-button {
     margin-left: 8px;
 }
-.logout_btn {
+.logout-button {
     width: 84px;
     margin-left: 8px;
 }
-.register_btn {
+.register-button {
     background-color: #f26101;
 }
-.plus-btn {
+.plus-button {
     width: 84px;
     margin-left: 14px;
 }

@@ -1,8 +1,8 @@
 <template>
-    <div class="wrapper_1">
+    <div class="wrapper-1">
         <v-container>
             <BreadCrumbs class="d-sm-none" :items="items" />
-            <div class="d-flex flex-column wrapper_2">
+            <div class="d-flex flex-column wrapper-2">
                 <v-avatar class="mx-auto" color="grey darken-1">
                     <v-img
                         alt=""
@@ -54,7 +54,7 @@ export default {
         };
     },
     methods: {
-        async fetchVoices() {
+        async fetchMyVoices() {
             const response = await axios.get(
                 "/api/voices/users/" + this.$route.params.id
             );
@@ -68,16 +68,17 @@ export default {
         }
     },
     created() {
-        this.fetchVoices();
+        this.fetchMyVoices();
     }
 };
 </script>
 
 <style scoped>
-.wrapper_1 {
+.wrapper-1 {
     background-color: #8aa8b0;
+    height: 100%;
 }
-.wrapper_2 {
+.wrapper-2 {
     background-color: white;
     padding-top: 14%;
     padding-bottom: 8%;

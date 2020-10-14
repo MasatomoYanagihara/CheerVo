@@ -139,8 +139,3 @@ export default {
     }
 };
 </script>
-<style lang="scss" scoped>
-.wrapper_1 {
-    display: flex;
-}
-</style>
