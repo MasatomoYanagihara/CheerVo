@@ -9,7 +9,7 @@
             outlined
             :ripple="false"
         >
-            <v-list-item three-line>
+            <v-list-item three-line class="px-4">
                 <v-list-item-avatar tile size="80" color="grey"
                     ><v-img
                         class="elevation-6"
@@ -30,7 +30,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item-content class="px-6 py-0">
+            <v-list-item-content class="px-4 py-0">
                 <audio
                     :src="voice.url"
                     controls
@@ -40,26 +40,28 @@
 
             <!-- goodボタン、badボタン、コメント数 -->
             <v-card-actions>
-                <v-row class="px-16" justify="space-around">
+                <v-row class="px-10" justify="space-between">
                     <v-btn icon color="grey darken-3" @click.prevent="like">
                         <v-icon>mdi-thumb-up-outline</v-icon>
                         <span class="subheading ml-1">{{
                             voice.likes_count
                         }}</span>
                     </v-btn>
-
                     <v-btn icon color="grey darken-3" @click.prevent="unlike">
                         <v-icon>mdi-thumb-down-outline</v-icon>
                         <span class="subheading ml-1">{{
                             voice.unlikes_count
                         }}</span>
                     </v-btn>
-
                     <v-btn icon color="grey darken-3">
                         <v-icon>mdi-comment-multiple-outline</v-icon>
                         <span class="subheading ml-1">{{
                             voice.comments_count
                         }}</span>
+                    </v-btn>
+                    <v-btn icon color="grey darken-3">
+                        <v-icon>mdi-heart-outline</v-icon>
+                        <span class="subheading ml-1">0</span>
                     </v-btn>
                 </v-row>
             </v-card-actions>

@@ -1,27 +1,53 @@
 <template>
-    <v-bottom-navigation class="d-sm-none" fixed>
-        <v-btn @click="moveToTopOrHomepage">
-            <v-icon>mdi-home</v-icon>
-        </v-btn>
+    <div>
+        <v-bottom-navigation class="d-sm-none" fixed>
+            <v-btn @click="moveToTopOrHomepage">
+                <v-icon>mdi-home</v-icon>
+            </v-btn>
 
-        <v-btn @click="moveToTopOrSerchPage">
-            <v-icon>mdi-magnify</v-icon>
-        </v-btn>
+            <v-btn @click="moveToTopOrSerchPage">
+                <v-icon>mdi-magnify</v-icon>
+            </v-btn>
 
-        <v-btn>
-            <v-icon>mdi-heart</v-icon>
-        </v-btn>
-        <v-btn>
-            <RouterLink :to="`/users/${userId}`">
-                <v-icon color="rgba(0,0,0,0.54)">mdi-account-circle</v-icon>
-            </RouterLink>
-        </v-btn>
-    </v-bottom-navigation>
+            <v-btn @click="moveToTopOrFavoritePage">
+                <v-icon>mdi-heart</v-icon>
+            </v-btn>
+            <v-btn>
+                <RouterLink :to="`/users/${userId}`">
+                    <v-icon color="rgba(0,0,0,0.54)">mdi-account-circle</v-icon>
+                </RouterLink>
+            </v-btn>
+        </v-bottom-navigation>
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="timeout"
+            centered
+            color="#313732"
+        >
+            お気に入り機能は近日リリース予定です
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    color="blue"
+                    text
+                    v-bind="attrs"
+                    @click="snackbar = false"
+                >
+                    閉じる
+                </v-btn>
+            </template>
+        </v-snackbar>
+    </div>
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
 
 export default {
+    data() {
+        return {
+            snackbar: false,
+            timeout: 3000
+        };
+    },
     computed: {
         // ユーザーID取得
         userId() {
@@ -61,6 +87,9 @@ export default {
             } else {
                 this.$router.push({ name: "search" });
             }
+        },
+        moveToTopOrFavoritePage() {
+            this.snackbar = true;
         }
     }
 };

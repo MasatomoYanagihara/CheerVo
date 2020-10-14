@@ -9,7 +9,7 @@
             outlined
             :ripple="false"
         >
-            <v-list-item three-line>
+            <v-list-item three-line class="px-4">
                 <v-list-item-avatar tile size="80" color="grey"
                     ><v-img
                         class="elevation-6"
@@ -30,7 +30,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item-content class="px-6 py-0">
+            <v-list-item-content class="px-4 py-0">
                 <audio
                     :src="voice.url"
                     controls
@@ -38,28 +38,33 @@
                 ></audio>
             </v-list-item-content>
 
-            <!-- goodボタン、badボタン、コメント数 -->
-            <v-card-actions>
-                <v-row class="px-16" justify="space-around">
+            <v-card-actions v-if="isLogin">
+                <v-row class="px-10" justify="space-between">
+                    <!-- Goodボタン -->
                     <v-btn icon color="grey darken-3" @click.prevent="like">
                         <v-icon>mdi-thumb-up-outline</v-icon>
                         <span class="subheading ml-1">{{
                             voice.likes_count
                         }}</span>
                     </v-btn>
-
+                    <!-- Badボタン -->
                     <v-btn icon color="grey darken-3" @click.prevent="unlike">
                         <v-icon>mdi-thumb-down-outline</v-icon>
                         <span class="subheading ml-1">{{
                             voice.unlikes_count
                         }}</span>
                     </v-btn>
-
+                    <!-- コメント数表示 -->
                     <v-btn icon color="grey darken-3">
-                        <v-icon>mdi-comment-multiple-outline</v-icon>
+                        <v-icon>mdi-comment-outline</v-icon>
                         <span class="subheading ml-1">{{
                             voice.comments_count
                         }}</span>
+                    </v-btn>
+                    <!-- お気に入りボタン -->
+                    <v-btn icon color="grey darken-3" @click.prevent="favorite">
+                        <v-icon>mdi-heart-outline</v-icon>
+                        <span class="subheading ml-1">0</span>
                     </v-btn>
                 </v-row>
             </v-card-actions>
@@ -77,18 +82,29 @@ export default {
             required: true
         }
     },
+    computed: {
+        // ログインチェック
+        isLogin() {
+            return this.$store.getters["auth/check"];
+        }
+    },
     methods: {
         like() {
             this.$emit("like", {
                 id: this.voice.id,
-                liked: this.voice.liked_by_user
+                liked: this.voice.liked_by_user,
+                unliked: this.voice.unliked_by_user
             });
         },
         unlike() {
             this.$emit("unlike", {
                 id: this.voice.id,
+                liked: this.voice.liked_by_user,
                 unliked: this.voice.unliked_by_user
             });
+        },
+        favorite() {
+            this.snackbar = true;
         }
     },
     filters: {
