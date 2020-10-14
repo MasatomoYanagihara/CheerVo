@@ -41,25 +41,50 @@
             <v-card-actions v-if="isLogin">
                 <v-row class="px-10" justify="space-between">
                     <!-- Goodボタン -->
-                    <v-btn icon color="grey darken-3" @click.prevent="like">
-                        <v-icon>mdi-thumb-up-outline</v-icon>
-                        <span class="subheading ml-1">{{
-                            voice.likes_count
-                        }}</span>
-                    </v-btn>
+                    <template v-if="this.voice.liked_by_user">
+                        <v-btn icon color="#F26101" @click.prevent="like">
+                            <v-icon>mdi-thumb-up</v-icon>
+                            <span class="subheading ml-1">
+                                {{ voice.likes_count }}
+                            </span>
+                        </v-btn>
+                    </template>
+                    <template v-else>
+                        <v-btn icon color="grey darken-3" @click.prevent="like">
+                            <v-icon>mdi-thumb-up-outline</v-icon>
+                            <span class="subheading ml-1">
+                                {{ voice.likes_count }}
+                            </span>
+                        </v-btn>
+                    </template>
                     <!-- Badボタン -->
-                    <v-btn icon color="grey darken-3" @click.prevent="unlike">
-                        <v-icon>mdi-thumb-down-outline</v-icon>
-                        <span class="subheading ml-1">{{
-                            voice.unlikes_count
-                        }}</span>
-                    </v-btn>
+                    <template v-if="this.voice.unliked_by_user">
+                        <v-btn icon color="#F26101" @click.prevent="unlike">
+                            <v-icon>mdi-thumb-down</v-icon>
+                            <span class="subheading ml-1">
+                                {{ voice.unlikes_count }}
+                            </span>
+                        </v-btn>
+                    </template>
+                    <template v-else>
+                        <v-btn
+                            icon
+                            color="grey darken-3"
+                            @click.prevent="unlike"
+                        >
+                            <v-icon>mdi-thumb-down-outline</v-icon>
+                            <span class="subheading ml-1">
+                                {{ voice.unlikes_count }}
+                            </span>
+                        </v-btn>
+                    </template>
+
                     <!-- コメント数表示 -->
                     <v-btn icon color="grey darken-3">
                         <v-icon>mdi-comment-outline</v-icon>
-                        <span class="subheading ml-1">{{
-                            voice.comments_count
-                        }}</span>
+                        <span class="subheading ml-1">
+                            {{ voice.comments_count }}
+                        </span>
                     </v-btn>
                     <!-- お気に入りボタン -->
                     <v-btn icon color="grey darken-3" @click.prevent="favorite">
