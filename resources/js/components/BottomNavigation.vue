@@ -12,25 +12,31 @@
             <v-btn @click="moveToTopOrFavoritePage">
                 <v-icon>mdi-heart</v-icon>
             </v-btn>
-            <v-btn>
-                <RouterLink :to="`/users/${userId}`">
-                    <v-icon color="rgba(0,0,0,0.54)">mdi-account-circle</v-icon>
-                </RouterLink>
+            <v-btn @click="moveToTopOrMypage">
+                <v-icon>mdi-account-circle</v-icon>
             </v-btn>
         </v-bottom-navigation>
-        <v-snackbar
-            v-model="snackbar"
-            :timeout="timeout"
-            centered
-            color="#313732"
-        >
+        <v-snackbar v-model="snackbar1" :timeout="timeout1" color="#313732">
             お気に入り機能は近日リリース予定です
             <template v-slot:action="{ attrs }">
                 <v-btn
                     color="blue"
                     text
                     v-bind="attrs"
-                    @click="snackbar = false"
+                    @click="snackbar1 = false"
+                >
+                    閉じる
+                </v-btn>
+            </template>
+        </v-snackbar>
+        <v-snackbar v-model="snackbar2" :timeout="timeout2" color="#313732">
+            ログインしてください
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    color="blue"
+                    text
+                    v-bind="attrs"
+                    @click="snackbar2 = false"
                 >
                     閉じる
                 </v-btn>
@@ -44,18 +50,23 @@ import { mapState, mapGetters } from "vuex";
 export default {
     data() {
         return {
-            snackbar: false,
-            timeout: 3000
+            snackbar1: false,
+            timeout1: 3000,
+            snackbar2: false,
+            timeout2: 3000
         };
     },
     computed: {
+        // ログインチェック
+        isLogin() {
+            return this.$store.getters["auth/check"];
+        },
         // ユーザーID取得
         userId() {
             return this.$store.getters["auth/userId"];
         }
     },
     methods: {
-        // ホーム画面なら一番上までスクロール、その他のページならホーム画面に移動
         moveToTopOrHomepage() {
             if (this.$route.path === "/") {
                 const duration = 300; // 移動速度（0.3秒で終了）
@@ -89,7 +100,28 @@ export default {
             }
         },
         moveToTopOrFavoritePage() {
-            this.snackbar = true;
+            this.snackbar1 = true;
+        },
+        moveToTopOrMypage() {
+            if (this.isLogin) {
+                if (this.$route.path === `/users/${this.userId}`) {
+                    const duration = 300; // 移動速度（0.3秒で終了）
+                    const interval = 20; // 0.020秒ごとに移動
+                    const step =
+                        -window.scrollY / Math.ceil(duration / interval); // 1回に移動する距離
+                    const timer = setInterval(() => {
+                        window.scrollBy(0, step); // スクロール位置を移動
+
+                        if (window.scrollY <= 0) {
+                            clearInterval(timer);
+                        }
+                    }, interval);
+                } else {
+                    this.$router.push(`/users/${this.userId}`);
+                }
+            } else {
+                this.snackbar2 = true;
+            }
         }
     }
 };
