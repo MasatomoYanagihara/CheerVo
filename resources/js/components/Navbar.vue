@@ -29,12 +29,14 @@
                     ログアウト
                 </v-btn>
             </div>
-            <div v-else class="d-none d-sm-flex">
+            <div v-if="!isLogin && this.$route.path === '/login'">
                 <Router-link :to="{ name: 'register' }">
                     <v-btn class="register-button" outlined small rounded>
                         <span class="white--text">会員登録</span>
                     </v-btn>
                 </Router-link>
+            </div>
+            <div v-if="!isLogin && !(this.$route.path === '/login')">
                 <Router-link :to="{ name: 'login' }">
                     <v-btn
                         outlined
@@ -172,6 +174,9 @@ export default {
                 this.$router.push("/login");
             }
         }
+    },
+    created() {
+        console.log(this.$route.path);
     }
 };
 </script>
