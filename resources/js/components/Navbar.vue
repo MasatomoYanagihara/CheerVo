@@ -10,7 +10,7 @@
             <v-spacer></v-spacer>
 
             <div v-if="isLogin" class="white--text">
-                <h3>{{ username }}</h3>
+                <h3>{{ userName }}</h3>
             </div>
             <div v-if="isLogin" class="plus-button d-none d-sm-flex">
                 <v-btn small rounded color="#F26101">
@@ -71,20 +71,20 @@
                 </router-link>
 
                 <!-- マイページ -->
-                <RouterLink :to="`/users/${userId}`">
-                    <div v-if="isLogin">
+                <div v-if="isLogin">
+                    <RouterLink :to="`/users/${userId}`">
                         <v-list-item link class="menu-item-1">
                             <v-list-item-action>
                                 <v-icon>mdi-account-circle</v-icon>
                             </v-list-item-action>
                             <v-list-item-content>
-                                <v-list-item-title
-                                    >マイページ</v-list-item-title
-                                >
+                                <v-list-item-title>
+                                    マイページ
+                                </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
-                    </div>
-                </RouterLink>
+                    </RouterLink>
+                </div>
 
                 <!-- ヘルプ -->
                 <v-list-item link class="menu-item-2">
@@ -152,7 +152,7 @@ export default {
             return this.$store.getters["auth/check"];
         },
         // ユーザーネーム取得
-        username() {
+        userName() {
             return this.$store.getters["auth/username"];
         },
         // ユーザーID取得
@@ -174,7 +174,7 @@ export default {
                 this.$router.push("/login");
             }
         }
-    },
+    }
 };
 </script>
 <style lang="scss" scoped>

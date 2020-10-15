@@ -87,7 +87,7 @@
                         </span>
                     </v-btn>
                     <!-- お気に入りボタン -->
-                    <v-btn icon color="grey darken-3" @click.prevent="favorite">
+                    <v-btn icon color="grey darken-3" @click.prevent="$emit('favorite-click')">
                         <v-icon>mdi-heart-outline</v-icon>
                         <span class="subheading ml-1">0</span>
                     </v-btn>
@@ -128,9 +128,6 @@ export default {
                 unliked: this.voice.unliked_by_user
             });
         },
-        favorite() {
-            this.snackbar = true;
-        }
     },
     filters: {
         moment: function(date) {

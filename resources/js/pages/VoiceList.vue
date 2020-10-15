@@ -8,6 +8,7 @@
                     :voice="voice"
                     @like="onLikeClick"
                     @unlike="onUnLikeClick"
+                    @favorite-click="onFavoriteClick"
                 />
                 <infinite-loading
                     class="infinite-loading"
@@ -40,7 +41,7 @@
                     color="#F26101"
                     size="58"
                     width="5"
-                    v-if="fileUploading"
+                    v-show="fileUploading"
                 ></v-progress-circular>
             </template>
 
@@ -134,6 +135,20 @@
             </template>
         </v-snackbar>
 
+        <v-snackbar v-model="snackbar2" :timeout="timeout2">
+            お気に入り機能は近日リリース予定です
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    color="blue"
+                    text
+                    v-bind="attrs"
+                    @click="snackbar2 = false"
+                >
+                    閉じる
+                </v-btn>
+            </template>
+        </v-snackbar>
+
         <BottomNavigation />
     </div>
 </template>
@@ -153,8 +168,10 @@ export default {
             voice: null, // 投稿用
             voices: [], // 一覧表示用
             title: "", // タイトル投稿用
-            snackbar: false, // スナックバー表示用
-            timeout: 3000, // スナックバー表示時間
+            snackbar: false, // スナックバー表示用（投稿が完了）
+            timeout: 3000, // スナックバー表示時間（投稿が完了）
+            snackbar2: "", // スナックバー表示用（お気に入り機能）
+            timeout2: 3000, // スナックバー表示時間（お気に入り機能）
             fileUploading: false,
             page: 1 // 無限スクロール用
         };
@@ -241,6 +258,9 @@ export default {
                 this.unlike(id);
                 this.notlike(id);
             }
+        },
+        onFavoriteClick() {
+            this.snackbar2 = true;
         },
         async like(id) {
             const response = await axios.put(`/api/voices/${id}/like`);
