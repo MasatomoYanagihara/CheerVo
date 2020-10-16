@@ -16,7 +16,7 @@
                 <v-icon>mdi-account-circle</v-icon>
             </v-btn>
         </v-bottom-navigation>
-        <v-snackbar v-model="snackbar1" :timeout="timeout1" color="#313732">
+        <v-snackbar v-model="snackbar1" :timeout="timeout1" color="#313732" centered>
             お気に入り機能は近日リリース予定です
             <template v-slot:action="{ attrs }">
                 <v-btn
@@ -29,7 +29,7 @@
                 </v-btn>
             </template>
         </v-snackbar>
-        <v-snackbar v-model="snackbar2" :timeout="timeout2" color="#313732">
+        <v-snackbar v-model="snackbar2" :timeout="timeout2" color="#313732" centered>
             ログインしてください
             <template v-slot:action="{ attrs }">
                 <v-btn

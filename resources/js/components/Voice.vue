@@ -24,7 +24,7 @@
                     <div>
                         {{ voice.owner.name }}
                     </div>
-                    <v-list-item-title class="headline mb-1">
+                    <v-list-item-title class=" mb-1">
                         {{ voice.title }}
                     </v-list-item-title>
                 </v-list-item-content>

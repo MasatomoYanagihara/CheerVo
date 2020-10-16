@@ -56,7 +56,7 @@
                         <v-container>
                             <v-row>
                                 <v-col cols="12" sm="6" md="4">
-                                    <h4>＊タイトルは20文字以内</h4>
+                                    <h4>＊タイトルは12文字以内</h4>
                                     <div v-if="voicePostErrors">
                                         <ul
                                             v-if="voicePostErrors.title"
@@ -96,7 +96,7 @@
                                     <input
                                         @change="onFileChange"
                                         type="file"
-                                        accept="audio/mp3, audio/m4a, audio/wav"
+                                        accept="audio/mp3, audio/mp4, audio/wav"
                                     />
                                 </v-col>
                             </v-row>
@@ -121,7 +121,7 @@
             </v-form>
         </v-dialog>
 
-        <v-snackbar v-model="snackbar" :timeout="timeout">
+        <v-snackbar v-model="snackbar" :timeout="timeout" centered>
             投稿が完了しました
             <template v-slot:action="{ attrs }">
                 <v-btn
@@ -135,7 +135,7 @@
             </template>
         </v-snackbar>
 
-        <v-snackbar v-model="snackbar2" :timeout="timeout2">
+        <v-snackbar v-model="snackbar2" :timeout="timeout2" centered>
             お気に入り機能は近日リリース予定です
             <template v-slot:action="{ attrs }">
                 <v-btn
@@ -170,7 +170,7 @@ export default {
             title: "", // タイトル投稿用
             snackbar: false, // スナックバー表示用（投稿が完了）
             timeout: 3000, // スナックバー表示時間（投稿が完了）
-            snackbar2: "", // スナックバー表示用（お気に入り機能）
+            snackbar2: false, // スナックバー表示用（お気に入り機能）
             timeout2: 3000, // スナックバー表示時間（お気に入り機能）
             fileUploading: false,
             page: 1 // 無限スクロール用
