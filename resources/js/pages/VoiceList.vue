@@ -107,13 +107,7 @@
                         <v-btn @click="submit" color="#F26101" rounded
                             ><span class="white--text">投稿する</span></v-btn
                         >
-                        <v-btn
-                            class="px-4"
-                            @click="
-                                dialog = false;
-                                clearError();
-                            "
-                            rounded
+                        <v-btn class="px-4" @click="clickCloseButton" rounded
                             >閉じる</v-btn
                         >
                     </v-card-actions>
@@ -220,6 +214,10 @@ export default {
             this.snackbar = true;
             this.fileUploading = false;
             this.fetchVoices();
+        },
+        clickCloseButton() {
+            this.dialog = false;
+            this.clearError();
         },
         async fetchVoices() {
             const response = await axios.get("/api/voices");
@@ -339,6 +337,7 @@ export default {
                         if (this.page < data.data.length) {
                             this.page += 1;
                             this.voices.push(...data.data);
+                            console.log(data);
                             $state.loaded();
                         } else {
                             $state.complete();
@@ -368,7 +367,8 @@ export default {
     padding-top: 16px;
     padding-bottom: 20px;
     height: 100%;
-    background-color: #8aa8b0;
+    // background-color: #8aa8b0;
+    background-color: #eeeeee;
 }
 .plus-button {
     position: fixed;

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app-bar fixed flat style="background-color: #313732;">
+        <v-app-bar fixed flat style="background-color: #ffa319;">
             <Router-link :to="{ name: 'home' }">
                 <v-toolbar-title class="product-title white--text"
                     >CheerVo</v-toolbar-title

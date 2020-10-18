@@ -43,8 +43,7 @@ export default {
             items: [
                 {
                     text: "ホーム",
-                    disabled: false,
-                    href: "/"
+                    disabled: false
                 },
                 {
                     text: "マイページ",
