@@ -87,7 +87,11 @@
                         </span>
                     </v-btn>
                     <!-- お気に入りボタン -->
-                    <v-btn icon color="grey darken-3" @click.prevent="$emit('favorite-click')">
+                    <v-btn
+                        icon
+                        color="grey darken-3"
+                        @click.prevent="$emit('favorite-click')"
+                    >
                         <v-icon>mdi-heart-outline</v-icon>
                         <span class="subheading ml-1">0</span>
                     </v-btn>
@@ -98,9 +102,10 @@
 </template>
 
 <script>
-import moment from "moment";
+import Mixin from "../mixins/mixin";
 
 export default {
+    mixins: [Mixin],
     props: {
         voice: {
             type: Object,
@@ -127,11 +132,6 @@ export default {
                 liked: this.voice.liked_by_user,
                 unliked: this.voice.unliked_by_user
             });
-        },
-    },
-    filters: {
-        moment: function(date) {
-            return moment(date).format("YYYY/MM/DD HH:mm");
         }
     }
 };

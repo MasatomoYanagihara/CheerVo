@@ -140,10 +140,11 @@
 
 <script>
 import { OK, CREATED, UNPROCESSABLE_ENTITY } from "../util";
-import moment from "moment";
+import Mixin from "../mixins/mixin";
 import BottomNavigation from "../components/BottomNavigation";
 
 export default {
+    mixins: [Mixin],
     components: {
         BottomNavigation
     },
@@ -209,11 +210,6 @@ export default {
                 await this.fetchVoice();
             },
             immediate: true
-        }
-    },
-    filters: {
-        moment: function(date) {
-            return moment(date).format("YYYY/MM/DD HH:mm");
         }
     }
 };
