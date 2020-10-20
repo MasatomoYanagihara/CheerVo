@@ -90,14 +90,39 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <h4 class="mb-2">
+                                    <!-- <h4 class="mb-2">
                                         ＊対応している拡張子：mp3/m4a/wav
                                     </h4>
                                     <input
                                         @change="onFileChange"
                                         type="file"
                                         accept="audio/mp3, audio/mp4, audio/wav"
-                                    />
+                                    /> -->
+                                    <!-- <div>
+                                        <v-btn
+                                            type="button"
+                                            v-if="status == 'ready'"
+                                            @click="startRecording"
+                                        >
+                                            録音を開始する
+                                        </v-btn>
+                                        <v-btn
+                                            type="button"
+                                            v-if="status == 'recording'"
+                                            @click="stopRecording"
+                                        >
+                                            録音を終了する
+                                        </v-btn>
+                                        <div id="result"></div>
+                                    </div> -->
+
+                                    <v-btn @click="rec_start">
+                                        録音開始
+                                    </v-btn>
+                                    <v-btn @click="rec_stop">
+                                        録音停止
+                                    </v-btn>
+                                    <audio id="player" controls></audio>
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -167,7 +192,14 @@ export default {
             snackbar2: false, // スナックバー表示用（お気に入り機能）
             timeout2: 3000, // スナックバー表示時間（お気に入り機能）
             fileUploading: false,
-            page: 1 // 無限スクロール用
+            page: 1, // 無限スクロール用
+
+            status: "ready", // 状況（init:ページ読み込んだ時, ready:録音ができる状態, recording:録音中）
+            recorder: null, // 音声にアクセスする "MediaRecorder" のインスタンス
+            audioData: [], // 入力された音声データ
+            audioExtension: "", // 音声ファイルの拡張子
+
+            localstream: null
         };
     },
     computed: {
@@ -193,8 +225,8 @@ export default {
         },
         async submit() {
             const formData = new FormData();
-            formData.append("voice", this.voice);
             formData.append("title", this.title);
+            formData.append("voice", this.voice);
 
             this.dialog = false;
             this.fileUploading = true;
@@ -228,6 +260,49 @@ export default {
             }
 
             this.voices = response.data.data;
+        },
+        // 録音開始
+        rec_start() {
+            const self = this;
+            navigator.mediaDevices
+                .getUserMedia({ audio: true })
+                .then(function(stream) {
+                    self.localstream = stream;
+                    self.recorder = new MediaRecorder(stream);
+
+                    self.recorder.start();
+                    console.log("録音開始");
+                })
+                .catch(function(e) {
+                    console.log(e);
+                });
+        },
+        // 録音停止
+        rec_stop() {
+            this.recorder.stop();
+
+            const self = this;
+            this.recorder.ondataavailable = function(e) {
+                self.audioData.push(e.data);
+                const audioBlob = new Blob(self.audioData);
+                self.voice = audioBlob;
+                document.getElementById("player").src = URL.createObjectURL(
+                    e.data
+                );
+            };
+            this.localstream.getTracks().forEach(track => track.stop());
+            console.log("録音停止");
+        },
+        // 音声ファイルの拡張子取得メソッド
+        getExtension(audioType) {
+            let extension = "wav";
+            const matches = audioType.match(/audio\/([^;]+)/);
+
+            if (matches) {
+                extension = matches[1];
+            }
+
+            return "." + extension;
         },
         // いいねクリックメソッド（子コンポーネントから$emit）
         onLikeClick({ id, liked, unliked }) {

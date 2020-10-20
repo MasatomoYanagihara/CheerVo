@@ -24,9 +24,9 @@ class StoreVoice extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:20',
+            'title' => 'required|max:12',
             // 4000KBまで
-            'voice' => 'required|file|mimes:mp3,m4a,wav|max:4000'
+            'voice' => 'required|file|max:4000'
         ];
     }
 }
