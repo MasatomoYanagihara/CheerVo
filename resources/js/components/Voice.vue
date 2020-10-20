@@ -11,11 +11,7 @@
         >
             <v-list-item three-line class="px-4">
                 <v-list-item-avatar tile size="80" color="grey"
-                    ><v-img
-                        class="elevation-6"
-                        alt=""
-                        :src="voice.owner.img_url"
-                    ></v-img
+                    ><v-img alt="" :src="voice.owner.img_url"></v-img
                 ></v-list-item-avatar>
                 <v-list-item-content>
                     <div class="mb-0">
