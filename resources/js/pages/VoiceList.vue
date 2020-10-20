@@ -98,7 +98,7 @@
                                         type="file"
                                         accept="audio/mp3, audio/mp4, audio/wav"
                                     /> -->
-                                    <div>
+                                    <!-- <div>
                                         <v-btn
                                             type="button"
                                             v-if="status == 'ready'"
@@ -114,7 +114,15 @@
                                             録音を終了する
                                         </v-btn>
                                         <div id="result"></div>
-                                    </div>
+                                    </div> -->
+
+                                    <v-btn @click="rec_start">
+                                        録音開始
+                                    </v-btn>
+                                    <v-btn @click="rec_stop">
+                                        録音停止
+                                    </v-btn>
+                                    <audio id="player" controls></audio>
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -185,10 +193,13 @@ export default {
             timeout2: 3000, // スナックバー表示時間（お気に入り機能）
             fileUploading: false,
             page: 1, // 無限スクロール用
+
             status: "ready", // 状況（init:ページ読み込んだ時, ready:録音ができる状態, recording:録音中）
             recorder: null, // 音声にアクセスする "MediaRecorder" のインスタンス
             audioData: [], // 入力された音声データ
-            audioExtension: "" // 音声ファイルの拡張子
+            audioExtension: "", // 音声ファイルの拡張子
+
+            localstream: null
         };
     },
     computed: {
@@ -214,8 +225,8 @@ export default {
         },
         async submit() {
             const formData = new FormData();
-            formData.append("voice", this.voice);
             formData.append("title", this.title);
+            formData.append("voice", this.voice);
 
             this.dialog = false;
             this.fileUploading = true;
@@ -250,18 +261,37 @@ export default {
 
             this.voices = response.data.data;
         },
-        // 録音開始メソッド
-        startRecording() {
-            this.status = "recording";
-            this.audioData = [];
-            this.recorder.start();
-            console.log("録音開始");
+        // 録音開始
+        rec_start() {
+            const self = this;
+            navigator.mediaDevices
+                .getUserMedia({ audio: true })
+                .then(function(stream) {
+                    self.localstream = stream;
+                    self.recorder = new MediaRecorder(stream);
+
+                    self.recorder.start();
+                    console.log("録音開始");
+                })
+                .catch(function(e) {
+                    console.log(e);
+                });
         },
-        // 録音終了メソッド
-        stopRecording() {
+        // 録音停止
+        rec_stop() {
             this.recorder.stop();
-            this.status = "ready";
-            console.log("録音終了");
+
+            const self = this;
+            this.recorder.ondataavailable = function(e) {
+                self.audioData.push(e.data);
+                const audioBlob = new Blob(self.audioData);
+                self.voice = audioBlob;
+                document.getElementById("player").src = URL.createObjectURL(
+                    e.data
+                );
+            };
+            this.localstream.getTracks().forEach(track => track.stop());
+            console.log("録音停止");
         },
         // 音声ファイルの拡張子取得メソッド
         getExtension(audioType) {
@@ -404,21 +434,6 @@ export default {
     },
     created() {
         this.clearError();
-
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-            this.recorder = new MediaRecorder(stream);
-            this.recorder.addEventListener("dataavailable", e => {
-                this.audioData.push(e.data);
-                this.audioExtension = this.getExtension(e.data.type);
-            });
-            this.recorder.addEventListener("stop", () => {
-                const audioBlob = new Blob(this.audioData);
-                this.voice = audioBlob;
-                console.log(audioBlob);
-                const url = URL.createObjectURL(audioBlob);
-            });
-            this.status = "ready";
-        });
     }
 };
 </script>
