@@ -1,7 +1,6 @@
 <template>
     <v-col cols="12" lg="12" md="12" xs="12">
         <v-card
-            :to="`/voices/${voice.id}`"
             width="340px"
             class="mx-auto"
             color="#FFFFFF"
@@ -13,19 +12,27 @@
                 <v-list-item-avatar tile size="80" color="grey"
                     ><v-img alt="" :src="voice.owner.img_url"></v-img
                 ></v-list-item-avatar>
-                <v-list-item-content>
-                    <div class="mb-0">
-                        <span class="grey--text">{{
-                            voice.created_at | moment
-                        }}</span>
-                    </div>
-                    <div>
-                        {{ voice.owner.name }}
-                    </div>
-                    <v-list-item-title class=" mb-1">
-                        <span class="title">{{ voice.title }}</span>
-                    </v-list-item-title>
-                </v-list-item-content>
+                <Router-link
+                    :to="{ name: 'voiceDetail', params: { id: voice.id } }"
+                >
+                    <v-list-item-content>
+                        <div class="mb-0">
+                            <span class="grey--text">{{
+                                voice.created_at | moment
+                            }}</span>
+                        </div>
+                        <div>
+                            <span class="black--text">{{
+                                voice.owner.name
+                            }}</span>
+                        </div>
+                        <v-list-item-title class="mt-4">
+                            <span class="title black--text">{{
+                                voice.title
+                            }}</span>
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </Router-link>
             </v-list-item>
 
             <v-list-item-content class="px-4 py-0">
@@ -134,3 +141,8 @@ export default {
     }
 };
 </script>
+<style lang="scss" scoped>
+a {
+    color: #000;
+}
+</style>

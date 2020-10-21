@@ -35,6 +35,7 @@ const routes = [
     },
     {
         path: "/voices/:id",
+        name: "voiceDetail",
         component: VoiceDetail,
         props: true
     },
