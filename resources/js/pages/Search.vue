@@ -13,10 +13,11 @@
                     v-model="keyword"
                     label="タイトル検索"
                     outlined
+                    dense
                     background-color="white"
                 ></v-text-field>
-                <v-btn class="mt-2" color="#F26101" type="submit" rounded
-                    ><span class="white--text font-weight-bold">検索</span>
+                <v-btn class="mt-1" color="#F26101" type="submit" rounded>
+                    <span class="white--text font-weight-bold">検索</span>
                 </v-btn>
             </div>
         </v-form>

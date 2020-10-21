@@ -403,13 +403,13 @@ export default {
             axios
                 .get("/api/voices", {
                     params: {
-                        page: this.page,
+                        page: this.page + 1,
                         per_page: 1
                     }
                 })
                 .then(({ data }) => {
                     setTimeout(() => {
-                        if (this.page < data.data.length) {
+                        if (this.page * 10 < data.total) {
                             this.page += 1;
                             this.voices.push(...data.data);
                             console.log(data);
@@ -443,7 +443,7 @@ export default {
     padding-bottom: 20px;
     height: 100%;
     // background-color: #8aa8b0;
-    background-color: #EEE;
+    background-color: #eee;
 }
 .plus-button {
     position: fixed;
