@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper-1 blue-grey lighten-1">
+    <div class="wrapper-1">
         <v-form @submit.prevent="searchKeyword">
             <div v-if="requiredMessage == true">
                 <ul class="error-message">
@@ -8,15 +8,17 @@
                     </li>
                 </ul>
             </div>
-            <v-text-field
-                v-model="keyword"
-                label="タイトル検索"
-                outlined
-                background-color="white"
-            ></v-text-field>
-            <v-btn color="#F26101" type="submit" rounded
-                ><span class="white--text">検索</span>
-            </v-btn>
+            <div class="d-flex">
+                <v-text-field
+                    v-model="keyword"
+                    label="タイトル検索"
+                    outlined
+                    background-color="white"
+                ></v-text-field>
+                <v-btn class="mt-2" color="#F26101" type="submit" rounded
+                    ><span class="white--text font-weight-bold">検索</span>
+                </v-btn>
+            </div>
         </v-form>
 
         <v-container>

@@ -443,7 +443,7 @@ export default {
     padding-bottom: 20px;
     height: 100%;
     // background-color: #8aa8b0;
-    background-color: #eeeeee;
+    background-color: #EEE;
 }
 .plus-button {
     position: fixed;

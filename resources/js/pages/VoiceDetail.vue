@@ -222,9 +222,9 @@ li {
     padding-left: 0;
 }
 .wrapper-1 {
+    background-color: #EEE;
     padding-top: 40px;
     height: 100%;
-    background-color: #8aa8b0;
 }
 .audio {
     margin-left: 20px;

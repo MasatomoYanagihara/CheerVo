@@ -1,6 +1,5 @@
-color
-#313732 ナビゲーションバー、フッター
-#8AA8B0 背景
-#DEDEDE
-#FFFFFF カード
+配色
+#FFA319 ナビゲーションバー、フッター
+#EEE 背景
+#DEDEDE #FFFFFF カード
 #F26101 ボタン（textはwhite）

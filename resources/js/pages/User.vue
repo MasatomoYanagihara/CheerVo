@@ -74,11 +74,10 @@ export default {
 
 <style scoped>
 .wrapper-1 {
-    background-color: #8aa8b0;
     height: 100%;
 }
 .wrapper-2 {
-    background-color: white;
+    background-color: gainsboro;
     padding-top: 14%;
     padding-bottom: 8%;
 }
