@@ -86,7 +86,11 @@ export default {
         async searchKeyword() {
             if (!this.keyword == "") {
                 const response = await axios
-                    .get(`/api/voices/search?keyword=${this.keyword}`)
+                    .get("/api/voices/search", {
+                        params: {
+                            keyword: this.keyword
+                        }
+                    })
                     .catch(err => err.response || err);
 
                 if (response.data.data.length === 0) {

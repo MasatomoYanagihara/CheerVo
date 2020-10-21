@@ -15,13 +15,15 @@
                 ></v-list-item-avatar>
                 <v-list-item-content>
                     <div class="mb-0">
-                        {{ voice.created_at | moment }}
+                        <span class="grey--text">{{
+                            voice.created_at | moment
+                        }}</span>
                     </div>
                     <div>
                         {{ voice.owner.name }}
                     </div>
                     <v-list-item-title class=" mb-1">
-                        {{ voice.title }}
+                        <span class="title">{{ voice.title }}</span>
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
