@@ -55,7 +55,7 @@ export default {
     methods: {
         async fetchMyVoices() {
             const response = await axios.get(
-                "/api/voices/users/" + this.$route.params.id
+                `/api/voices/users/${this.$route.params.id}`
             );
 
             if (response.status !== OK) {
@@ -74,11 +74,13 @@ export default {
 
 <style scoped>
 .wrapper-1 {
+    background-color: #eee;
     height: 100%;
 }
 .wrapper-2 {
     background-color: gainsboro;
     padding-top: 14%;
     padding-bottom: 8%;
+    border-radius: 4px;
 }
 </style>

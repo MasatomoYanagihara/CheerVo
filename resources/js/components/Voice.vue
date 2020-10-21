@@ -8,25 +8,32 @@
             outlined
             :ripple="false"
         >
-            <v-list-item three-line class="px-0">
+            <v-list-item three-line class="px-0 pb-0">
                 <v-list-item-avatar tile size="80" color="grey"
                     ><v-img alt="" :src="voice.owner.img_url"></v-img
                 ></v-list-item-avatar>
                 <Router-link
                     :to="{ name: 'voiceDetail', params: { id: voice.id } }"
                 >
-                    <v-list-item-content>
-                        <div class="mb-0">
-                            <span class="grey--text">{{
-                                voice.created_at | moment
-                            }}</span>
+                    <v-list-item-content class="pt-0 pb-4">
+                        <div class="d-flex justify-space-between">
+                            <div class="pt-3">
+                                <span class="created_at-text">{{
+                                    voice.created_at | moment
+                                }}</span>
+                            </div>
+                            <div>
+                                <v-btn class="mr-2" icon @click.prevent="test">
+                                    <v-icon class="mx-3"
+                                        >mdi-chevron-down</v-icon
+                                    >
+                                </v-btn>
+                            </div>
                         </div>
-                        <div>
-                            <span class="black--text">{{
-                                voice.owner.name
-                            }}</span>
-                        </div>
-                        <v-list-item-title class="mt-4">
+
+                        <span class="black--text">{{ voice.owner.name }}</span>
+
+                        <v-list-item-title>
                             <span class="title black--text">{{
                                 voice.title
                             }}</span>
@@ -137,6 +144,9 @@ export default {
                 liked: this.voice.liked_by_user,
                 unliked: this.voice.unliked_by_user
             });
+        },
+        test() {
+            console.log("test");
         }
     }
 };
@@ -144,5 +154,8 @@ export default {
 <style lang="scss" scoped>
 a {
     color: #000;
+}
+.created_at-text {
+    color: #424242;
 }
 </style>
