@@ -153,6 +153,7 @@ export default {
     padding-top: 30px;
     padding-bottom: 20px;
     height: 100%;
+    background-color: #EEE;
 }
 .error-message {
     list-style: none;

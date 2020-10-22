@@ -28,7 +28,9 @@ const getters = {
     // ユーザーネーム取得
     username: state => (state.user ? state.user.name : ""),
     // ユーザーID取得
-    userId: state => (state.user ? state.user.id : "")
+    userId: state => (state.user ? state.user.id : ""),
+    // ユーザーimg_url取得
+    userImg: state => (state.user ? state.user.img_url : "")
 };
 
 const actions = {

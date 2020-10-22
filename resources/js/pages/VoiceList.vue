@@ -115,14 +115,27 @@
                                         </v-btn>
                                         <div id="result"></div>
                                     </div> -->
-
-                                    <v-btn @click="rec_start">
-                                        録音開始
-                                    </v-btn>
-                                    <v-btn @click="rec_stop">
-                                        録音停止
-                                    </v-btn>
-                                    <audio id="player" controls></audio>
+                                    <div class="text-center">
+                                        <v-btn
+                                            class=""
+                                            v-if="!recording"
+                                            @click="rec_start"
+                                        >
+                                            録音開始
+                                        </v-btn>
+                                        <v-btn
+                                            v-if="recording"
+                                            @click="rec_stop"
+                                        >
+                                            録音停止
+                                        </v-btn>
+                                    </div>
+                                    <audio
+                                        v-if="voice_veri"
+                                        class="mt-5 pr-6"
+                                        id="player"
+                                        controls
+                                    ></audio>
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -130,7 +143,9 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn @click="submit" color="#F26101" rounded
-                            ><span class="white--text">投稿する</span></v-btn
+                            ><span class="white--text"
+                                ><strong>投稿する</strong></span
+                            ></v-btn
                         >
                         <v-btn class="px-4" @click="clickCloseButton" rounded
                             >閉じる</v-btn
@@ -198,8 +213,9 @@ export default {
             recorder: null, // 音声にアクセスする "MediaRecorder" のインスタンス
             audioData: [], // 入力された音声データ
             audioExtension: "", // 音声ファイルの拡張子
-
-            localstream: null
+            recording: null, // 録音中か判定する
+            localstream: null,
+            voice_veri: false // 録音後の音声確認
         };
     },
     computed: {
@@ -230,6 +246,7 @@ export default {
 
             this.dialog = false;
             this.fileUploading = true;
+            this.voice_veri = false;
             const response = await axios.post("/api/voices", formData);
 
             if (response.status === UNPROCESSABLE_ENTITY) {
@@ -249,6 +266,8 @@ export default {
         },
         clickCloseButton() {
             this.dialog = false;
+            this.recording = false;
+            this.voice_veri = false;
             this.clearError();
         },
         async fetchVoices() {
@@ -264,6 +283,7 @@ export default {
         // 録音開始
         rec_start() {
             const self = this;
+            this.recording = true;
             navigator.mediaDevices
                 .getUserMedia({ audio: true })
                 .then(function(stream) {
@@ -271,7 +291,6 @@ export default {
                     self.recorder = new MediaRecorder(stream);
 
                     self.recorder.start();
-                    console.log("録音開始");
                 })
                 .catch(function(e) {
                     console.log(e);
@@ -291,7 +310,8 @@ export default {
                 );
             };
             this.localstream.getTracks().forEach(track => track.stop());
-            console.log("録音停止");
+            this.recording = false;
+            this.voice_veri = true;
         },
         // 音声ファイルの拡張子取得メソッド
         getExtension(audioType) {

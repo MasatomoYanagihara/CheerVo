@@ -3,11 +3,13 @@
         <v-container>
             <BreadCrumbs class="d-sm-none" :items="items" />
             <div class="d-flex flex-column wrapper-2">
-                <v-avatar class="mx-auto" color="grey darken-1">
-                    <v-img
-                        alt=""
-                        src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                    ></v-img>
+                <v-avatar
+                    style="width:100px; height: 100px;"
+                    class="mx-auto"
+                    color="grey darken-1"
+                    tile
+                >
+                    <v-img alt="" :src="userImg"></v-img>
                 </v-avatar>
                 <h2 class="mx-auto">{{ username }}</h2>
             </div>
@@ -30,6 +32,9 @@ export default {
         // ユーザーネーム取得
         username() {
             return this.$store.getters["auth/username"];
+        },
+        userImg() {
+            return this.$store.getters["auth/userImg"];
         }
     },
     components: {
@@ -79,8 +84,8 @@ export default {
 }
 .wrapper-2 {
     background-color: gainsboro;
-    padding-top: 14%;
-    padding-bottom: 8%;
+    padding-top: 10%;
+    padding-bottom: 2%;
     border-radius: 4px;
 }
 </style>
