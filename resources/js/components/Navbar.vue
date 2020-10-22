@@ -31,7 +31,13 @@
             </div>
             <div v-if="!isLogin && this.$route.path === '/login'">
                 <Router-link :to="{ name: 'register' }">
-                    <v-btn class="register-button" outlined small rounded>
+                    <v-btn
+                        outlined
+                        small
+                        rounded
+                        color="#FFFFFF"
+                        class="register-button"
+                    >
                         <span class="white--text">会員登録</span>
                     </v-btn>
                 </Router-link>
@@ -188,9 +194,6 @@ export default {
 .logout-button {
     width: 84px;
     margin-left: 8px;
-}
-.register-button {
-    background-color: #f26101;
 }
 .plus-button {
     width: 84px;

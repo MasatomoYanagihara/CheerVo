@@ -9,7 +9,7 @@ $factory->define(App\Voice::class, function (Faker $faker) {
     return [
         'id' => Str::random(12),
         'user_id' => $faker->numberBetween(1,3),
-        'title' => $faker->realText($faker->numberBetween(10,14)),
+        'title' => $faker->realText($faker->numberBetween(10,20)),
         'filename' => Str::random(12) . '.mp3',
         'created_at' => $faker->dateTime(),
         'updated_at' => $faker->dateTime(),
