@@ -14,7 +14,7 @@
             </div>
             <div v-if="isLogin" class="plus-button d-none d-sm-flex">
                 <v-btn small rounded color="#F26101">
-                    <span class="white--text">投稿する</span>
+                    <span class="white--text font-weight-bold">投稿する</span>
                 </v-btn>
             </div>
             <div v-if="isLogin" class="d-none d-sm-flex">
@@ -26,7 +26,7 @@
                     @click="logout"
                     class="logout-button font-weight-bold"
                 >
-                    ログアウト
+                    <span class="font-weight-bold">ログアウト</span>
                 </v-btn>
             </div>
             <div v-if="!isLogin && this.$route.path === '/login'">
@@ -38,7 +38,9 @@
                         color="#FFFFFF"
                         class="register-button"
                     >
-                        <span class="white--text">会員登録</span>
+                        <span class="white--text font-weight-bold"
+                            >会員登録</span
+                        >
                     </v-btn>
                 </Router-link>
             </div>
@@ -51,7 +53,7 @@
                         color="#FFFFFF"
                         class="login-button"
                     >
-                        ログイン
+                        <span class="font-weight-bold">ログイン</span>
                     </v-btn>
                 </Router-link>
             </div>
