@@ -67,7 +67,7 @@
             <v-list dense>
                 <v-list-item-title class="pl-2">MENU</v-list-item-title>
                 <!-- ホーム -->
-                <router-link to="/">
+                <Router-link to="/">
                     <v-list-item link class="menu-item-1">
                         <v-list-item-action>
                             <v-icon>mdi-home</v-icon>
@@ -76,7 +76,7 @@
                             <v-list-item-title>ホーム</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
-                </router-link>
+                </Router-link>
 
                 <!-- マイページ -->
                 <div v-if="isLogin">
@@ -146,44 +146,44 @@
     </div>
 </template>
 <script>
-import { mapState, mapGetters } from "vuex";
+import {
+    defineComponent,
+    reactive,
+    toRefs,
+    computed
+} from "@vue/composition-api";
 
-export default {
-    data() {
-        return {
-            drawer: false // サイドナビトグル
-        };
-    },
-    computed: {
-        // ログインチェック
-        isLogin() {
-            return this.$store.getters["auth/check"];
-        },
-        // ユーザーネーム取得
-        userName() {
-            return this.$store.getters["auth/username"];
-        },
-        // ユーザーID取得
-        userId() {
-            return this.$store.getters["auth/userId"];
-        },
-        ...mapState({
-            apiStatus: state => state.auth.apiStatus
-        }),
-        ...mapGetters({
-            isLogin: "auth/check"
-        })
-    },
-    methods: {
-        async logout() {
-            await this.$store.dispatch("auth/logout");
+export default defineComponent({
+    setup(prop, context) {
+        const state = reactive({
+            // サイドナビトグル
+            drawer: false,
 
-            if (this.apiStatus) {
-                this.$router.push("/login");
+            // ログインチェック
+            isLogin: computed(() => context.root.$store.getters["auth/check"]),
+            // ユーザーネーム取得
+            userName: computed(
+                () => context.root.$store.getters["auth/username"]
+            ),
+            // ユーザーID取得
+            userId: computed(() => context.root.$store.getters["auth/userId"]),
+            apiStatus: computed(() => context.root.$store.state.auth.apiStatus)
+        });
+
+        const logout = async () => {
+            await context.root.$store.dispatch("auth/logout");
+
+            if (state.apiStatus) {
+                context.root.$router.push("/login");
             }
-        }
+        };
+
+        return {
+            ...toRefs(state),
+            logout
+        };
     }
-};
+});
 </script>
 <style lang="scss" scoped>
 .product-title {
