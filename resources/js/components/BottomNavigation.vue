@@ -110,7 +110,7 @@ export default defineComponent({
 
         const moveToTopOrMypage = () => {
             if (state.isLogin) {
-                if (context.root.$route.path === `/users/${context.root.userId}`) {
+                if (context.root.$route.path === `/users/${state.userId}`) {
                     const duration = 300; // 移動速度（0.3秒で終了）
                     const interval = 20; // 0.020秒ごとに移動
                     const step =
@@ -123,7 +123,7 @@ export default defineComponent({
                         }
                     }, interval);
                 } else {
-                    context.root.$router.push(`/users/${context.root.userId}`);
+                    context.root.$router.push(`/users/${state.userId}`);
                 }
             } else {
                 state.snackbar2 = true;
