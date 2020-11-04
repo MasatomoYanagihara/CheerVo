@@ -11,7 +11,7 @@
                 >
                     <v-img alt="" :src="userImg"></v-img>
                 </v-avatar>
-                <h2 class="mx-auto">{{ username }}</h2>
+                <h2 class="mx-auto">{{ userName }}</h2>
             </div>
             <v-row>
                 <Voice v-for="voice in voices" :key="voice.id" :voice="voice" />
@@ -26,24 +26,22 @@ import { OK, UNPROCESSABLE_ENTITY } from "../util";
 import Voice from "../components/Voice.vue";
 import BottomNavigation from "../components/BottomNavigation";
 import BreadCrumbs from "../components/BreadCrumbs";
+import {
+    defineComponent,
+    reactive,
+    computed,
+    toRefs,
+    onMounted
+} from "@vue/composition-api";
 
-export default {
-    computed: {
-        // ユーザーネーム取得
-        username() {
-            return this.$store.getters["auth/username"];
-        },
-        userImg() {
-            return this.$store.getters["auth/userImg"];
-        }
-    },
+export default defineComponent({
     components: {
         Voice,
         BottomNavigation,
         BreadCrumbs
     },
-    data() {
-        return {
+    setup(prop, context) {
+        const state = reactive({
             voices: {}, //一覧表示用
             items: [
                 {
@@ -54,27 +52,34 @@ export default {
                     text: "マイページ",
                     disabled: false
                 }
-            ]
-        };
-    },
-    methods: {
-        async fetchMyVoices() {
+            ],
+
+            userName: computed(
+                () => context.root.$store.getters["auth/userName"]
+            ),
+            userImg: computed(() => context.root.$store.getters["auth/userImg"])
+        });
+
+        onMounted(() => fetchMyVoices());
+
+        const fetchMyVoices = async () => {
             const response = await axios.get(
-                `/api/voices/users/${this.$route.params.id}`
+                `/api/voices/users/${context.root.$route.params.id}`
             );
 
             if (response.status !== OK) {
-                this.$store.commit("error/setCode", response.status);
+                context.root.$store.commit("error/setCode", response.status);
                 return false;
             }
 
-            this.voices = response.data;
+            state.voices = response.data;
+        };
+
+        return {
+          ...toRefs(state)
         }
-    },
-    created() {
-        this.fetchMyVoices();
     }
-};
+});
 </script>
 
 <style scoped>

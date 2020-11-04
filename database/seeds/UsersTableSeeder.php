@@ -32,6 +32,13 @@ class UsersTableSeeder extends Seeder
                 'img_url' => 'https://images.unsplash.com/photo-1593626986521-f24d25d60103?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
                 'password' => Hash::make('hogehoge'),
             ]);
+        DB::table('users')->insert(
+            [
+                'name' => 'testuser',
+                'email' => 'test@test.jp',
+                'img_url' => 'https://images.unsplash.com/photo-1593626986521-f24d25d60103?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('testuser'),
+            ]);
     }
     
 }

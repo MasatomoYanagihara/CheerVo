@@ -1,4 +1,20 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/VoiceList.js": "/VoiceList.js",
+    "/voicelist.js": "/voicelist.js",
+    "/login.js": "/login.js",
+    "/voiceDetail.js": "/voiceDetail.js",
+    "/register.js": "/register.js",
+    "/search.js": "/search.js",
+    "/search~users~voiceDetail~voicelist.js": "/search~users~voiceDetail~voicelist.js",
+    "/search~users~voicelist.js": "/search~users~voicelist.js",
+    "/users.js": "/users.js",
+    "/vendors~search~users~voiceDetail~voicelist.js": "/vendors~search~users~voiceDetail~voicelist.js",
+    "/notFound.js": "/notFound.js",
+    "/systemError.js": "/systemError.js",
+    "/search~users~voice.js": "/search~users~voice.js",
+    "/search~users~voice~voiceDetail.js": "/search~users~voice~voiceDetail.js",
+    "/vendors~search~users~voice~voiceDetail.js": "/vendors~search~users~voice~voiceDetail.js",
+    "/voice.js": "/voice.js"
 }
