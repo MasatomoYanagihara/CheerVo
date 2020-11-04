@@ -31,6 +31,7 @@ export default {
                 if (val === INTERNAL_SERVER_ERROR) {
                     this.$router.push("/500");
                 } else if (val === NOT_FOUND) {
+                    console.log(val);
                     this.$router.push("/not-found");
                 }
             },

@@ -16,5 +16,9 @@
     "/search~users~voice.js": "/search~users~voice.js",
     "/search~users~voice~voiceDetail.js": "/search~users~voice~voiceDetail.js",
     "/vendors~search~users~voice~voiceDetail.js": "/vendors~search~users~voice~voiceDetail.js",
-    "/voice.js": "/voice.js"
+    "/voice.js": "/voice.js",
+    "/home.js": "/home.js",
+    "/home~search~users.js": "/home~search~users.js",
+    "/home~search~users~voiceDetail.js": "/home~search~users~voiceDetail.js",
+    "/vendors~home~search~users~voiceDetail.js": "/vendors~home~search~users~voiceDetail.js"
 }

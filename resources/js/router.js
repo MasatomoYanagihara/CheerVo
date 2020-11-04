@@ -8,7 +8,7 @@ const routes = [
     {
         path: "/",
         name: "home",
-        component: () => import(/* webpackChunkName: "voice" */ './pages/VoiceList.vue'),
+        component: () => import(/* webpackChunkName: "home" */ './pages/VoiceList.vue'),
         meta: {
             title: 'ホーム',
         },

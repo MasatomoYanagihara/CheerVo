@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"login":"login","notFound":"notFound","register":"register","systemError":"systemError","vendors~search~users~voice~voiceDetail":"vendors~search~users~voice~voiceDetail","search~users~voice~voiceDetail":"search~users~voice~voiceDetail","search~users~voice":"search~users~voice","search":"search","users":"users","voice":"voice","voiceDetail":"voiceDetail"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"login":"login","notFound":"notFound","register":"register","systemError":"systemError","vendors~home~search~users~voiceDetail":"vendors~home~search~users~voiceDetail","home~search~users~voiceDetail":"home~search~users~voiceDetail","home~search~users":"home~search~users","home":"home","search":"search","users":"users","voiceDetail":"voiceDetail"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -3856,6 +3856,7 @@ __webpack_require__.r(__webpack_exports__);
         if (val === _util__WEBPACK_IMPORTED_MODULE_2__["INTERNAL_SERVER_ERROR"]) {
           this.$router.push("/500");
         } else if (val === _util__WEBPACK_IMPORTED_MODULE_2__["NOT_FOUND"]) {
+          console.log(val);
           this.$router.push("/not-found");
         }
       },
@@ -67386,7 +67387,7 @@ var routes = [{
   path: "/",
   name: "home",
   component: function component() {
-    return Promise.all(/*! import() | voice */[__webpack_require__.e("vendors~search~users~voice~voiceDetail"), __webpack_require__.e("search~users~voice~voiceDetail"), __webpack_require__.e("search~users~voice"), __webpack_require__.e("voice")]).then(__webpack_require__.bind(null, /*! ./pages/VoiceList.vue */ "./resources/js/pages/VoiceList.vue"));
+    return Promise.all(/*! import() | home */[__webpack_require__.e("vendors~home~search~users~voiceDetail"), __webpack_require__.e("home~search~users~voiceDetail"), __webpack_require__.e("home~search~users"), __webpack_require__.e("home")]).then(__webpack_require__.bind(null, /*! ./pages/VoiceList.vue */ "./resources/js/pages/VoiceList.vue"));
   },
   meta: {
     title: 'ホーム'
@@ -67413,7 +67414,7 @@ var routes = [{
   path: "/voices/:id",
   name: "voiceDetail",
   component: function component() {
-    return Promise.all(/*! import() | voiceDetail */[__webpack_require__.e("vendors~search~users~voice~voiceDetail"), __webpack_require__.e("search~users~voice~voiceDetail"), __webpack_require__.e("voiceDetail")]).then(__webpack_require__.bind(null, /*! ./pages/VoiceDetail.vue */ "./resources/js/pages/VoiceDetail.vue"));
+    return Promise.all(/*! import() | voiceDetail */[__webpack_require__.e("vendors~home~search~users~voiceDetail"), __webpack_require__.e("home~search~users~voiceDetail"), __webpack_require__.e("voiceDetail")]).then(__webpack_require__.bind(null, /*! ./pages/VoiceDetail.vue */ "./resources/js/pages/VoiceDetail.vue"));
   },
   meta: {
     title: 'ボイス詳細'
@@ -67432,7 +67433,7 @@ var routes = [{
   path: "/search",
   name: "search",
   component: function component() {
-    return Promise.all(/*! import() | search */[__webpack_require__.e("vendors~search~users~voice~voiceDetail"), __webpack_require__.e("search~users~voice~voiceDetail"), __webpack_require__.e("search~users~voice"), __webpack_require__.e("search")]).then(__webpack_require__.bind(null, /*! ./pages/Search.vue */ "./resources/js/pages/Search.vue"));
+    return Promise.all(/*! import() | search */[__webpack_require__.e("vendors~home~search~users~voiceDetail"), __webpack_require__.e("home~search~users~voiceDetail"), __webpack_require__.e("home~search~users"), __webpack_require__.e("search")]).then(__webpack_require__.bind(null, /*! ./pages/Search.vue */ "./resources/js/pages/Search.vue"));
   },
   meta: {
     title: '検索'
@@ -67441,7 +67442,7 @@ var routes = [{
   path: "/users/:id",
   name: "users",
   component: function component() {
-    return Promise.all(/*! import() | users */[__webpack_require__.e("vendors~search~users~voice~voiceDetail"), __webpack_require__.e("search~users~voice~voiceDetail"), __webpack_require__.e("search~users~voice"), __webpack_require__.e("users")]).then(__webpack_require__.bind(null, /*! ./pages/User.vue */ "./resources/js/pages/User.vue"));
+    return Promise.all(/*! import() | users */[__webpack_require__.e("vendors~home~search~users~voiceDetail"), __webpack_require__.e("home~search~users~voiceDetail"), __webpack_require__.e("home~search~users"), __webpack_require__.e("users")]).then(__webpack_require__.bind(null, /*! ./pages/User.vue */ "./resources/js/pages/User.vue"));
   },
   meta: {
     title: 'マイページ'
