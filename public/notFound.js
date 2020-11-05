@@ -12,7 +12,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".wrapper_1[data-v-2eaaa6da] {\n  margin-top: 100px;\n  margin-left: 60px;\n}", ""]);
+exports.push([module.i, ".wrapper-1[data-v-2eaaa6da] {\n  margin-top: 100px;\n  margin-left: 60px;\n}", ""]);
 
 // exports
 
@@ -71,7 +71,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "wrapper_1" }, [
+    return _c("div", { staticClass: "wrapper-1" }, [
       _c("h1", [_vm._v("お探しのページは、見つかりませんでした。")])
     ])
   }
