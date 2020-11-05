@@ -1,7 +1,6 @@
 <template>
     <div class="wrapper-1">
         <v-card
-            :to="`/voices/${voice.id}`"
             width="340px"
             class="mx-auto"
             color="#FFFFFF"
@@ -142,8 +141,15 @@
 import { OK, CREATED, UNPROCESSABLE_ENTITY } from "../util";
 import Mixin from "../mixins/mixin";
 import BottomNavigation from "../components/BottomNavigation";
+import {
+    defineComponent,
+    reactive,
+    computed,
+    toRefs,
+    onMounted
+} from "@vue/composition-api";
 
-export default {
+export default defineComponent({
     mixins: [Mixin],
     components: {
         BottomNavigation
@@ -154,65 +160,55 @@ export default {
             required: true
         }
     },
-    data() {
-        return {
+    setup(props, context) {
+        const state = reactive({
             voice: null, // ボイス取得用
             commentContent: "", // コメント投稿用
-            commentErrors: null // エラー用
+            commentErrors: null, // エラー用
+
+            isLogin: computed(() => context.root.$store.getters["auth/check"])
+        });
+
+        const fetchVoice = async () => {
+            const response = await axios.get(`/api/voices/${props.id}`);
+
+            state.voice = response.data;
         };
-    },
-    computed: {
-        isLogin() {
-            return this.$store.getters["auth/check"];
-        }
-    },
-    methods: {
-        async fetchVoice() {
-            const response = await axios.get(`/api/voices/${this.id}`);
-
-            // if (response.status !== OK) {
-            //     this.$store.commit("error/setCode", response.status);
-            //     return false;
-            // }
-
-            this.voice = response.data;
-        },
-        async addComment() {
+        const addComment = async () => {
             const response = await axios.post(
-                `/api/voices/${this.id}/comments`,
+                `/api/voices/${props.id}/comments`,
                 {
-                    content: this.commentContent
+                    content: state.commentContent
                 }
             );
 
             // バリデーションエラー
             if (response.status === UNPROCESSABLE_ENTITY) {
-                this.commentErrors = response.data.errors;
+                state.commentErrors = response.data.errors;
                 return false;
             }
 
-            this.commentContent = "";
-            this.commentErrors = null;
+            state.commentContent = "";
+            state.commentErrors = null;
 
             // その他のエラー
             if (response.status !== CREATED) {
-                this.$store.commit("error/setCode", response.status);
+                context.root.$store.commit("error/setCode", response.status);
                 return false;
             }
 
-            this.voice.comments = [response.data, ...this.voice.comments];
-            this.fetchVoice();
-        }
-    },
-    watch: {
-        $route: {
-            async handler() {
-                await this.fetchVoice();
-            },
-            immediate: true
-        }
+            state.voice.comments = [response.data, ...this.voice.comments];
+            fetchVoice();
+        };
+
+        fetchVoice();
+
+        return {
+            ...toRefs(state),
+            addComment
+        };
     }
-};
+});
 </script>
 <style lang="scss" scoped>
 li {
