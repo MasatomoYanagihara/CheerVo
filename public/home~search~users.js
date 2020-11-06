@@ -10,6 +10,13 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_mixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../mixins/mixin */ "./resources/js/mixins/mixin.js");
+/* harmony import */ var _vue_composition_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vue/composition-api */ "./node_modules/@vue/composition-api/dist/vue-composition-api.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -126,7 +133,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["defineComponent"])({
   mixins: [_mixins_mixin__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     voice: {
@@ -134,32 +142,37 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
-  computed: {
-    // ログインチェック
-    isLogin: function isLogin() {
-      return this.$store.getters["auth/check"];
-    }
-  },
-  methods: {
-    like: function like() {
-      this.$emit("like", {
-        id: this.voice.id,
-        liked: this.voice.liked_by_user,
-        unliked: this.voice.unliked_by_user
+  setup: function setup(prop, context) {
+    var _this = this;
+
+    var state = Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["reactive"])({
+      isLogin: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["computed"])(function () {
+        return context.root.$store.getters["auth/check"];
+      })
+    });
+
+    var like = function like() {
+      _this.$emit("like", {
+        id: props.voice.id,
+        liked: props.voice.liked_by_user,
+        unliked: props.voice.unliked_by_user
       });
-    },
-    unlike: function unlike() {
-      this.$emit("unlike", {
-        id: this.voice.id,
-        liked: this.voice.liked_by_user,
-        unliked: this.voice.unliked_by_user
+    };
+
+    var unlike = function unlike() {
+      _this.$emit("unlike", {
+        id: props.voice.id,
+        liked: props.voice.liked_by_user,
+        unliked: props.voice.unliked_by_user
       });
-    },
-    test: function test() {
-      console.log("test");
-    }
+    };
+
+    return _objectSpread(_objectSpread({}, Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["toRefs"])(state)), {}, {
+      like: like,
+      unlike: unlike
+    });
   }
-});
+}));
 
 /***/ }),
 
