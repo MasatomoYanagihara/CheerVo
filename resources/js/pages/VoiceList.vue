@@ -190,14 +190,21 @@
 import { OK, UNPROCESSABLE_ENTITY } from "../util";
 import Voice from "../components/Voice.vue";
 import BottomNavigation from "../components/BottomNavigation";
+import {
+    defineComponent,
+    reactive,
+    computed,
+    toRefs,
+    onMounted
+} from "@vue/composition-api";
 
-export default {
+export default defineComponent({
     components: {
         Voice,
         BottomNavigation
     },
-    data() {
-        return {
+    setup(prop, context) {
+        const state = reactive({
             dialog: false,
             voice: null, // 投稿用
             voices: [], // 一覧表示用
@@ -215,106 +222,97 @@ export default {
             audioExtension: "", // 音声ファイルの拡張子
             recording: null, // 録音中か判定する
             localstream: null,
-            voice_veri: false // 録音後の音声確認
-        };
-    },
-    computed: {
-        isLogin() {
-            return this.$store.getters["auth/check"];
-        },
-        voicePostErrors() {
-            return this.$store.state.voicePost.voicePostErrorMessages;
-        }
-    },
-    methods: {
-        // フォームでファイルが選択されたら実行される
-        onFileChange(event) {
-            this.voice = event.target.files[0];
-        },
-        reset() {
-            this.title = "";
-            this.voice = null;
-            // this.$el.querySelector('input[type="file"]').value = null; なぜかエラーでる
-        },
-        clearError() {
-            this.$store.commit("voicePost/setVoicePostErrorMessages", null);
-        },
-        async submit() {
-            const formData = new FormData();
-            formData.append("title", this.title);
-            formData.append("voice", this.voice);
+            voice_veri: false, // 録音後の音声確認
 
-            this.dialog = false;
-            this.fileUploading = true;
-            this.voice_veri = false;
+            isLogin: computed(() => context.root.$store.state.voicePost),
+            voicePostErrors: computed(
+                () => context.root.$store.state.voicePost.voicePostErrorMessages
+            )
+        });
+
+        // フォームでファイルが選択されたら実行される
+        const onFileChange = event => (state.voice = event.target.files[0]);
+        const reset = () => {
+            state.title = "";
+            state.voce = null;
+        };
+        const clearError = () => {
+            context.root.$store.commit(
+                "voicePost/setVoicePostErrorMessages",
+                null
+            );
+        };
+        const submit = async () => {
+            const formData = new FormData();
+            formData.append("title", state.title);
+            formData.append("voice", state.voice);
+
+            state.dialog = false;
+            state.fileUploading = true;
+            state.voice_veri = false;
             const response = await axios.post("/api/voices", formData);
 
             if (response.status === UNPROCESSABLE_ENTITY) {
-                this.$store.commit(
+                context.root.$store.commit(
                     "voicePost/setVoicePostErrorMessages",
                     response.data.errors
                 );
-                this.dialog = true;
-                this.fileUploading = false;
+                state.dialog = true;
+                state.fileUploading = false;
                 return false;
             }
 
-            this.reset();
-            this.snackbar = true;
-            this.fileUploading = false;
-            this.fetchVoices();
-        },
-        clickCloseButton() {
-            this.dialog = false;
-            this.recording = false;
-            this.voice_veri = false;
-            this.clearError();
-        },
-        async fetchVoices() {
+            state.snackbar = true;
+            state.fileUploading = false;
+            reset();
+            fetchVoices();
+        };
+        const clickCloseButton = () => {
+            state.dialog = false;
+            state.recording = false;
+            state.voice_veri = false;
+            clearError();
+        };
+        const fetchVoices = async () => {
             const response = await axios.get("/api/voices");
 
             if (response.status !== OK) {
-                this.$store.commit("error/setCode", response.status);
+                context.root.$store.commit("error/setCode", response.status);
                 return false;
             }
 
-            this.voices = response.data.data;
-        },
-        // 録音開始
-        rec_start() {
-            const self = this;
-            this.recording = true;
+            state.voices = response.data.data;
+        };
+        const rec_start = () => {
+            state.recording = true;
             navigator.mediaDevices
                 .getUserMedia({ audio: true })
                 .then(function(stream) {
-                    self.localstream = stream;
-                    self.recorder = new MediaRecorder(stream);
+                    state.localstream = stream;
+                    staet.recorder = new MediaRecorder(stream);
 
-                    self.recorder.start();
+                    state.recorder.start();
                 })
                 .catch(function(e) {
                     console.log(e);
                 });
-        },
-        // 録音停止
-        rec_stop() {
-            this.recorder.stop();
+        };
+        const rec_stop = () => {
+            state.recorder.stop();
 
-            const self = this;
-            this.recorder.ondataavailable = function(e) {
-                self.audioData.push(e.data);
-                const audioBlob = new Blob(self.audioData);
-                self.voice = audioBlob;
+            state.recorder.ondataavailable = function(e) {
+                state.audioData.push(e.data);
+                const audioBlob = new Blob(state.audioData);
+                state.voice = audioBlob;
                 document.getElementById("player").src = URL.createObjectURL(
                     e.data
                 );
             };
-            this.localstream.getTracks().forEach(track => track.stop());
-            this.recording = false;
-            this.voice_veri = true;
-        },
-        // 音声ファイルの拡張子取得メソッド
-        getExtension(audioType) {
+            state.localstream.getTracks().forEach(track => track.stop());
+            state.recording = false;
+            state.voice_veri = true;
+        };
+        const getExtension = audioType => {
             let extension = "wav";
             const matches = audioType.match(/audio\/([^;]+)/);
 
@@ -323,103 +321,101 @@ export default {
             }
 
             return "." + extension;
-        },
-        // いいねクリックメソッド（子コンポーネントから$emit）
-        onLikeClick({ id, liked, unliked }) {
+        };
+        const onLikeClick = ({ id, liked, unliked }) => {
             if (liked) {
                 // Goodしている
-                this.notlike(id);
+                notlike(id);
             } else if (!liked && !unliked) {
                 // Goodしてない かつ Badしてない
-                this.like(id);
+                like(id);
             } else if (!liked && unliked) {
                 // Goodしてない かつ Badしている
-                this.like(id);
-                this.notUnlike(id);
+                like(id);
+                notUnlike(id);
             }
-        },
-        // unlikeクリックメソッド（子コンポーネントから$emit）
-        onUnLikeClick({ id, liked, unliked }) {
+        };
+        const onUnLikeClick = ({ id, liked, unliked }) => {
             if (unliked) {
                 // Badしている
-                this.notUnlike(id);
+                notUnlike(id);
             } else if (!unliked && !liked) {
                 // Badしてない かつ Goodしてない
-                this.unlike(id);
+                unlike(id);
             } else if (!unliked && liked) {
                 // Badしてない かつ Goodしている
-                this.unlike(id);
-                this.notlike(id);
+                unlike(id);
+                notlike(id);
             }
-        },
-        onFavoriteClick() {
-            this.snackbar2 = true;
-        },
-        async like(id) {
+        };
+        const onFavoriteClick = () => {
+            state.snackbar2 = true;
+        };
+        const like = async id => {
             const response = await axios.put(`/api/voices/${id}/like`);
 
             if (response.status !== OK) {
-                this.$store.commit("error/setCode", response.status);
+                context.root.$store.commit("error/setCode", response.status);
                 return false;
             }
 
-            this.voices = this.voices.map(voice => {
+            state.voices = state.voices.map(voice => {
                 if (voice.id === response.data.voice_id) {
                     voice.likes_count += 1;
                     voice.liked_by_user = true;
                 }
                 return voice;
             });
-        },
-        async notlike(id) {
+        };
+        const notlike = async id => {
             const response = await axios.delete(`/api/voices/${id}/like`);
 
             if (response.status !== OK) {
-                this.$store.commit("error/setCode", response.status);
+                context.root.$store.commit("error/setCode", response.status);
                 return false;
             }
 
-            this.voices = this.voices.map(voice => {
+            state.voices = state.voices.map(voice => {
                 if (voice.id === response.data.voice_id) {
                     voice.likes_count -= 1;
                     voice.liked_by_user = false;
                 }
                 return voice;
             });
-        },
-        async unlike(id) {
+        };
+        const unlike = async id => {
             const response = await axios.put(`/api/voices/${id}/unlike`);
 
             if (response.status !== OK) {
-                this.$store.commit("error/setCode", response.status);
+                context.root.$store.commit("error/setCode", response.status);
                 return false;
             }
 
-            this.voices = this.voices.map(voice => {
+            state.voices = state.voices.map(voice => {
                 if (voice.id === response.data.voice_id) {
                     voice.unlikes_count += 1;
                     voice.unliked_by_user = true;
                 }
                 return voice;
             });
-        },
-        async notUnlike(id) {
+        };
+        const notUnlike = async id => {
             const response = await axios.delete(`/api/voices/${id}/notunlike`);
 
             if (response.status !== OK) {
-                this.$store.commit("error/setCode", response.status);
+                context.root.$store.commit("error/setCode", response.status);
                 return false;
             }
 
-            this.voices = this.voices.map(voice => {
+            state.voices = state.voices.map(voice => {
                 if (voice.id === response.data.voice_id) {
                     voice.unlikes_count -= 1;
                     voice.unliked_by_user = false;
                 }
                 return voice;
             });
-        },
-        infiniteHandler($state) {
+        };
+        const infiniteHandler = $state => {
             axios
                 .get("/api/voices", {
                     params: {
@@ -431,7 +427,7 @@ export default {
                     setTimeout(() => {
                         if (this.page * 10 < data.total) {
                             this.page += 1;
-                            this.voices.push(...data.data);
+                            state.voices.push(...data.data);
                             console.log(data);
                             $state.loaded();
                         } else {
@@ -442,20 +438,33 @@ export default {
                 .catch(err => {
                     $state.complete();
                 });
-        }
-    },
-    watch: {
-        $route: {
-            async handler() {
-                await this.fetchVoices();
-            },
-            immediate: true
-        }
-    },
-    created() {
-        this.clearError();
+        };
+
+        onMounted(() => {
+            fetchVoices(), clearError();
+        });
+
+        return {
+            ...toRefs(state),
+            onFileChange,
+            reset,
+            clearError,
+            submit,
+            clickCloseButton,
+            fetchVoices,
+            rec_start,
+            rec_stop,
+            getExtension,
+            onLikeClick,
+            onUnLikeClick,
+            onFavoriteClick,
+            notlike,
+            unlike,
+            notUnlike,
+            infiniteHandler
+        };
     }
-};
+});
 </script>
 <style lang="scss" scoped>
 .wrapper-1 {

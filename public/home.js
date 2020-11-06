@@ -14,7 +14,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
 /* harmony import */ var _components_Voice_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Voice.vue */ "./resources/js/components/Voice.vue");
 /* harmony import */ var _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/BottomNavigation */ "./resources/js/components/BottomNavigation.vue");
+/* harmony import */ var _vue_composition_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @vue/composition-api */ "./node_modules/@vue/composition-api/dist/vue-composition-api.esm.js");
 
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -223,13 +230,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["defineComponent"])({
   components: {
     Voice: _components_Voice_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     BottomNavigation: _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  data: function data() {
-    return {
+  setup: function setup(prop, context) {
+    var _this = this;
+
+    var state = Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["reactive"])({
       dialog: false,
       voice: null,
       // 投稿用
@@ -259,45 +269,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       recording: null,
       // 録音中か判定する
       localstream: null,
-      voice_veri: false // 録音後の音声確認
+      voice_veri: false,
+      // 録音後の音声確認
+      isLogin: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["computed"])(function () {
+        return context.root.$store.state.voicePost;
+      }),
+      voicePostErrors: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["computed"])(function () {
+        return context.root.$store.state.voicePost.voicePostErrorMessages;
+      })
+    }); // フォームでファイルが選択されたら実行される
 
+    var onFileChange = function onFileChange(event) {
+      return state.voice = event.target.files[0];
     };
-  },
-  computed: {
-    isLogin: function isLogin() {
-      return this.$store.getters["auth/check"];
-    },
-    voicePostErrors: function voicePostErrors() {
-      return this.$store.state.voicePost.voicePostErrorMessages;
-    }
-  },
-  methods: {
-    // フォームでファイルが選択されたら実行される
-    onFileChange: function onFileChange(event) {
-      this.voice = event.target.files[0];
-    },
-    reset: function reset() {
-      this.title = "";
-      this.voice = null; // this.$el.querySelector('input[type="file"]').value = null; なぜかエラーでる
-    },
-    clearError: function clearError() {
-      this.$store.commit("voicePost/setVoicePostErrorMessages", null);
-    },
-    submit: function submit() {
-      var _this = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+    var reset = function reset() {
+      state.title = "";
+      state.voce = null;
+    };
+
+    var clearError = function clearError() {
+      context.root.$store.commit("voicePost/setVoicePostErrorMessages", null);
+    };
+
+    var submit = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var formData, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 formData = new FormData();
-                formData.append("title", _this.title);
-                formData.append("voice", _this.voice);
-                _this.dialog = false;
-                _this.fileUploading = true;
-                _this.voice_veri = false;
+                formData.append("title", state.title);
+                formData.append("voice", state.voice);
+                state.dialog = false;
+                state.fileUploading = true;
+                state.voice_veri = false;
                 _context.next = 8;
                 return axios.post("/api/voices", formData);
 
@@ -309,19 +316,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this.$store.commit("voicePost/setVoicePostErrorMessages", response.data.errors);
-
-                _this.dialog = true;
-                _this.fileUploading = false;
+                context.root.$store.commit("voicePost/setVoicePostErrorMessages", response.data.errors);
+                state.dialog = true;
+                state.fileUploading = false;
                 return _context.abrupt("return", false);
 
               case 14:
-                _this.reset();
-
-                _this.snackbar = true;
-                _this.fileUploading = false;
-
-                _this.fetchVoices();
+                state.snackbar = true;
+                state.fileUploading = false;
+                reset();
+                fetchVoices();
 
               case 18:
               case "end":
@@ -329,18 +333,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
-      }))();
-    },
-    clickCloseButton: function clickCloseButton() {
-      this.dialog = false;
-      this.recording = false;
-      this.voice_veri = false;
-      this.clearError();
-    },
-    fetchVoices: function fetchVoices() {
-      var _this2 = this;
+      }));
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return function submit() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    var clickCloseButton = function clickCloseButton() {
+      state.dialog = false;
+      state.recording = false;
+      state.voice_veri = false;
+      clearError();
+    };
+
+    var fetchVoices = /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -357,12 +365,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this2.$store.commit("error/setCode", response.status);
-
+                context.root.$store.commit("error/setCode", response.status);
                 return _context2.abrupt("return", false);
 
               case 6:
-                _this2.voices = response.data.data;
+                state.voices = response.data.data;
 
               case 7:
               case "end":
@@ -370,42 +377,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
-      }))();
-    },
-    // 録音開始
-    rec_start: function rec_start() {
-      var self = this;
-      this.recording = true;
+      }));
+
+      return function fetchVoices() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+
+    var rec_start = function rec_start() {
+      state.recording = true;
       navigator.mediaDevices.getUserMedia({
         audio: true
       }).then(function (stream) {
-        self.localstream = stream;
-        self.recorder = new MediaRecorder(stream);
-        self.recorder.start();
+        state.localstream = stream;
+        staet.recorder = new MediaRecorder(stream);
+        state.recorder.start();
       })["catch"](function (e) {
         console.log(e);
       });
-    },
-    // 録音停止
-    rec_stop: function rec_stop() {
-      this.recorder.stop();
-      var self = this;
+    };
 
-      this.recorder.ondataavailable = function (e) {
-        self.audioData.push(e.data);
-        var audioBlob = new Blob(self.audioData);
-        self.voice = audioBlob;
+    var rec_stop = function rec_stop() {
+      state.recorder.stop();
+
+      state.recorder.ondataavailable = function (e) {
+        state.audioData.push(e.data);
+        var audioBlob = new Blob(state.audioData);
+        state.voice = audioBlob;
         document.getElementById("player").src = URL.createObjectURL(e.data);
       };
 
-      this.localstream.getTracks().forEach(function (track) {
+      state.localstream.getTracks().forEach(function (track) {
         return track.stop();
       });
-      this.recording = false;
-      this.voice_veri = true;
-    },
-    // 音声ファイルの拡張子取得メソッド
-    getExtension: function getExtension(audioType) {
+      state.recording = false;
+      state.voice_veri = true;
+    };
+
+    var getExtension = function getExtension(audioType) {
       var extension = "wav";
       var matches = audioType.match(/audio\/([^;]+)/);
 
@@ -414,50 +423,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return "." + extension;
-    },
-    // いいねクリックメソッド（子コンポーネントから$emit）
-    onLikeClick: function onLikeClick(_ref) {
-      var id = _ref.id,
-          liked = _ref.liked,
-          unliked = _ref.unliked;
+    };
+
+    var onLikeClick = function onLikeClick(_ref3) {
+      var id = _ref3.id,
+          liked = _ref3.liked,
+          unliked = _ref3.unliked;
 
       if (liked) {
         // Goodしている
-        this.notlike(id);
+        notlike(id);
       } else if (!liked && !unliked) {
         // Goodしてない かつ Badしてない
-        this.like(id);
+        like(id);
       } else if (!liked && unliked) {
         // Goodしてない かつ Badしている
-        this.like(id);
-        this.notUnlike(id);
+        like(id);
+        notUnlike(id);
       }
-    },
-    // unlikeクリックメソッド（子コンポーネントから$emit）
-    onUnLikeClick: function onUnLikeClick(_ref2) {
-      var id = _ref2.id,
-          liked = _ref2.liked,
-          unliked = _ref2.unliked;
+    };
+
+    var onUnLikeClick = function onUnLikeClick(_ref4) {
+      var id = _ref4.id,
+          liked = _ref4.liked,
+          unliked = _ref4.unliked;
 
       if (unliked) {
         // Badしている
-        this.notUnlike(id);
+        notUnlike(id);
       } else if (!unliked && !liked) {
         // Badしてない かつ Goodしてない
-        this.unlike(id);
+        unlike(id);
       } else if (!unliked && liked) {
         // Badしてない かつ Goodしている
-        this.unlike(id);
-        this.notlike(id);
+        unlike(id);
+        notlike(id);
       }
-    },
-    onFavoriteClick: function onFavoriteClick() {
-      this.snackbar2 = true;
-    },
-    like: function like(id) {
-      var _this3 = this;
+    };
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+    var onFavoriteClick = function onFavoriteClick() {
+      state.snackbar2 = true;
+    };
+
+    var like = /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
@@ -474,12 +483,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this3.$store.commit("error/setCode", response.status);
-
+                context.root.$store.commit("error/setCode", response.status);
                 return _context3.abrupt("return", false);
 
               case 6:
-                _this3.voices = _this3.voices.map(function (voice) {
+                state.voices = state.voices.map(function (voice) {
                   if (voice.id === response.data.voice_id) {
                     voice.likes_count += 1;
                     voice.liked_by_user = true;
@@ -494,12 +502,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee3);
-      }))();
-    },
-    notlike: function notlike(id) {
-      var _this4 = this;
+      }));
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return function like(_x) {
+        return _ref5.apply(this, arguments);
+      };
+    }();
+
+    var notlike = /*#__PURE__*/function () {
+      var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
@@ -516,12 +527,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this4.$store.commit("error/setCode", response.status);
-
+                context.root.$store.commit("error/setCode", response.status);
                 return _context4.abrupt("return", false);
 
               case 6:
-                _this4.voices = _this4.voices.map(function (voice) {
+                state.voices = state.voices.map(function (voice) {
                   if (voice.id === response.data.voice_id) {
                     voice.likes_count -= 1;
                     voice.liked_by_user = false;
@@ -536,12 +546,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee4);
-      }))();
-    },
-    unlike: function unlike(id) {
-      var _this5 = this;
+      }));
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return function notlike(_x2) {
+        return _ref6.apply(this, arguments);
+      };
+    }();
+
+    var unlike = /*#__PURE__*/function () {
+      var _ref7 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(id) {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
@@ -558,12 +571,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this5.$store.commit("error/setCode", response.status);
-
+                context.root.$store.commit("error/setCode", response.status);
                 return _context5.abrupt("return", false);
 
               case 6:
-                _this5.voices = _this5.voices.map(function (voice) {
+                state.voices = state.voices.map(function (voice) {
                   if (voice.id === response.data.voice_id) {
                     voice.unlikes_count += 1;
                     voice.unliked_by_user = true;
@@ -578,12 +590,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee5);
-      }))();
-    },
-    notUnlike: function notUnlike(id) {
-      var _this6 = this;
+      }));
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      return function unlike(_x3) {
+        return _ref7.apply(this, arguments);
+      };
+    }();
+
+    var notUnlike = /*#__PURE__*/function () {
+      var _ref8 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(id) {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
@@ -600,12 +615,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this6.$store.commit("error/setCode", response.status);
-
+                context.root.$store.commit("error/setCode", response.status);
                 return _context6.abrupt("return", false);
 
               case 6:
-                _this6.voices = _this6.voices.map(function (voice) {
+                state.voices = state.voices.map(function (voice) {
                   if (voice.id === response.data.voice_id) {
                     voice.unlikes_count -= 1;
                     voice.unliked_by_user = false;
@@ -620,25 +634,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee6);
-      }))();
-    },
-    infiniteHandler: function infiniteHandler($state) {
-      var _this7 = this;
+      }));
 
+      return function notUnlike(_x4) {
+        return _ref8.apply(this, arguments);
+      };
+    }();
+
+    var infiniteHandler = function infiniteHandler($state) {
       axios.get("/api/voices", {
         params: {
-          page: this.page + 1,
+          page: _this.page + 1,
           per_page: 1
         }
-      }).then(function (_ref3) {
-        var data = _ref3.data;
+      }).then(function (_ref9) {
+        var data = _ref9.data;
         setTimeout(function () {
-          if (_this7.page * 10 < data.total) {
-            var _this7$voices;
+          if (_this.page * 10 < data.total) {
+            var _state$voices;
 
-            _this7.page += 1;
+            _this.page += 1;
 
-            (_this7$voices = _this7.voices).push.apply(_this7$voices, _toConsumableArray(data.data));
+            (_state$voices = state.voices).push.apply(_state$voices, _toConsumableArray(data.data));
 
             console.log(data);
             $state.loaded();
@@ -649,36 +666,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"](function (err) {
         $state.complete();
       });
-    }
-  },
-  watch: {
-    $route: {
-      handler: function handler() {
-        var _this8 = this;
+    };
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-            while (1) {
-              switch (_context7.prev = _context7.next) {
-                case 0:
-                  _context7.next = 2;
-                  return _this8.fetchVoices();
-
-                case 2:
-                case "end":
-                  return _context7.stop();
-              }
-            }
-          }, _callee7);
-        }))();
-      },
-      immediate: true
-    }
-  },
-  created: function created() {
-    this.clearError();
+    Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["onMounted"])(function () {
+      fetchVoices(), clearError();
+    });
+    return _objectSpread(_objectSpread({}, Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["toRefs"])(state)), {}, {
+      onFileChange: onFileChange,
+      reset: reset,
+      clearError: clearError,
+      submit: submit,
+      clickCloseButton: clickCloseButton,
+      fetchVoices: fetchVoices,
+      rec_start: rec_start,
+      rec_stop: rec_stop,
+      getExtension: getExtension,
+      onLikeClick: onLikeClick,
+      onUnLikeClick: onUnLikeClick,
+      onFavoriteClick: onFavoriteClick,
+      notlike: notlike,
+      unlike: unlike,
+      notUnlike: notUnlike,
+      infiniteHandler: infiniteHandler
+    });
   }
-});
+}));
 
 /***/ }),
 
