@@ -197,7 +197,7 @@ export default defineComponent({
                 return false;
             }
 
-            state.voice.comments = [response.data, ...this.voice.comments];
+            state.voice.comments = [response.data, ...state.voice.comments];
             fetchVoice();
         };
 

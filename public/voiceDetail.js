@@ -194,8 +194,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   setup: function setup(props, context) {
-    var _this = this;
-
     var state = Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["reactive"])({
       voice: null,
       // ボイス取得用
@@ -271,7 +269,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", false);
 
               case 11:
-                state.voice.comments = [response.data].concat(_toConsumableArray(_this.voice.comments));
+                state.voice.comments = [response.data].concat(_toConsumableArray(state.voice.comments));
                 fetchVoice();
 
               case 13:
