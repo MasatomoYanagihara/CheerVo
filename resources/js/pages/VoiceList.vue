@@ -282,6 +282,7 @@ export default defineComponent({
             }
 
             state.voices = response.data.data;
+            state.fileUploading = false;
         };
         const rec_start = () => {
             state.recording = true;
@@ -289,7 +290,7 @@ export default defineComponent({
                 .getUserMedia({ audio: true })
                 .then(function(stream) {
                     state.localstream = stream;
-                    staet.recorder = new MediaRecorder(stream);
+                    state.recorder = new MediaRecorder(stream);
 
                     state.recorder.start();
                 })

@@ -370,8 +370,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
                 state.voices = response.data.data;
+                state.fileUploading = false;
 
-              case 7:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -390,7 +391,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         audio: true
       }).then(function (stream) {
         state.localstream = stream;
-        staet.recorder = new MediaRecorder(stream);
+        state.recorder = new MediaRecorder(stream);
         state.recorder.start();
       })["catch"](function (e) {
         console.log(e);
