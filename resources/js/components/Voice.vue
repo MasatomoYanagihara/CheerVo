@@ -9,7 +9,7 @@
             :ripple="false"
         >
             <v-list-item three-line class="px-0 pb-0">
-                <v-list-item-avatar tile size="80" color="grey"
+                <v-list-item-avatar size="80" color="grey"
                     ><v-img alt="" :src="voice.owner.img_url"></v-img
                 ></v-list-item-avatar>
                 <Router-link

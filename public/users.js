@@ -67,7 +67,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 
@@ -319,8 +318,8 @@ var render = function() {
                 "v-avatar",
                 {
                   staticClass: "mx-auto",
-                  staticStyle: { width: "100px", height: "100px" },
-                  attrs: { color: "grey darken-1", tile: "" }
+                  staticStyle: { width: "120px", height: "120px" },
+                  attrs: { color: "grey darken-1" }
                 },
                 [_c("v-img", { attrs: { alt: "", src: _vm.userImg } })],
                 1

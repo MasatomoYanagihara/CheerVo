@@ -4,10 +4,9 @@
             <BreadCrumbs class="d-sm-none" :items="items" />
             <div class="d-flex flex-column wrapper-2">
                 <v-avatar
-                    style="width:100px; height: 100px;"
+                    style="width:120px; height: 120px;"
                     class="mx-auto"
                     color="grey darken-1"
-                    tile
                 >
                     <v-img alt="" :src="userImg"></v-img>
                 </v-avatar>
