@@ -4,7 +4,7 @@
             width="340px"
             class="mx-auto"
             color="#FFFFFF"
-            height="220px"
+            height="194px"
             outlined
             :ripple="false"
         >
@@ -154,6 +154,9 @@ export default {
 <style lang="scss" scoped>
 a {
     color: #000;
+}
+audio {
+    height: 30px;
 }
 .created_at-text {
     color: #424242;
