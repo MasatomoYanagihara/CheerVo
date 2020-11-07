@@ -75,8 +75,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     // ユーザーネーム取得
-    username: function username() {
-      return this.$store.getters["auth/username"];
+    userName: function userName() {
+      return this.$store.getters["auth/userName"];
     },
     userImg: function userImg() {
       return this.$store.getters["auth/userImg"];
@@ -175,7 +175,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.wrapper-1[data-v-99948d58] {\n    background-color: #eee;\n    height: 100%;\n}\n.wrapper-2[data-v-99948d58] {\n    background-color: gainsboro;\n    padding-top: 10%;\n    padding-bottom: 2%;\n    border-radius: 4px;\n}\n", ""]);
+exports.push([module.i, "\n.wrapper-1[data-v-99948d58] {\n    background-color: #eee;\n    height: 100%;\n}\n.wrapper-2[data-v-99948d58] {\n    background-image: url(\"https://images.unsplash.com/photo-1584028887908-f6d2257fe9d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60\");\n    max-width: 340px;\n    margin: 0 auto;\n    padding-top: 10%;\n    padding-bottom: 2%;\n    border-radius: 4px;\n}\n", ""]);
 
 // exports
 
@@ -327,7 +327,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("h2", { staticClass: "mx-auto" }, [
-                _vm._v(_vm._s(_vm.username))
+                _vm._v(_vm._s(_vm.userName))
               ])
             ],
             1

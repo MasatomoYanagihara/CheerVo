@@ -4056,7 +4056,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     // ユーザーネーム取得
     userName: function userName() {
-      return this.$store.getters["auth/username"];
+      return this.$store.getters["auth/userName"];
     },
     // ユーザーID取得
     userId: function userId() {

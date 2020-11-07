@@ -11,7 +11,7 @@
                 >
                     <v-img alt="" :src="userImg"></v-img>
                 </v-avatar>
-                <h2 class="mx-auto">{{ username }}</h2>
+                <h2 class="mx-auto">{{ userName }}</h2>
             </div>
             <v-row>
                 <Voice v-for="voice in voices" :key="voice.id" :voice="voice" />
@@ -30,8 +30,8 @@ import BreadCrumbs from "../components/BreadCrumbs";
 export default {
     computed: {
         // ユーザーネーム取得
-        username() {
-            return this.$store.getters["auth/username"];
+        userName() {
+            return this.$store.getters["auth/userName"];
         },
         userImg() {
             return this.$store.getters["auth/userImg"];
@@ -83,7 +83,9 @@ export default {
     height: 100%;
 }
 .wrapper-2 {
-    background-color: gainsboro;
+    background-image: url("https://images.unsplash.com/photo-1584028887908-f6d2257fe9d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60");
+    max-width: 340px;
+    margin: 0 auto;
     padding-top: 10%;
     padding-bottom: 2%;
     border-radius: 4px;

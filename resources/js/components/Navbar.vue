@@ -161,7 +161,7 @@ export default {
         },
         // ユーザーネーム取得
         userName() {
-            return this.$store.getters["auth/username"];
+            return this.$store.getters["auth/userName"];
         },
         // ユーザーID取得
         userId() {
