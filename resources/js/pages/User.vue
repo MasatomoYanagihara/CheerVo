@@ -84,6 +84,7 @@ export default {
 }
 .wrapper-2 {
     background-color: gainsboro;
+    background-image: url("https://images.unsplash.com/photo-1584028887908-f6d2257fe9d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60");
     padding-top: 10%;
     padding-bottom: 2%;
     border-radius: 4px;
