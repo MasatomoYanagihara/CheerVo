@@ -1,4 +1,32 @@
 {
     "/js/app.js": "/js/app.js",
+<<<<<<< HEAD
     "/css/app.css": "/css/app.css"
+=======
+    "/css/app.css": "/css/app.css",
+    "/home.js": "/home.js",
+    "/home~search~users.js": "/home~search~users.js",
+    "/home~search~users~voiceDetail.js": "/home~search~users~voiceDetail.js",
+    "/login.js": "/login.js",
+    "/notFound.js": "/notFound.js",
+    "/register.js": "/register.js",
+    "/search.js": "/search.js",
+    "/systemError.js": "/systemError.js",
+    "/users.js": "/users.js",
+    "/vendors~home~search~users~voiceDetail.js": "/vendors~home~search~users~voiceDetail.js",
+    "/voiceDetail.js": "/voiceDetail.js",
+    "/vendors~home~search~users.js": "/vendors~home~search~users.js",
+    "/search~users.js": "/search~users.js",
+    "/search~users~voiceDetail.js": "/search~users~voiceDetail.js",
+    "/vendors~search~users~voiceDetail.js": "/vendors~search~users~voiceDetail.js",
+<<<<<<< Updated upstream
+    "/vendors~voiceDetail.js": "/vendors~voiceDetail.js"
+=======
+    "/vendors~voiceDetail.js": "/vendors~voiceDetail.js",
+    "/search~users~voice.js": "/search~users~voice.js",
+    "/search~users~voice~voiceDetail.js": "/search~users~voice~voiceDetail.js",
+    "/vendors~search~users~voice~voiceDetail.js": "/vendors~search~users~voice~voiceDetail.js",
+    "/voice.js": "/voice.js"
+>>>>>>> Stashed changes
+>>>>>>> parent of d6fb44e... .0: Auto stash before merge of "Vue2.0" and "origin/Vue2.0"
 }
