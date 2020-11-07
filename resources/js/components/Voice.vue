@@ -115,15 +115,8 @@
 
 <script>
 import Mixin from "../mixins/mixin";
-import {
-    defineComponent,
-    reactive,
-    computed,
-    toRefs,
-    onMounted
-} from "@vue/composition-api";
 
-export default defineComponent({
+export default {
     mixins: [Mixin],
     props: {
         voice: {
@@ -131,33 +124,32 @@ export default defineComponent({
             required: true
         }
     },
-    setup(prop, context) {
-        const state = reactive({
-            isLogin: computed(() => context.root.$store.getters["auth/check"])
-        });
-
-        const like = () => {
+    computed: {
+        // ログインチェック
+        isLogin() {
+            return this.$store.getters["auth/check"];
+        }
+    },
+    methods: {
+        like() {
             this.$emit("like", {
-                id: props.voice.id,
-                liked: props.voice.liked_by_user,
-                unliked: props.voice.unliked_by_user
+                id: this.voice.id,
+                liked: this.voice.liked_by_user,
+                unliked: this.voice.unliked_by_user
             });
-        };
-        const unlike = () => {
+        },
+        unlike() {
             this.$emit("unlike", {
-                id: props.voice.id,
-                liked: props.voice.liked_by_user,
-                unliked: props.voice.unliked_by_user
+                id: this.voice.id,
+                liked: this.voice.liked_by_user,
+                unliked: this.voice.unliked_by_user
             });
-        };
-
-        return {
-            ...toRefs(state),
-            like,
-            unlike
-        };
+        },
+        test() {
+            console.log("test");
+        }
     }
-});
+};
 </script>
 <style lang="scss" scoped>
 a {
