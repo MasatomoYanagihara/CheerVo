@@ -14,14 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
 /* harmony import */ var _mixins_mixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/mixin */ "./resources/js/mixins/mixin.js");
 /* harmony import */ var _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/BottomNavigation */ "./resources/js/components/BottomNavigation.vue");
-/* harmony import */ var _vue_composition_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @vue/composition-api */ "./node_modules/@vue/composition-api/dist/vue-composition-api.esm.js");
 
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -178,11 +171,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["defineComponent"])({
+/* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_mixins_mixin__WEBPACK_IMPORTED_MODULE_2__["default"]],
   components: {
     BottomNavigation: _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -193,32 +186,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       required: true
     }
   },
-  setup: function setup(props, context) {
-    var state = Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["reactive"])({
+  data: function data() {
+    return {
       voice: null,
       // ボイス取得用
       commentContent: "",
       // コメント投稿用
-      commentErrors: null,
-      // エラー用
-      isLogin: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["computed"])(function () {
-        return context.root.$store.getters["auth/check"];
-      })
-    });
+      commentErrors: null // エラー用
 
-    var fetchVoice = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+    };
+  },
+  computed: {
+    isLogin: function isLogin() {
+      return this.$store.getters["auth/check"];
+    }
+  },
+  methods: {
+    fetchVoice: function fetchVoice() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get("/api/voices/".concat(props.id));
+                return axios.get("/api/voices/".concat(_this.id));
 
               case 2:
                 response = _context.sent;
-                state.voice = response.data;
+                // if (response.status !== OK) {
+                //     this.$store.commit("error/setCode", response.status);
+                //     return false;
+                // }
+                _this.voice = response.data;
 
               case 4:
               case "end":
@@ -226,23 +228,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
-      }));
+      }))();
+    },
+    addComment: function addComment() {
+      var _this2 = this;
 
-      return function fetchVoice() {
-        return _ref.apply(this, arguments);
-      };
-    }();
-
-    var addComment = /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.post("/api/voices/".concat(props.id, "/comments"), {
-                  content: state.commentContent
+                return axios.post("/api/voices/".concat(_this2.id, "/comments"), {
+                  content: _this2.commentContent
                 });
 
               case 2:
@@ -253,24 +252,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                state.commentErrors = response.data.errors;
+                _this2.commentErrors = response.data.errors;
                 return _context2.abrupt("return", false);
 
               case 6:
-                state.commentContent = "";
-                state.commentErrors = null; // その他のエラー
+                _this2.commentContent = "";
+                _this2.commentErrors = null; // その他のエラー
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
                   _context2.next = 11;
                   break;
                 }
 
-                context.root.$store.commit("error/setCode", response.status);
+                _this2.$store.commit("error/setCode", response.status);
+
                 return _context2.abrupt("return", false);
 
               case 11:
-                state.voice.comments = [response.data].concat(_toConsumableArray(state.voice.comments));
-                fetchVoice();
+                _this2.voice.comments = [response.data].concat(_toConsumableArray(_this2.voice.comments));
+
+                _this2.fetchVoice();
 
               case 13:
               case "end":
@@ -278,19 +279,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee2);
-      }));
+      }))();
+    }
+  },
+  watch: {
+    $route: {
+      handler: function handler() {
+        var _this3 = this;
 
-      return function addComment() {
-        return _ref2.apply(this, arguments);
-      };
-    }();
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+            while (1) {
+              switch (_context3.prev = _context3.next) {
+                case 0:
+                  _context3.next = 2;
+                  return _this3.fetchVoice();
 
-    fetchVoice();
-    return _objectSpread(_objectSpread({}, Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_4__["toRefs"])(state)), {}, {
-      addComment: addComment
-    });
+                case 2:
+                case "end":
+                  return _context3.stop();
+              }
+            }
+          }, _callee3);
+        }))();
+      },
+      immediate: true
+    }
   }
-}));
+});
 
 /***/ }),
 
@@ -367,6 +383,7 @@ var render = function() {
         {
           staticClass: "mx-auto",
           attrs: {
+            to: "/voices/" + _vm.voice.id,
             width: "340px",
             color: "#FFFFFF",
             height: "220px",

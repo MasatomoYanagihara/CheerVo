@@ -11,14 +11,8 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _vue_composition_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vue/composition-api */ "./node_modules/@vue/composition-api/dist/vue-composition-api.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -92,41 +86,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["defineComponent"])({
-  setup: function setup(prop, context) {
-    var state = Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["reactive"])({
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
       registerForm: {
         name: "",
         email: "",
         password: "",
         password_confirmation: ""
-      },
-      apiStatus: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["computed"])(function () {
-        return context.root.$store.state.auth.apiStatus;
-      }),
-      loginErrors: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["computed"])(function () {
-        return context.root.$store.state.auth.loginErrorMessages;
-      }),
-      registerErrors: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["computed"])(function () {
-        return context.root.$store.state.auth.registerErrorMessages;
-      })
-    });
-    Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["onMounted"])(function () {
-      return clearError();
-    });
+      }
+    };
+  },
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    apiStatus: function apiStatus(state) {
+      return state.auth.apiStatus;
+    },
+    loginErrors: function loginErrors(state) {
+      return state.auth.loginErrorMessages;
+    },
+    registerErrors: function registerErrors(state) {
+      return state.auth.registerErrorMessages;
+    }
+  }),
+  methods: {
+    // 会員登録メソッド
+    register: function register() {
+      var _this = this;
 
-    var register = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return context.root.$store.dispatch("auth/register", state.registerForm);
+                return _this.$store.dispatch("auth/register", _this.registerForm);
 
               case 2:
-                if (state.apiStatus) {
-                  context.root.$router.push("/");
+                // API通信に問題がなければ"/"に遷移
+                if (_this.apiStatus) {
+                  _this.$router.push("/");
                 }
 
               case 3:
@@ -135,23 +133,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
-      }));
-
-      return function register() {
-        return _ref.apply(this, arguments);
-      };
-    }();
-
-    var clearError = function clearError() {
-      context.root.$store.commit("auth/setLoginErrorMessages", null);
-      context.root.$store.commit("auth/setRegisterErrorMessages", null);
-    };
-
-    return _objectSpread(_objectSpread({}, Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_1__["toRefs"])(state)), {}, {
-      register: register
-    });
+      }))();
+    }
+  },
+  clearError: function clearError() {
+    this.$store.commit("auth/setLoginErrorMessages", null);
+    this.$store.commit("auth/setRegisterErrorMessages", null);
   }
-}));
+});
 
 /***/ }),
 

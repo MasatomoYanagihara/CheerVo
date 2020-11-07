@@ -39,14 +39,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Voice_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Voice.vue */ "./resources/js/components/Voice.vue");
 /* harmony import */ var _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/BottomNavigation */ "./resources/js/components/BottomNavigation.vue");
 /* harmony import */ var _components_BreadCrumbs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/BreadCrumbs */ "./resources/js/components/BreadCrumbs.vue");
-/* harmony import */ var _vue_composition_api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vue/composition-api */ "./node_modules/@vue/composition-api/dist/vue-composition-api.esm.js");
 
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -79,15 +72,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_5__["defineComponent"])({
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    // ユーザーネーム取得
+    username: function username() {
+      return this.$store.getters["auth/username"];
+    },
+    userImg: function userImg() {
+      return this.$store.getters["auth/userImg"];
+    }
+  },
   components: {
     Voice: _components_Voice_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     BottomNavigation: _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_3__["default"],
     BreadCrumbs: _components_BreadCrumbs__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
-  setup: function setup(prop, context) {
-    var state = Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_5__["reactive"])({
+  data: function data() {
+    return {
       voices: {},
       //一覧表示用
       items: [{
@@ -96,27 +97,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, {
         text: "マイページ",
         disabled: false
-      }],
-      userName: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_5__["computed"])(function () {
-        return context.root.$store.getters["auth/userName"];
-      }),
-      userImg: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_5__["computed"])(function () {
-        return context.root.$store.getters["auth/userImg"];
-      })
-    });
-    Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_5__["onMounted"])(function () {
-      return fetchMyVoices();
-    });
+      }]
+    };
+  },
+  methods: {
+    fetchMyVoices: function fetchMyVoices() {
+      var _this = this;
 
-    var fetchMyVoices = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get("/api/voices/users/".concat(context.root.$route.params.id));
+                return axios.get("/api/voices/users/".concat(_this.$route.params.id));
 
               case 2:
                 response = _context.sent;
@@ -126,11 +121,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                context.root.$store.commit("error/setCode", response.status);
+                _this.$store.commit("error/setCode", response.status);
+
                 return _context.abrupt("return", false);
 
               case 6:
-                state.voices = response.data;
+                _this.voices = response.data;
 
               case 7:
               case "end":
@@ -138,16 +134,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
-      }));
-
-      return function fetchMyVoices() {
-        return _ref.apply(this, arguments);
-      };
-    }();
-
-    return _objectSpread({}, Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_5__["toRefs"])(state));
+      }))();
+    }
+  },
+  created: function created() {
+    this.fetchMyVoices();
   }
-}));
+});
 
 /***/ }),
 
@@ -334,7 +327,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("h2", { staticClass: "mx-auto" }, [
-                _vm._v(_vm._s(_vm.userName))
+                _vm._v(_vm._s(_vm.username))
               ])
             ],
             1

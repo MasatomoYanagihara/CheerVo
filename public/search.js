@@ -13,14 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_Voice_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Voice.vue */ "./resources/js/components/Voice.vue");
 /* harmony import */ var _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/BottomNavigation */ "./resources/js/components/BottomNavigation.vue");
-/* harmony import */ var _vue_composition_api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @vue/composition-api */ "./node_modules/@vue/composition-api/dist/vue-composition-api.esm.js");
 
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -108,125 +101,119 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_3__["defineComponent"])({
+/* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Voice: _components_Voice_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     BottomNavigation: _components_BottomNavigation__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  setup: function setup(prop, context) {
-    var _this = this;
-
-    var state = Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_3__["reactive"])({
+  data: function data() {
+    return {
       keyword: "",
       searchResultData: [],
       snackbar: false,
       timeout: 3000,
       requiredMessage: false,
       page: 1
-    });
-    var methods = {
-      searchKeyword: function () {
-        var _searchKeyword = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          var response;
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  if (!(!state.keyword == "")) {
-                    _context.next = 9;
-                    break;
-                  }
-
-                  _context.next = 3;
-                  return axios.get("/api/voices/search", {
-                    params: {
-                      keyword: state.keyword
-                    }
-                  })["catch"](function (err) {
-                    return err.response || err;
-                  });
-
-                case 3:
-                  response = _context.sent;
-
-                  if (response.data.data.length === 0) {
-                    state.snackbar = true;
-                  }
-
-                  state.searchResultData = response.data.data;
-                  state.requiredMessage = false;
-                  _context.next = 10;
-                  break;
-
-                case 9:
-                  state.requiredMessage = true;
-
-                case 10:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee);
-        }));
-
-        function searchKeyword() {
-          return _searchKeyword.apply(this, arguments);
-        }
-
-        return searchKeyword;
-      }(),
-      // いいねクリックメソッド（子コンポーネントから$emit）
-      onLikeClick: function onLikeClick(_ref) {
-        var id = _ref.id,
-            liked = _ref.liked;
-
-        if (liked) {
-          _this.notlike(id);
-        } else {
-          _this.like(id);
-        }
-      },
-      // unlikeクリックメソッド（子コンポーネントから$emit）
-      onUnLikeClick: function onUnLikeClick(_ref2) {
-        var id = _ref2.id,
-            unliked = _ref2.unliked;
-
-        if (unliked) {
-          _this.notUnlike(id);
-        } else {
-          _this.unlike(id);
-        }
-      },
-      infiniteHandler: function infiniteHandler($state) {
-        axios.get("/api/voices/search?keyword=".concat(state.keyword), {
-          params: {
-            page: state.page,
-            per_page: 1
-          }
-        }).then(function (_ref3) {
-          var data = _ref3.data;
-          setTimeout(function () {
-            if (state.page < data.data.length) {
-              var _state$searchResultDa;
-
-              state.page += 1;
-
-              (_state$searchResultDa = state.searchResultData).push.apply(_state$searchResultDa, _toConsumableArray(data.data));
-
-              $state.loaded();
-            } else {
-              $state.complete();
-            }
-          }, 1500);
-        })["catch"](function (err) {
-          $state.complete();
-        });
-      }
     };
-    return _objectSpread(_objectSpread({}, Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_3__["toRefs"])(state)), methods);
+  },
+  methods: {
+    searchKeyword: function searchKeyword() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(!_this.keyword == "")) {
+                  _context.next = 9;
+                  break;
+                }
+
+                _context.next = 3;
+                return axios.get("/api/voices/search", {
+                  params: {
+                    keyword: _this.keyword
+                  }
+                })["catch"](function (err) {
+                  return err.response || err;
+                });
+
+              case 3:
+                response = _context.sent;
+
+                if (response.data.data.length === 0) {
+                  _this.snackbar = true;
+                }
+
+                _this.searchResultData = response.data.data;
+                _this.requiredMessage = false;
+                _context.next = 10;
+                break;
+
+              case 9:
+                _this.requiredMessage = true;
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    // いいねクリックメソッド（子コンポーネントから$emit）
+    onLikeClick: function onLikeClick(_ref) {
+      var id = _ref.id,
+          liked = _ref.liked;
+
+      if (liked) {
+        this.notlike(id);
+      } else {
+        this.like(id);
+      }
+    },
+    // unlikeクリックメソッド（子コンポーネントから$emit）
+    onUnLikeClick: function onUnLikeClick(_ref2) {
+      var id = _ref2.id,
+          unliked = _ref2.unliked;
+
+      if (unliked) {
+        this.notUnlike(id);
+      } else {
+        this.unlike(id);
+      }
+    },
+    infiniteHandler: function infiniteHandler($state) {
+      var _this2 = this;
+
+      axios.get("/api/voices/search?keyword=".concat(this.keyword), {
+        params: {
+          page: this.page,
+          per_page: 1
+        }
+      }).then(function (_ref3) {
+        var data = _ref3.data;
+        setTimeout(function () {
+          if (_this2.page < data.data.length) {
+            var _this2$searchResultDa;
+
+            _this2.page += 1;
+
+            (_this2$searchResultDa = _this2.searchResultData).push.apply(_this2$searchResultDa, _toConsumableArray(data.data));
+
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+        }, 1500);
+      })["catch"](function (err) {
+        $state.complete();
+      });
+    }
   }
-}));
+});
 
 /***/ }),
 
@@ -242,7 +229,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".wrapper-1[data-v-7262a471] {\n  padding-top: 30px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #eee;\n}\n.error-message[data-v-7262a471] {\n  list-style: none;\n  color: red;\n  padding-left: 0;\n}\n.infinite-loading[data-v-7262a471] {\n  margin: 0 auto;\n}", ""]);
+exports.push([module.i, ".wrapper-1[data-v-7262a471] {\n  padding-top: 30px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #EEE;\n}\n.error-message[data-v-7262a471] {\n  list-style: none;\n  color: red;\n  padding-left: 0;\n}\n.infinite-loading[data-v-7262a471] {\n  margin: 0 auto;\n}", ""]);
 
 // exports
 

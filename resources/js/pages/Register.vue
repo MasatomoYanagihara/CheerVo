@@ -66,56 +66,41 @@
     </div>
 </template>
 <script>
-import {
-    defineComponent,
-    reactive,
-    toRefs,
-    computed,
-    onMounted
-} from "@vue/composition-api";
+import { mapState } from "vuex";
 
-export default defineComponent({
-    setup(prop, context) {
-        const state = reactive({
+export default {
+    data() {
+        return {
             registerForm: {
                 name: "",
                 email: "",
                 password: "",
                 password_confirmation: ""
-            },
-
-            apiStatus: computed(() => context.root.$store.state.auth.apiStatus),
-            loginErrors: computed(
-                () => context.root.$store.state.auth.loginErrorMessages
-            ),
-            registerErrors: computed(
-                () => context.root.$store.state.auth.registerErrorMessages
-            )
-        });
-
-        onMounted(() => clearError());
-
-        const register = async () => {
-            await context.root.$store.dispatch(
-                "auth/register",
-                state.registerForm
-            );
-
-            if (state.apiStatus) {
-                context.root.$router.push("/");
             }
         };
-        const clearError = () => {
-            context.root.$store.commit("auth/setLoginErrorMessages", null);
-            context.root.$store.commit("auth/setRegisterErrorMessages", null);
-        };
+    },
+    computed: mapState({
+        apiStatus: state => state.auth.apiStatus,
+        loginErrors: state => state.auth.loginErrorMessages,
+        registerErrors: state => state.auth.registerErrorMessages
+    }),
+    methods: {
+        // 会員登録メソッド
+        async register() {
+            // authストアのresigterアクションを呼び出す
+            await this.$store.dispatch("auth/register", this.registerForm);
 
-        return {
-            ...toRefs(state),
-            register
-        };
+            // API通信に問題がなければ"/"に遷移
+            if (this.apiStatus) {
+                this.$router.push("/");
+            }
+        }
+    },
+    clearError() {
+        this.$store.commit("auth/setLoginErrorMessages", null);
+        this.$store.commit("auth/setRegisterErrorMessages", null);
     }
-});
+};
 </script>
 <style lang="scss" scoped>
 .register-button {
