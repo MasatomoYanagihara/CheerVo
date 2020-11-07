@@ -175,7 +175,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "a[data-v-d4cd1e52] {\n  color: #000;\n}\n.created_at-text[data-v-d4cd1e52] {\n  color: #424242;\n}", ""]);
+exports.push([module.i, "a[data-v-d4cd1e52] {\n  color: #000;\n}\naudio[data-v-d4cd1e52] {\n  height: 30px;\n}\n.created_at-text[data-v-d4cd1e52] {\n  color: #424242;\n}", ""]);
 
 // exports
 
@@ -238,7 +238,7 @@ var render = function() {
           attrs: {
             width: "340px",
             color: "#FFFFFF",
-            height: "220px",
+            height: "194px",
             outlined: "",
             ripple: false
           }
