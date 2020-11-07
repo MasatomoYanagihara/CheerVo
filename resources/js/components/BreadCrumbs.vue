@@ -8,16 +8,9 @@
     </div>
 </template>
 <script>
-import {
-  defineComponent,
-  reactive,
-  toRefs,
-  computed,
-} from '@vue/composition-api';
-
-export default defineComponent({
+export default {
     props: ["items"]
-});
+};
 </script>
 <style style="scss" scoped>
 a {

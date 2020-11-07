@@ -45,33 +45,30 @@
     </div>
 </template>
 <script>
-import {
-  defineComponent,
-  reactive,
-  toRefs,
-  computed,
-} from '@vue/composition-api';
+import { mapState, mapGetters } from "vuex";
 
-export default defineComponent({
-    setup(prop, context) {
-        const state = reactive({
+export default {
+    data() {
+        return {
             snackbar1: false,
             timeout1: 3000,
             snackbar2: false,
-            timeout2: 3000,
-
-            // ログインチェック
-            isLogin: computed(
-                () => context.root.$store.getters["auth/check"],
-            ),
-            // ユーザーID取得
-            userId: computed(
-                () => context.root.$store.getters["auth/userId"],
-            ),
-        })
-
-        const moveToTopOrHomepage = () => {
-            if (context.root.$route.path === "/") {
+            timeout2: 3000
+        };
+    },
+    computed: {
+        // ログインチェック
+        isLogin() {
+            return this.$store.getters["auth/check"];
+        },
+        // ユーザーID取得
+        userId() {
+            return this.$store.getters["auth/userId"];
+        }
+    },
+    methods: {
+        moveToTopOrHomepage() {
+            if (this.$route.path === "/") {
                 const duration = 300; // 移動速度（0.3秒で終了）
                 const interval = 20; // 0.020秒ごとに移動
                 const step = -window.scrollY / Math.ceil(duration / interval); // 1回に移動する距離
@@ -83,12 +80,11 @@ export default defineComponent({
                     }
                 }, interval);
             } else {
-                context.root.$router.push({ name: "home" });
+                this.$router.push({ name: "home" });
             }
-        }
-
-        const moveToTopOrSerchPage = () => {
-            if (context.root.$route.path === "/search") {
+        },
+        moveToTopOrSerchPage() {
+            if (this.$route.path === "/search") {
                 const duration = 300; // 移動速度（0.3秒で終了）
                 const interval = 20; // 0.020秒ごとに移動
                 const step = -window.scrollY / Math.ceil(duration / interval); // 1回に移動する距離
@@ -100,17 +96,15 @@ export default defineComponent({
                     }
                 }, interval);
             } else {
-                context.root.$router.push({ name: "search" });
+                this.$router.push({ name: "search" });
             }
-        }
-
-        const moveToTopOrFavoritePage = () => {
-            state.snackbar1 = true;
-        }
-
-        const moveToTopOrMypage = () => {
-            if (state.isLogin) {
-                if (context.root.$route.path === `/users/${state.userId}`) {
+        },
+        moveToTopOrFavoritePage() {
+            this.snackbar1 = true;
+        },
+        moveToTopOrMypage() {
+            if (this.isLogin) {
+                if (this.$route.path === `/users/${this.userId}`) {
                     const duration = 300; // 移動速度（0.3秒で終了）
                     const interval = 20; // 0.020秒ごとに移動
                     const step =
@@ -123,22 +117,14 @@ export default defineComponent({
                         }
                     }, interval);
                 } else {
-                    context.root.$router.push(`/users/${state.userId}`);
+                    this.$router.push(`/users/${this.userId}`);
                 }
             } else {
-                state.snackbar2 = true;
+                this.snackbar2 = true;
             }
         }
-
-        return {
-            ...toRefs(state),
-            moveToTopOrHomepage,
-            moveToTopOrSerchPage,
-            moveToTopOrFavoritePage,
-            moveToTopOrMypage
-        };
     }
-})
+};
 </script>
 <style lang="scss" scoped>
 a {
