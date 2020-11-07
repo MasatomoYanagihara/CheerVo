@@ -220,6 +220,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -231,6 +256,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       dialog: false,
+      // ボイス投稿フォームダイアログ
+      dialog2: false,
+      // アップロード中ダイアログ
       voice: null,
       // 投稿用
       voices: [],
@@ -296,7 +324,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append("title", _this.title);
                 formData.append("voice", _this.voice);
                 _this.dialog = false;
-                _this.fileUploading = true;
+                _this.dialog2 = true; // this.fileUploading = true;
+
                 _this.voice_veri = false;
                 _context.next = 8;
                 return axios.post("/api/voices", formData);
@@ -305,25 +334,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"])) {
-                  _context.next = 14;
+                  _context.next = 15;
                   break;
                 }
 
                 _this.$store.commit("voicePost/setVoicePostErrorMessages", response.data.errors);
 
                 _this.dialog = true;
+                _this.dialog2 = false;
                 _this.fileUploading = false;
                 return _context.abrupt("return", false);
 
-              case 14:
+              case 15:
                 _this.reset();
 
                 _this.snackbar = true;
                 _this.fileUploading = false;
+                _this.dialog2 = false;
 
                 _this.fetchVoices();
 
-              case 18:
+                _this.moveToTop();
+
+              case 21:
               case "end":
                 return _context.stop();
             }
@@ -622,6 +655,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee6);
       }))();
     },
+    moveToTop: function moveToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "instant"
+      });
+    },
     infiniteHandler: function infiniteHandler($state) {
       var _this7 = this;
 
@@ -803,14 +842,20 @@ var render = function() {
                 var on = ref.on
                 var attrs = ref.attrs
                 return [
-                  _vm.isLogin && !_vm.fileUploading
+                  _vm.isLogin
                     ? _c(
                         "v-btn",
                         _vm._g(
                           _vm._b(
                             {
                               staticClass: "plus-button d-flex d-sm-none",
-                              attrs: { color: "#F26101", fab: "", dark: "" }
+                              attrs: {
+                                color: "#F26101",
+                                fab: "",
+                                dark: "",
+                                disabled: _vm.dialog2,
+                                loading: _vm.dialog2
+                              }
                             },
                             "v-btn",
                             attrs,
@@ -1053,6 +1098,41 @@ var render = function() {
                     ],
                     1
                   )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { "hide-overlay": "", persistent: "", width: "300" },
+          model: {
+            value: _vm.dialog2,
+            callback: function($$v) {
+              _vm.dialog2 = $$v
+            },
+            expression: "dialog2"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            { attrs: { color: "#FFA319", dark: "" } },
+            [
+              _c(
+                "v-card-text",
+                [
+                  _vm._v("\n        アップロード中\n        "),
+                  _c("v-progress-linear", {
+                    staticClass: "mb-0",
+                    attrs: { indeterminate: "", color: "white" }
+                  })
                 ],
                 1
               )

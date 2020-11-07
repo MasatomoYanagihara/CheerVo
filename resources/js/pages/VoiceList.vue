@@ -31,7 +31,9 @@
                     dark
                     v-bind="attrs"
                     v-on="on"
-                    v-if="isLogin && !fileUploading"
+                    v-if="isLogin"
+                    :disabled="dialog2"
+                    :loading="dialog2"
                 >
                     <v-icon dark>mdi-plus</v-icon>
                 </v-btn>
@@ -155,6 +157,29 @@
             </v-form>
         </v-dialog>
 
+
+        <v-dialog
+        v-model="dialog2"
+        hide-overlay
+        persistent
+        width="300"
+        >
+        <v-card
+            color="#FFA319"
+            dark
+        >
+            <v-card-text>
+            アップロード中
+            <v-progress-linear
+                indeterminate
+                color="white"
+                class="mb-0"
+            ></v-progress-linear>
+            </v-card-text>
+        </v-card>
+        </v-dialog>
+
+
         <v-snackbar v-model="snackbar" :timeout="timeout" centered>
             投稿が完了しました
             <template v-slot:action="{ attrs }">
@@ -198,7 +223,8 @@ export default {
     },
     data() {
         return {
-            dialog: false,
+            dialog: false, // ボイス投稿フォームダイアログ
+            dialog2: false, // アップロード中ダイアログ
             voice: null, // 投稿用
             voices: [], // 一覧表示用
             title: "", // タイトル投稿用
@@ -245,7 +271,8 @@ export default {
             formData.append("voice", this.voice);
 
             this.dialog = false;
-            this.fileUploading = true;
+            this.dialog2 = true;
+            // this.fileUploading = true;
             this.voice_veri = false;
             const response = await axios.post("/api/voices", formData);
 
@@ -255,6 +282,7 @@ export default {
                     response.data.errors
                 );
                 this.dialog = true;
+                this.dialog2 = false;
                 this.fileUploading = false;
                 return false;
             }
@@ -262,7 +290,9 @@ export default {
             this.reset();
             this.snackbar = true;
             this.fileUploading = false;
+            this.dialog2 = false;
             this.fetchVoices();
+            this.moveToTop();
         },
         clickCloseButton() {
             this.dialog = false;
@@ -417,6 +447,12 @@ export default {
                     voice.unliked_by_user = false;
                 }
                 return voice;
+            });
+        },
+        moveToTop() {
+            window.scrollTo({
+                top:0,
+                behavior: "instant"
             });
         },
         infiniteHandler($state) {
