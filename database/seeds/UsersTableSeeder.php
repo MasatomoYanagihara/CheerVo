@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
             [
             'name' => '柳原政知',
             'email' => 'yanagihara@hoge.jp',
-            'img_url' => 'https://laravel-voice.s3-ap-northeast-1.amazonaws.com/faceimg.png',
+            'img_url' => 'https://images.unsplash.com/photo-1490650034439-fd184c3c86a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
             'password' => Hash::make('hogehoge'),
         ]);
         DB::table('users')->insert(
