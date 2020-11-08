@@ -10,7 +10,7 @@ const routes = [
         name: "home",
         component: () => import(/* webpackChunkName: "home" */ './pages/VoiceList.vue'),
         meta: {
-            title: 'ホーム',
+            title: 'CheerVo',
         },
     },
     {
@@ -18,7 +18,7 @@ const routes = [
         name: "login",
         component: () => import(/* webpackChunkName: "login" */ './pages/Login.vue'),
         meta: {
-            title: 'ログイン',
+            title: 'CheerVo - ログイン',
         },
         beforeEnter(to, from, next) {
             // getterでログイン状態を確認
@@ -35,7 +35,7 @@ const routes = [
         name: "voiceDetail",
         component: () => import(/* webpackChunkName: "voiceDetail" */ './pages/VoiceDetail.vue'),
         meta: {
-            title: 'ボイス詳細',
+            title: 'CheerVo - ボイス詳細',
         },
         props: true
     },
@@ -44,7 +44,7 @@ const routes = [
         name: "register",
         component: () => import(/* webpackChunkName: "register" */ './pages/Register.vue'),
         meta: {
-            title: '会員登録',
+            title: 'CheerVo - 会員登録',
         },
     },
     {
@@ -52,7 +52,7 @@ const routes = [
         name: "search",
         component: () => import(/* webpackChunkName: "search" */ './pages/Search.vue'),
         meta: {
-            title: '検索',
+            title: 'CheerVo - 検索',
         },
     },
     {
@@ -60,7 +60,7 @@ const routes = [
         name: "users",
         component: () => import(/* webpackChunkName: "users" */ './pages/User.vue'),
         meta: {
-            title: 'マイページ',
+            title: 'CheerVo - マイページ',
         },
     },
     {
@@ -68,7 +68,7 @@ const routes = [
         name: "systemError",
         component: () => import(/* webpackChunkName: "systemError" */ './pages/errors/SystemError.vue'),
         meta: {
-            title: 'システムエラー',
+            title: 'CheerVo - システムエラー',
         },
     },
     {
@@ -76,7 +76,7 @@ const routes = [
         name: "notFound",
         component: () => import(/* webpackChunkName: "notFound" */ './pages/errors/NotFound.vue'),
         meta: {
-            title: 'NotFound',
+            title: 'CheerV0 - NotFound',
         },
     }
 ];
