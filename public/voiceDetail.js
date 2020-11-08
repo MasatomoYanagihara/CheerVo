@@ -398,7 +398,7 @@ var render = function() {
             [
               _c(
                 "v-list-item-avatar",
-                { attrs: { tile: "", size: "80", color: "grey" } },
+                { attrs: { size: "80", color: "grey" } },
                 [
                   _c("v-img", {
                     staticClass: "elevation-6",

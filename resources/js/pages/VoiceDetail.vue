@@ -10,7 +10,7 @@
             :ripple="false"
         >
             <v-list-item three-line class="px-4">
-                <v-list-item-avatar tile size="80" color="grey"
+                <v-list-item-avatar size="80" color="grey"
                     ><v-img
                         class="elevation-6"
                         alt=""

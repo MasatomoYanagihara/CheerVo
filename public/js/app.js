@@ -67390,7 +67390,7 @@ var routes = [{
     return Promise.all(/*! import() | home */[__webpack_require__.e("vendors~home~search~users~voiceDetail"), __webpack_require__.e("home~search~users~voiceDetail"), __webpack_require__.e("home~search~users"), __webpack_require__.e("home")]).then(__webpack_require__.bind(null, /*! ./pages/VoiceList.vue */ "./resources/js/pages/VoiceList.vue"));
   },
   meta: {
-    title: 'ホーム'
+    title: 'CheerVo'
   }
 }, {
   path: "/login",
@@ -67399,7 +67399,7 @@ var routes = [{
     return __webpack_require__.e(/*! import() | login */ "login").then(__webpack_require__.bind(null, /*! ./pages/Login.vue */ "./resources/js/pages/Login.vue"));
   },
   meta: {
-    title: 'ログイン'
+    title: 'CheerVo - ログイン'
   },
   beforeEnter: function beforeEnter(to, from, next) {
     // getterでログイン状態を確認
@@ -67417,7 +67417,7 @@ var routes = [{
     return Promise.all(/*! import() | voiceDetail */[__webpack_require__.e("vendors~home~search~users~voiceDetail"), __webpack_require__.e("home~search~users~voiceDetail"), __webpack_require__.e("voiceDetail")]).then(__webpack_require__.bind(null, /*! ./pages/VoiceDetail.vue */ "./resources/js/pages/VoiceDetail.vue"));
   },
   meta: {
-    title: 'ボイス詳細'
+    title: 'CheerVo - ボイス詳細'
   },
   props: true
 }, {
@@ -67427,7 +67427,7 @@ var routes = [{
     return __webpack_require__.e(/*! import() | register */ "register").then(__webpack_require__.bind(null, /*! ./pages/Register.vue */ "./resources/js/pages/Register.vue"));
   },
   meta: {
-    title: '会員登録'
+    title: 'CheerVo - 会員登録'
   }
 }, {
   path: "/search",
@@ -67436,7 +67436,7 @@ var routes = [{
     return Promise.all(/*! import() | search */[__webpack_require__.e("vendors~home~search~users~voiceDetail"), __webpack_require__.e("home~search~users~voiceDetail"), __webpack_require__.e("home~search~users"), __webpack_require__.e("search")]).then(__webpack_require__.bind(null, /*! ./pages/Search.vue */ "./resources/js/pages/Search.vue"));
   },
   meta: {
-    title: '検索'
+    title: 'CheerVo - 検索'
   }
 }, {
   path: "/users/:id",
@@ -67445,7 +67445,7 @@ var routes = [{
     return Promise.all(/*! import() | users */[__webpack_require__.e("vendors~home~search~users~voiceDetail"), __webpack_require__.e("home~search~users~voiceDetail"), __webpack_require__.e("home~search~users"), __webpack_require__.e("users")]).then(__webpack_require__.bind(null, /*! ./pages/User.vue */ "./resources/js/pages/User.vue"));
   },
   meta: {
-    title: 'マイページ'
+    title: 'CheerVo - マイページ'
   }
 }, {
   path: "/500",
@@ -67454,7 +67454,7 @@ var routes = [{
     return __webpack_require__.e(/*! import() | systemError */ "systemError").then(__webpack_require__.bind(null, /*! ./pages/errors/SystemError.vue */ "./resources/js/pages/errors/SystemError.vue"));
   },
   meta: {
-    title: 'システムエラー'
+    title: 'CheerVo - システムエラー'
   }
 }, {
   path: "*",
@@ -67463,7 +67463,7 @@ var routes = [{
     return __webpack_require__.e(/*! import() | notFound */ "notFound").then(__webpack_require__.bind(null, /*! ./pages/errors/NotFound.vue */ "./resources/js/pages/errors/NotFound.vue"));
   },
   meta: {
-    title: 'NotFound'
+    title: 'CheerV0 - NotFound'
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
