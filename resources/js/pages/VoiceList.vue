@@ -96,6 +96,7 @@
                                                 mdi-circle
                                             </v-icon>
                                         </v-btn>
+                                        <p v-if="!recording">録音する</p>
                                         <v-btn
                                             color="grey darken-2"
                                             v-if="recording"
@@ -178,7 +179,7 @@ export default {
     },
     data() {
         return {
-            dialog: true, // ボイス投稿フォームダイアログ
+            dialog: false, // ボイス投稿フォームダイアログ
             uploading: false, // アップロード中ローディング
             voice: null, // 投稿用
             voices: [], // 一覧表示用
@@ -225,7 +226,7 @@ export default {
             formData.append("voice", this.voice);
 
             this.dialog = false;
-            this.dialog2 = true;
+            this.uploading = true;
             this.voice_veri = false;
             const response = await axios.post("/api/voices", formData);
 
@@ -235,19 +236,20 @@ export default {
                     response.data.errors
                 );
                 this.dialog = true;
-                this.dialog2 = false;
+                this.uploading = false;
                 return false;
             }
 
             this.reset();
             this.snackbar = true;
-            this.dialog2 = false;
+            this.uploading = false;
             this.fetchVoices();
             this.moveToTop();
         },
         clickCloseButton() {
             this.dialog = false;
             this.recording = false;
+            this.uploading = false;
             this.voice_veri = false;
             this.clearError();
         },

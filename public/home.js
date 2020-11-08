@@ -200,6 +200,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -210,7 +211,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      dialog: true,
+      dialog: false,
       // ボイス投稿フォームダイアログ
       uploading: false,
       // アップロード中ローディング
@@ -278,7 +279,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append("title", _this.title);
                 formData.append("voice", _this.voice);
                 _this.dialog = false;
-                _this.dialog2 = true;
+                _this.uploading = true;
                 _this.voice_veri = false;
                 _context.next = 8;
                 return axios.post("/api/voices", formData);
@@ -294,14 +295,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.$store.commit("voicePost/setVoicePostErrorMessages", response.data.errors);
 
                 _this.dialog = true;
-                _this.dialog2 = false;
+                _this.uploading = false;
                 return _context.abrupt("return", false);
 
               case 14:
                 _this.reset();
 
                 _this.snackbar = true;
-                _this.dialog2 = false;
+                _this.uploading = false;
 
                 _this.fetchVoices();
 
@@ -318,6 +319,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     clickCloseButton: function clickCloseButton() {
       this.dialog = false;
       this.recording = false;
+      this.uploading = false;
       this.voice_veri = false;
       this.clearError();
     },
@@ -992,6 +994,10 @@ var render = function() {
                                             ],
                                             1
                                           )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      !_vm.recording
+                                        ? _c("p", [_vm._v("録音する")])
                                         : _vm._e(),
                                       _vm._v(" "),
                                       _vm.recording
