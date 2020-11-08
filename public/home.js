@@ -200,51 +200,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -255,10 +210,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      dialog: false,
+      dialog: true,
       // ボイス投稿フォームダイアログ
-      dialog2: false,
-      // アップロード中ダイアログ
+      uploading: false,
+      // アップロード中ローディング
       voice: null,
       // 投稿用
       voices: [],
@@ -273,7 +228,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // スナックバー表示用（お気に入り機能）
       timeout2: 3000,
       // スナックバー表示時間（お気に入り機能）
-      fileUploading: false,
       page: 1,
       // 無限スクロール用
       status: "ready",
@@ -324,8 +278,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append("title", _this.title);
                 formData.append("voice", _this.voice);
                 _this.dialog = false;
-                _this.dialog2 = true; // this.fileUploading = true;
-
+                _this.dialog2 = true;
                 _this.voice_veri = false;
                 _context.next = 8;
                 return axios.post("/api/voices", formData);
@@ -334,7 +287,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"])) {
-                  _context.next = 15;
+                  _context.next = 14;
                   break;
                 }
 
@@ -342,21 +295,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.dialog = true;
                 _this.dialog2 = false;
-                _this.fileUploading = false;
                 return _context.abrupt("return", false);
 
-              case 15:
+              case 14:
                 _this.reset();
 
                 _this.snackbar = true;
-                _this.fileUploading = false;
                 _this.dialog2 = false;
 
                 _this.fetchVoices();
 
                 _this.moveToTop();
 
-              case 21:
+              case 19:
               case "end":
                 return _context.stop();
             }
@@ -733,7 +684,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".wrapper-1[data-v-e7b90492] {\n  padding-top: 16px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #eee;\n}\n.plus-button[data-v-e7b90492] {\n  position: fixed;\n  bottom: 80px;\n  right: 20px;\n}\n.progress-circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 79px;\n  right: 19px;\n}\n.title-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.file-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.infinite-loading[data-v-e7b90492] {\n  margin: 0 auto;\n}", ""]);
+exports.push([module.i, "audio[data-v-e7b90492] {\n  height: 30px;\n}\n.wrapper-1[data-v-e7b90492] {\n  padding-top: 16px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #eee;\n}\n.plus-button[data-v-e7b90492] {\n  position: fixed;\n  bottom: 80px;\n  right: 20px;\n}\n.progress-circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 79px;\n  right: 19px;\n}\n.title-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.file-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.infinite-loading[data-v-e7b90492] {\n  margin: 0 auto;\n}\n.custom-loader[data-v-e7b90492] {\n  -webkit-animation: loader-data-v-e7b90492 1s infinite;\n          animation: loader-data-v-e7b90492 1s infinite;\n  display: flex;\n}\n@-webkit-keyframes loader-data-v-e7b90492 {\nfrom {\n    transform: rotate(0);\n}\nto {\n    transform: rotate(360deg);\n}\n}\n@keyframes loader-data-v-e7b90492 {\nfrom {\n    transform: rotate(0);\n}\nto {\n    transform: rotate(360deg);\n}\n}", ""]);
 
 // exports
 
@@ -853,8 +804,7 @@ var render = function() {
                                 color: "#F26101",
                                 fab: "",
                                 dark: "",
-                                disabled: _vm.dialog2,
-                                loading: _vm.dialog2
+                                loading: _vm.uploading
                               }
                             },
                             "v-btn",
@@ -870,25 +820,7 @@ var render = function() {
                         ],
                         1
                       )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("v-progress-circular", {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.fileUploading,
-                        expression: "fileUploading"
-                      }
-                    ],
-                    staticClass: "progress-circular",
-                    attrs: {
-                      indeterminate: "",
-                      color: "#F26101",
-                      size: "58",
-                      width: "5"
-                    }
-                  })
+                    : _vm._e()
                 ]
               }
             }
@@ -918,7 +850,7 @@ var render = function() {
                 "v-card",
                 { attrs: { color: "#FFFFFF" } },
                 [
-                  _c("v-card-title", [
+                  _c("v-card-title", { staticClass: "pb-0" }, [
                     _c("span", { staticClass: "headline mx-auto mt-4" }, [
                       _vm._v("ボイスを投稿する")
                     ])
@@ -926,6 +858,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-card-text",
+                    { staticClass: "pb-0" },
                     [
                       _c(
                         "v-container",
@@ -935,7 +868,10 @@ var render = function() {
                             [
                               _c(
                                 "v-col",
-                                { attrs: { cols: "12", sm: "6", md: "4" } },
+                                {
+                                  staticClass: "pb-0",
+                                  attrs: { cols: "12", sm: "6", md: "4" }
+                                },
                                 [
                                   _c("h4", [_vm._v("＊タイトルは12文字以内")]),
                                   _vm._v(" "),
@@ -1021,38 +957,88 @@ var render = function() {
                                   _vm._v(" "),
                                   _c(
                                     "div",
-                                    { staticClass: "text-center" },
+                                    { staticClass: "text-center mb-7" },
                                     [
                                       !_vm.recording
                                         ? _c(
                                             "v-btn",
-                                            { on: { click: _vm.rec_start } },
+                                            {
+                                              staticStyle: {
+                                                width: "60px",
+                                                height: "60px"
+                                              },
+                                              attrs: {
+                                                color: "grey darken-2",
+                                                fab: "",
+                                                outlined: ""
+                                              },
+                                              on: { click: _vm.rec_start }
+                                            },
                                             [
-                                              _vm._v(
-                                                "\n                                        録音開始\n                                    "
+                                              _c(
+                                                "v-icon",
+                                                {
+                                                  attrs: {
+                                                    size: "58",
+                                                    color: "red"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                            mdi-circle\n                                        "
+                                                  )
+                                                ]
                                               )
-                                            ]
+                                            ],
+                                            1
                                           )
                                         : _vm._e(),
                                       _vm._v(" "),
                                       _vm.recording
                                         ? _c(
                                             "v-btn",
-                                            { on: { click: _vm.rec_stop } },
+                                            {
+                                              staticStyle: {
+                                                width: "60px",
+                                                height: "60px"
+                                              },
+                                              attrs: {
+                                                color: "grey darken-2",
+                                                fab: "",
+                                                outlined: ""
+                                              },
+                                              on: { click: _vm.rec_stop }
+                                            },
                                             [
-                                              _vm._v(
-                                                "\n                                        録音停止\n                                    "
+                                              _c(
+                                                "v-icon",
+                                                {
+                                                  attrs: {
+                                                    size: "38",
+                                                    color: "red"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                            mdi-square-rounded\n                                        "
+                                                  )
+                                                ]
                                               )
-                                            ]
+                                            ],
+                                            1
                                           )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _vm.recording
+                                        ? _c("p", [_vm._v("録音中")])
                                         : _vm._e()
                                     ],
                                     1
                                   ),
                                   _vm._v(" "),
-                                  _vm.voice_veri
+                                  _vm.voice_veri && !_vm.recording
                                     ? _c("audio", {
-                                        staticClass: "mt-5 pr-6",
+                                        staticClass: "mt-0 pr-6",
                                         attrs: { id: "player", controls: "" }
                                       })
                                     : _vm._e()
@@ -1070,6 +1056,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "v-card-actions",
+                    { staticClass: "pt-0" },
                     [
                       _c("v-spacer"),
                       _vm._v(" "),
@@ -1098,41 +1085,6 @@ var render = function() {
                     ],
                     1
                   )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-dialog",
-        {
-          attrs: { "hide-overlay": "", persistent: "", width: "300" },
-          model: {
-            value: _vm.dialog2,
-            callback: function($$v) {
-              _vm.dialog2 = $$v
-            },
-            expression: "dialog2"
-          }
-        },
-        [
-          _c(
-            "v-card",
-            { attrs: { color: "#FFA319", dark: "" } },
-            [
-              _c(
-                "v-card-text",
-                [
-                  _vm._v("\n        アップロード中\n        "),
-                  _c("v-progress-linear", {
-                    staticClass: "mb-0",
-                    attrs: { indeterminate: "", color: "white" }
-                  })
                 ],
                 1
               )
@@ -1224,7 +1176,7 @@ var render = function() {
             expression: "snackbar2"
           }
         },
-        [_vm._v("\n        お気に入り機能は近日リリース予定です\n        ")]
+        [_vm._v("\n        お気に入り機能は未実装です\n        ")]
       ),
       _vm._v(" "),
       _c("BottomNavigation")

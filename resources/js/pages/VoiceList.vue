@@ -32,32 +32,23 @@
                     v-bind="attrs"
                     v-on="on"
                     v-if="isLogin"
-                    :disabled="dialog2"
-                    :loading="dialog2"
+                    :loading="uploading"
                 >
                     <v-icon dark>mdi-plus</v-icon>
                 </v-btn>
-                <v-progress-circular
-                    class="progress-circular"
-                    indeterminate
-                    color="#F26101"
-                    size="58"
-                    width="5"
-                    v-show="fileUploading"
-                ></v-progress-circular>
             </template>
 
             <v-form @submit.prevent="submit">
                 <v-card color="#FFFFFF">
-                    <v-card-title>
+                    <v-card-title class="pb-0">
                         <span class="headline mx-auto mt-4"
                             >ボイスを投稿する</span
                         >
                     </v-card-title>
-                    <v-card-text>
+                    <v-card-text class="pb-0">
                         <v-container>
                             <v-row>
-                                <v-col cols="12" sm="6" md="4">
+                                <v-col class="pb-0" cols="12" sm="6" md="4">
                                     <h4>＊タイトルは12文字以内</h4>
                                     <div v-if="voicePostErrors">
                                         <ul
@@ -92,49 +83,36 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <!-- <h4 class="mb-2">
-                                        ＊対応している拡張子：mp3/m4a/wav
-                                    </h4>
-                                    <input
-                                        @change="onFileChange"
-                                        type="file"
-                                        accept="audio/mp3, audio/mp4, audio/wav"
-                                    /> -->
-                                    <!-- <div>
+                                    <div class="text-center mb-7">
                                         <v-btn
-                                            type="button"
-                                            v-if="status == 'ready'"
-                                            @click="startRecording"
-                                        >
-                                            録音を開始する
-                                        </v-btn>
-                                        <v-btn
-                                            type="button"
-                                            v-if="status == 'recording'"
-                                            @click="stopRecording"
-                                        >
-                                            録音を終了する
-                                        </v-btn>
-                                        <div id="result"></div>
-                                    </div> -->
-                                    <div class="text-center">
-                                        <v-btn
-                                            class=""
+                                            color="grey darken-2"
                                             v-if="!recording"
                                             @click="rec_start"
+                                            fab
+                                            outlined
+                                            style="width: 60px; height:60px;"
                                         >
-                                            録音開始
+                                            <v-icon size=58 color="red">
+                                                mdi-circle
+                                            </v-icon>
                                         </v-btn>
                                         <v-btn
+                                            color="grey darken-2"
                                             v-if="recording"
                                             @click="rec_stop"
+                                            fab
+                                            outlined
+                                            style="width: 60px; height:60px;"
                                         >
-                                            録音停止
+                                            <v-icon size=38 color="red">
+                                                mdi-square-rounded
+                                            </v-icon>
                                         </v-btn>
+                                        <p v-if="recording">録音中</p>
                                     </div>
                                     <audio
-                                        v-if="voice_veri"
-                                        class="mt-5 pr-6"
+                                        v-if="voice_veri && !recording"
+                                        class="mt-0 pr-6"
                                         id="player"
                                         controls
                                     ></audio>
@@ -142,7 +120,7 @@
                             </v-row>
                         </v-container>
                     </v-card-text>
-                    <v-card-actions>
+                    <v-card-actions class="pt-0">
                         <v-spacer></v-spacer>
                         <v-btn @click="submit" color="#F26101" rounded
                             ><span class="white--text"
@@ -156,29 +134,6 @@
                 </v-card>
             </v-form>
         </v-dialog>
-
-
-        <v-dialog
-        v-model="dialog2"
-        hide-overlay
-        persistent
-        width="300"
-        >
-        <v-card
-            color="#FFA319"
-            dark
-        >
-            <v-card-text>
-            アップロード中
-            <v-progress-linear
-                indeterminate
-                color="white"
-                class="mb-0"
-            ></v-progress-linear>
-            </v-card-text>
-        </v-card>
-        </v-dialog>
-
 
         <v-snackbar v-model="snackbar" :timeout="timeout" centered>
             投稿が完了しました
@@ -195,7 +150,7 @@
         </v-snackbar>
 
         <v-snackbar v-model="snackbar2" :timeout="timeout2" centered>
-            お気に入り機能は近日リリース予定です
+            お気に入り機能は未実装です
             <template v-slot:action="{ attrs }">
                 <v-btn
                     color="blue"
@@ -223,8 +178,8 @@ export default {
     },
     data() {
         return {
-            dialog: false, // ボイス投稿フォームダイアログ
-            dialog2: false, // アップロード中ダイアログ
+            dialog: true, // ボイス投稿フォームダイアログ
+            uploading: false, // アップロード中ローディング
             voice: null, // 投稿用
             voices: [], // 一覧表示用
             title: "", // タイトル投稿用
@@ -232,7 +187,6 @@ export default {
             timeout: 3000, // スナックバー表示時間（投稿が完了）
             snackbar2: false, // スナックバー表示用（お気に入り機能）
             timeout2: 3000, // スナックバー表示時間（お気に入り機能）
-            fileUploading: false,
             page: 1, // 無限スクロール用
 
             status: "ready", // 状況（init:ページ読み込んだ時, ready:録音ができる状態, recording:録音中）
@@ -272,7 +226,6 @@ export default {
 
             this.dialog = false;
             this.dialog2 = true;
-            // this.fileUploading = true;
             this.voice_veri = false;
             const response = await axios.post("/api/voices", formData);
 
@@ -283,13 +236,11 @@ export default {
                 );
                 this.dialog = true;
                 this.dialog2 = false;
-                this.fileUploading = false;
                 return false;
             }
 
             this.reset();
             this.snackbar = true;
-            this.fileUploading = false;
             this.dialog2 = false;
             this.fetchVoices();
             this.moveToTop();
@@ -494,6 +445,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+audio {
+    height: 30px;
+}
 .wrapper-1 {
     padding-top: 16px;
     padding-bottom: 20px;
@@ -524,4 +478,40 @@ export default {
 .infinite-loading {
     margin: 0 auto;
 }
+  .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 </style>
