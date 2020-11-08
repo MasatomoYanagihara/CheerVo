@@ -109,7 +109,7 @@
                                                 mdi-square-rounded
                                             </v-icon>
                                         </v-btn>
-                                        <p v-if="recording">録音中</p>
+                                        <p v-if="recording" class="red--text font-weight-bold">録音中</p>
                                     </div>
                                     <audio
                                         v-if="voice_veri && !recording"
