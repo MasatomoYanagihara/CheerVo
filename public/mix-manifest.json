@@ -11,14 +11,5 @@
     "/systemError.js": "/systemError.js",
     "/users.js": "/users.js",
     "/vendors~home~search~users~voiceDetail.js": "/vendors~home~search~users~voiceDetail.js",
-    "/voiceDetail.js": "/voiceDetail.js",
-    "/vendors~home~search~users.js": "/vendors~home~search~users.js",
-    "/search~users.js": "/search~users.js",
-    "/search~users~voiceDetail.js": "/search~users~voiceDetail.js",
-    "/vendors~search~users~voiceDetail.js": "/vendors~search~users~voiceDetail.js",
-    "/vendors~voiceDetail.js": "/vendors~voiceDetail.js",
-    "/search~users~voice.js": "/search~users~voice.js",
-    "/search~users~voice~voiceDetail.js": "/search~users~voice~voiceDetail.js",
-    "/vendors~search~users~voice~voiceDetail.js": "/vendors~search~users~voice~voiceDetail.js",
-    "/voice.js": "/voice.js"
+    "/voiceDetail.js": "/voiceDetail.js"
 }

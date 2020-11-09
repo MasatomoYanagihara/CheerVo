@@ -321,7 +321,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.recording = false;
       this.uploading = false;
       this.voice_veri = false;
+      this.reset();
       this.clearError();
+      navigator.mediaDevices.getUserMedia({
+        audio: false
+      });
     },
     fetchVoices: function fetchVoices() {
       var _this2 = this;
@@ -909,7 +913,10 @@ var render = function() {
                                     : _vm._e(),
                                   _vm._v(" "),
                                   _c("v-text-field", {
-                                    attrs: { label: "タイトル", required: "" },
+                                    attrs: {
+                                      label: "タイトルを入力",
+                                      required: ""
+                                    },
                                     model: {
                                       value: _vm.title,
                                       callback: function($$v) {

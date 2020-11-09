@@ -64,7 +64,7 @@
                                         </ul>
                                     </div>
                                     <v-text-field
-                                        label="タイトル"
+                                        label="タイトルを入力"
                                         required
                                         v-model="title"
                                     ></v-text-field>
@@ -251,7 +251,10 @@ export default {
             this.recording = false;
             this.uploading = false;
             this.voice_veri = false;
+            this.reset();
             this.clearError();
+            navigator.mediaDevices
+                .getUserMedia({ audio: false })
         },
         async fetchVoices() {
             const response = await axios.get("/api/voices");

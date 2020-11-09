@@ -17,7 +17,7 @@
             </v-btn>
         </v-bottom-navigation>
         <v-snackbar v-model="snackbar1" :timeout="timeout1" color="#313732" centered>
-            お気に入り機能は近日リリース予定です
+            お気に入り機能は未実装です
             <template v-slot:action="{ attrs }">
                 <v-btn
                     color="blue"
