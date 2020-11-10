@@ -69,72 +69,72 @@
 <script>
 import Voice from "../components/Voice.vue";
 import BottomNavigation from "../components/BottomNavigation";
+import { defineComponent, reactive, toRefs } from "@vue/composition-api";
 
-export default {
+export default defineComponent({
     components: {
         Voice,
         BottomNavigation
     },
-    data() {
-        return {
+    setup(prop, context) {
+        const state = reactive({
             keyword: "",
             searchResultData: [],
             snackbar: false,
             timeout: 3000,
             requiredMessage: false,
             page: 1
-        };
-    },
-    methods: {
-        async searchKeyword() {
-            if (!this.keyword == "") {
-                const response = await axios
-                    .get("/api/voices/search", {
-                        params: {
-                            keyword: this.keyword
-                        }
-                    })
-                    .catch(err => err.response || err);
+        });
 
-                if (response.data.data.length === 0) {
-                    this.snackbar = true;
+        const methods = {
+            searchKeyword: async () => {
+                if (!state.keyword == "") {
+                    const response = await axios
+                        .get("/api/voices/search", {
+                            params: {
+                                keyword: state.keyword
+                            }
+                        })
+                        .catch(err => err.response || err);
+
+                    if (response.data.data.length === 0) {
+                        state.snackbar = true;
+                    }
+
+                    state.searchResultData = response.data.data;
+                    state.requiredMessage = false;
+                } else {
+                    state.requiredMessage = true;
                 }
-
-                this.searchResultData = response.data.data;
-                this.requiredMessage = false;
-            } else {
-                this.requiredMessage = true;
-            }
-        },
-        // いいねクリックメソッド（子コンポーネントから$emit）
-        onLikeClick({ id, liked }) {
-            if (liked) {
-                this.notlike(id);
-            } else {
-                this.like(id);
-            }
-        },
-        // unlikeクリックメソッド（子コンポーネントから$emit）
-        onUnLikeClick({ id, unliked }) {
-            if (unliked) {
-                this.notUnlike(id);
-            } else {
-                this.unlike(id);
-            }
-        },
-        infiniteHandler($state) {
-            axios
-                .get(`/api/voices/search?keyword=${this.keyword}`, {
+            },
+            // いいねクリックメソッド（子コンポーネントから$emit）
+            onLikeClick: ({ id, liked }) => {
+                if (liked) {
+                    this.notlike(id);
+                } else {
+                    this.like(id);
+                }
+            },
+            // unlikeクリックメソッド（子コンポーネントから$emit）
+            onUnLikeClick: ({ id, unliked }) => {
+                if (unliked) {
+                    this.notUnlike(id);
+                } else {
+                    this.unlike(id);
+                }
+            },
+            infiniteHandler: ($state) => {
+                axios.get(`/api/voices/search?keyword=${state.keyword}`, {
                     params: {
-                        page: this.page,
+                        page: state.page,
                         per_page: 1
                     }
                 })
                 .then(({ data }) => {
                     setTimeout(() => {
-                        if (this.page < data.data.length) {
-                            this.page += 1;
-                            this.searchResultData.push(...data.data);
+                        if (state.page < data.data.length) {
+                            state.page += 1;
+                            state.searchResultData.push(...data.data);
                             $state.loaded();
                         } else {
                             $state.complete();
@@ -144,16 +144,22 @@ export default {
                 .catch(err => {
                     $state.complete();
                 });
-        }
+            }
+        };
+
+        return {
+        ...toRefs(state),
+        ...methods,
+      };
     }
-};
+});
 </script>
 <style lang="scss" scoped>
 .wrapper-1 {
     padding-top: 30px;
     padding-bottom: 20px;
     height: 100%;
-    background-color: #EEE;
+    background-color: #eee;
 }
 .error-message {
     list-style: none;
