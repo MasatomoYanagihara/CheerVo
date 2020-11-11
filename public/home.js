@@ -201,6 +201,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -270,7 +275,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var formData, response;
+        var formData, waitTime, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -281,14 +286,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.dialog = false;
                 _this.uploading = true;
                 _this.voice_veri = false;
-                _context.next = 8;
+
+                waitTime = function waitTime() {
+                  return console.log("1500ms待機");
+                };
+
+                setTimeout(waitTime, 1500);
+                _context.next = 10;
                 return axios.post("/api/voices", formData);
 
-              case 8:
+              case 10:
                 response = _context.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"])) {
-                  _context.next = 14;
+                  _context.next = 16;
                   break;
                 }
 
@@ -298,7 +309,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.uploading = false;
                 return _context.abrupt("return", false);
 
-              case 14:
+              case 16:
                 _this.reset();
 
                 _this.snackbar = true;
@@ -308,7 +319,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.moveToTop();
 
-              case 19:
+              case 21:
               case "end":
                 return _context.stop();
             }
@@ -323,9 +334,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.voice_veri = false;
       this.reset();
       this.clearError();
-      navigator.mediaDevices.getUserMedia({
-        audio: false
-      });
     },
     fetchVoices: function fetchVoices() {
       var _this2 = this;
@@ -636,7 +644,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
             (_this7$voices = _this7.voices).push.apply(_this7$voices, _toConsumableArray(data.data));
 
-            console.log(data);
             $state.loaded();
           } else {
             $state.complete();
@@ -1049,7 +1056,11 @@ var render = function() {
                                               staticClass:
                                                 "red--text font-weight-bold"
                                             },
-                                            [_vm._v("録音中")]
+                                            [
+                                              _vm._v(
+                                                "\n                                        録音中\n                                    "
+                                              )
+                                            ]
                                           )
                                         : _vm._e()
                                     ],

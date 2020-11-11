@@ -593,7 +593,7 @@ var render = function() {
             expression: "snackbar1"
           }
         },
-        [_vm._v("\n        お気に入り機能は近日リリース予定です\n        ")]
+        [_vm._v("\n        お気に入り機能は未実装です\n        ")]
       ),
       _vm._v(" "),
       _c(

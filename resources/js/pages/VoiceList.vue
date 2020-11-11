@@ -92,7 +92,7 @@
                                             outlined
                                             style="width: 60px; height:60px;"
                                         >
-                                            <v-icon size=58 color="red">
+                                            <v-icon size="58" color="red">
                                                 mdi-circle
                                             </v-icon>
                                         </v-btn>
@@ -105,11 +105,16 @@
                                             outlined
                                             style="width: 60px; height:60px;"
                                         >
-                                            <v-icon size=38 color="red">
+                                            <v-icon size="38" color="red">
                                                 mdi-square-rounded
                                             </v-icon>
                                         </v-btn>
-                                        <p v-if="recording" class="red--text font-weight-bold">録音中</p>
+                                        <p
+                                            v-if="recording"
+                                            class="red--text font-weight-bold"
+                                        >
+                                            録音中
+                                        </p>
                                     </div>
                                     <audio
                                         v-if="voice_veri && !recording"
@@ -228,6 +233,8 @@ export default {
             this.dialog = false;
             this.uploading = true;
             this.voice_veri = false;
+            const waitTime = () => console.log("1500ms待機");
+            setTimeout(waitTime, 1500);
             const response = await axios.post("/api/voices", formData);
 
             if (response.status === UNPROCESSABLE_ENTITY) {
@@ -253,8 +260,6 @@ export default {
             this.voice_veri = false;
             this.reset();
             this.clearError();
-            navigator.mediaDevices
-                .getUserMedia({ audio: false })
         },
         async fetchVoices() {
             const response = await axios.get("/api/voices");
@@ -407,7 +412,7 @@ export default {
         },
         moveToTop() {
             window.scrollTo({
-                top:0,
+                top: 0,
                 behavior: "instant"
             });
         },
@@ -424,7 +429,6 @@ export default {
                         if (this.page * 10 < data.total) {
                             this.page += 1;
                             this.voices.push(...data.data);
-                            console.log(data);
                             $state.loaded();
                         } else {
                             $state.complete();
@@ -483,40 +487,40 @@ audio {
 .infinite-loading {
     margin: 0 auto;
 }
-  .custom-loader {
+.custom-loader {
     animation: loader 1s infinite;
     display: flex;
-  }
-  @-moz-keyframes loader {
+}
+@-moz-keyframes loader {
     from {
-      transform: rotate(0);
+        transform: rotate(0);
     }
     to {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
-  @-webkit-keyframes loader {
+}
+@-webkit-keyframes loader {
     from {
-      transform: rotate(0);
+        transform: rotate(0);
     }
     to {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
-  @-o-keyframes loader {
+}
+@-o-keyframes loader {
     from {
-      transform: rotate(0);
+        transform: rotate(0);
     }
     to {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
-  @keyframes loader {
+}
+@keyframes loader {
     from {
-      transform: rotate(0);
+        transform: rotate(0);
     }
     to {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
+}
 </style>

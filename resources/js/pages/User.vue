@@ -82,7 +82,7 @@ export default {
     height: 100%;
 }
 .wrapper-2 {
-    background-image: url("https://images.unsplash.com/photo-1584028887908-f6d2257fe9d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60");
+    background-image: url("https://images.unsplash.com/photo-1584098113770-a5922198255a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60");
     max-width: 340px;
     margin: 0 auto;
     padding-top: 10%;

@@ -174,7 +174,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.wrapper-1[data-v-99948d58] {\n    background-color: #eee;\n    height: 100%;\n}\n.wrapper-2[data-v-99948d58] {\n    background-image: url(\"https://images.unsplash.com/photo-1584028887908-f6d2257fe9d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60\");\n    max-width: 340px;\n    margin: 0 auto;\n    padding-top: 10%;\n    padding-bottom: 2%;\n    border-radius: 4px;\n}\n", ""]);
+exports.push([module.i, "\n.wrapper-1[data-v-99948d58] {\n    background-color: #eee;\n    height: 100%;\n}\n.wrapper-2[data-v-99948d58] {\n    background-image: url(\"https://images.unsplash.com/photo-1584098113770-a5922198255a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60\");\n    max-width: 340px;\n    margin: 0 auto;\n    padding-top: 10%;\n    padding-bottom: 2%;\n    border-radius: 4px;\n}\n", ""]);
 
 // exports
 
