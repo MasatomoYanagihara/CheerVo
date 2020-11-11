@@ -11,6 +11,6 @@ class VoicesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Voice::class, 50)->create();
+        factory(App\Voice::class, 100)->create();
     }
 }

@@ -14,50 +14,85 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert(
             [
             'name' => '柳原政知',
-            'email' => 'yanagihara@hoge.jp',
-            'img_url' => 'https://images.unsplash.com/photo-1490650034439-fd184c3c86a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-            'password' => Hash::make('hogehoge'),
+            'email' => 'yanagihara@test.jp',
+            'img_url' => 'https://images.unsplash.com/photo-1528105862282-e4333365c1d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+            'password' => Hash::make('password'),
         ]);
         DB::table('users')->insert(
             [
-                'name' => 'NANA',
-                'email' => 'nana@hoge.jp',
-                'img_url' => 'https://images.unsplash.com/photo-1596797882870-8c33deeac224?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                'password' => Hash::make('hogehoge'),
+                'name' => 'Nana',
+                'email' => 'nana@test.jp',
+                'img_url' => 'https://images.unsplash.com/photo-1532723136756-147542750512?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('password'),
         ]);
         DB::table('users')->insert(
             [
                 'name' => '沼田竜平',
-                'email' => 'numata@hoge.jp',
-                'img_url' => 'https://images.unsplash.com/photo-1593626986521-f24d25d60103?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                'password' => Hash::make('hogehoge'),
+                'email' => 'numata@test.jp',
+                'img_url' => 'https://images.unsplash.com/photo-1517281749396-564b95a206c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('password'),
             ]);
         DB::table('users')->insert(
             [
-                'name' => 'ハリー',
-                'email' => 'hari@hoge.jp',
-                'img_url' => 'https://images.unsplash.com/photo-1569079349972-cbf332db1153?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                'password' => Hash::make('hogehoge'),
+                'name' => 'Jason',
+                'email' => 'jason@test.jp',
+                'img_url' => 'https://images.unsplash.com/photo-1521913626209-0fbf68f4c4b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('password'),
             ]);
         DB::table('users')->insert(
             [
                 'name' => 'Mike',
-                'email' => 'mike@hoge.jp',
-                'img_url' => 'https://images.unsplash.com/photo-1603072007571-7295a309e45f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                'password' => Hash::make('hogehoge'),
+                'email' => 'mike@test.jp',
+                'img_url' => 'https://images.unsplash.com/photo-1548504769-900b70ed122e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('password'),
             ]);
         DB::table('users')->insert(
             [
                 'name' => 'Lisa',
-                'email' => 'lisa@hoge.jp',
-                'img_url' => 'https://images.unsplash.com/photo-1603471567917-74fa6b3f7fe4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-                'password' => Hash::make('hogehoge'),
+                'email' => 'lisa@test.jp',
+                'img_url' => 'https://images.unsplash.com/flagged/photo-1593005510329-8a4035a7238f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('password'),
+            ]);
+        DB::table('users')->insert(
+            [
+                'name' => 'Pawel',
+                'email' => 'pawel@test.jp',
+                'img_url' => 'https://images.unsplash.com/photo-1593827436316-f25fa93a1af1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('password'),
+            ]);
+        DB::table('users')->insert(
+            [
+                'name' => 'Levis',
+                'email' => 'levis@test.jp',
+                'img_url' => 'https://images.unsplash.com/photo-1438183972690-6d4658e3290e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjI5MzI0fQ&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('password'),
+            ]);
+        DB::table('users')->insert(
+            [
+                'name' => 'Markus',
+                'email' => 'markus@test.jp',
+                'img_url' => 'https://images.unsplash.com/photo-1536228891610-d27ef66f7110?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('password'),
+            ]);
+        DB::table('users')->insert(
+            [
+                'name' => 'Steve',
+                'email' => 'steve@test.jp',
+                'img_url' => 'https://images.unsplash.com/photo-1572635148818-ef6fd45eb394?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('password'),
+            ]);
+        DB::table('users')->insert(
+            [
+                'name' => 'John',
+                'email' => 'john@test.jp',
+                'img_url' => 'https://images.unsplash.com/photo-1530982011887-3cc11cc85693?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+                'password' => Hash::make('password'),
             ]);
         DB::table('users')->insert(
             [
                 'name' => 'testuser',
                 'email' => 'test@test.jp',
-                'img_url' => 'https://images.unsplash.com/photo-1587354004405-bbce24c893c8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+                'img_url' => 'https://images.unsplash.com/photo-1565267172527-5cad7255d962?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
                 'password' => Hash::make('testuser'),
             ]);
     }
