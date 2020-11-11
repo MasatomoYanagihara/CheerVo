@@ -699,7 +699,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "audio[data-v-e7b90492] {\n  height: 30px;\n}\n.wrapper-1[data-v-e7b90492] {\n  padding-top: 16px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #eee;\n}\n.plus-button[data-v-e7b90492] {\n  position: fixed;\n  bottom: 80px;\n  right: 20px;\n}\n.progress-circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 79px;\n  right: 19px;\n}\n.title-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.file-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.infinite-loading[data-v-e7b90492] {\n  margin: 0 auto;\n}\n.custom-loader[data-v-e7b90492] {\n  -webkit-animation: loader-data-v-e7b90492 1s infinite;\n          animation: loader-data-v-e7b90492 1s infinite;\n  display: flex;\n}\n.card-title[data-v-e7b90492] {\n  margin: 0 auto;\n}\n@-webkit-keyframes loader-data-v-e7b90492 {\nfrom {\n    transform: rotate(0);\n}\nto {\n    transform: rotate(360deg);\n}\n}\n@keyframes loader-data-v-e7b90492 {\nfrom {\n    transform: rotate(0);\n}\nto {\n    transform: rotate(360deg);\n}\n}", ""]);
+exports.push([module.i, "audio[data-v-e7b90492] {\n  height: 30px;\n  width: 260px;\n}\n.wrapper-1[data-v-e7b90492] {\n  padding-top: 16px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #eee;\n}\n.plus-button[data-v-e7b90492] {\n  position: fixed;\n  bottom: 80px;\n  right: 20px;\n}\n.progress-circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 79px;\n  right: 19px;\n}\n.title-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.file-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.infinite-loading[data-v-e7b90492] {\n  margin: 0 auto;\n}\n.custom-loader[data-v-e7b90492] {\n  -webkit-animation: loader-data-v-e7b90492 1s infinite;\n          animation: loader-data-v-e7b90492 1s infinite;\n  display: flex;\n}\n.card-title[data-v-e7b90492] {\n  margin: 0 auto;\n}\n@-webkit-keyframes loader-data-v-e7b90492 {\nfrom {\n    transform: rotate(0);\n}\nto {\n    transform: rotate(360deg);\n}\n}\n@keyframes loader-data-v-e7b90492 {\nfrom {\n    transform: rotate(0);\n}\nto {\n    transform: rotate(360deg);\n}\n}", ""]);
 
 // exports
 
@@ -1077,7 +1077,7 @@ var render = function() {
                                   _vm._v(" "),
                                   _vm.voice_veri && !_vm.recording
                                     ? _c("audio", {
-                                        staticClass: "mt-0 pr-6",
+                                        staticClass: "mt-0 px-auto",
                                         attrs: { id: "player", controls: "" }
                                       })
                                     : _vm._e()

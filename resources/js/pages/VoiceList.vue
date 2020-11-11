@@ -120,7 +120,7 @@
                                     </div>
                                     <audio
                                         v-if="voice_veri && !recording"
-                                        class="mt-0 pr-6"
+                                        class="mt-0 px-auto"
                                         id="player"
                                         controls
                                     ></audio>
@@ -458,6 +458,7 @@ export default {
 <style lang="scss" scoped>
 audio {
     height: 30px;
+    width: 260px;
 }
 .wrapper-1 {
     padding-top: 16px;
