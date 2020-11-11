@@ -11,5 +11,6 @@
     "/systemError.js": "/systemError.js",
     "/users.js": "/users.js",
     "/vendors~home~search~users~voiceDetail.js": "/vendors~home~search~users~voiceDetail.js",
-    "/voiceDetail.js": "/voiceDetail.js"
+    "/voiceDetail.js": "/voiceDetail.js",
+    "/vendors~home~search~users.js": "/vendors~home~search~users.js"
 }
