@@ -5,7 +5,7 @@
             width="340px"
             class="mx-auto"
             color="#FFFFFF"
-            height="220px"
+            height="194px"
             outlined
             :ripple="false"
         >
@@ -18,7 +18,7 @@
                     ></v-img
                 ></v-list-item-avatar>
                 <v-list-item-content>
-                    <div class="mb-0">
+                    <div class="mb-0 created_at-text">
                         {{ voice.created_at | moment }}
                     </div>
                     <div>
@@ -54,7 +54,7 @@
                         }}</span>
                     </v-btn>
                     <v-btn icon color="grey darken-3">
-                        <v-icon>mdi-comment-multiple-outline</v-icon>
+                        <v-icon>mdi-comment-outline</v-icon>
                         <span class="subheading ml-1">{{
                             voice.comments_count
                         }}</span>
@@ -68,10 +68,28 @@
         </v-card>
 
         <!-- コメント投稿フォーム（ログイン中のみ表示） -->
-        <v-container class="commet_container">
+        <v-container class="commet_container pb-0">
             <v-row>
                 <v-col cols="12" sm="12">
                     <v-form v-if="isLogin" @submit.prevent="addComment">
+                        <div v-show="!showTextarea" class="text-center mb-4">
+                            <v-btn
+                                @click="showTextarea = !showTextarea"
+                                color="#F26101"
+                                rounded
+                            >
+                                <span class="white--text font-weight-bold"
+                                    >コメントする</span
+                                ></v-btn
+                            >
+                        </div>
+                        <div v-show="showTextarea" class="text-center mb-4">
+                            <v-btn type="submit" color="#F26101" rounded>
+                                <span class="white--text font-weight-bold"
+                                    >コメントを投稿する</span
+                                ></v-btn
+                            >
+                        </div>
                         <!-- エラー表示 -->
                         <div v-if="commentErrors" class="errors">
                             <ul v-if="commentErrors.content">
@@ -84,26 +102,22 @@
                             </ul>
                         </div>
                         <v-textarea
-                            background-color="grey lighten-2"
+                            class="textarea"
+                            background-color="grey lighten-5"
                             label="コメントを入力"
                             rows="3"
                             outlined
                             v-model="commentContent"
+                            v-show="showTextarea"
                         ></v-textarea>
-                        <div class="text-center">
-                            <v-btn type="submit" color="#F26101">
-                                <span class="white--text"
-                                    ><strong>投稿する</strong></span
-                                ></v-btn
-                            >
-                        </div>
                     </v-form>
                 </v-col>
             </v-row>
         </v-container>
+        <hr />
 
         <!-- コメント表示 -->
-        <v-container>
+        <v-container class="pt-0">
             <v-row>
                 <v-col cols="12" sm="12">
                     <ul class="ul" v-if="voice.comments.length > 0">
@@ -114,20 +128,29 @@
                             <v-card
                                 class="mx-auto mb-2"
                                 width="340px"
-                                height="100px"
-                                tile
+                                color="grey lighten-5"
+                                min-height="100px"
+                                outlined
+                                :ripple="false"
                             >
-                                <v-list-item-content>
-                                    <div class="mb-0">
-                                        {{ comment.created_at | moment }}
-                                    </div>
-                                    <v-list-item-title class="mb-1">
-                                        {{ comment.author.name }}
-                                    </v-list-item-title>
-                                    <div>
-                                        {{ comment.content }}
-                                    </div>
-                                </v-list-item-content>
+                                <v-list-item>
+                                    <v-list-item-avatar size="60" color="grey"
+                                        ><v-img
+                                            :src="comment.author.img_url"
+                                        ></v-img
+                                    ></v-list-item-avatar>
+                                    <v-list-item-content>
+                                        <span class="mb-0 created_at-text">
+                                            {{ comment.created_at | moment }}
+                                        </span>
+                                        <v-list-item-title class="mb-1">
+                                            {{ comment.author.name }}
+                                        </v-list-item-title>
+                                        <div class="comment-content">
+                                            {{ comment.content }}
+                                        </div>
+                                    </v-list-item-content>
+                                </v-list-item>
                             </v-card>
                         </li>
                     </ul>
@@ -158,7 +181,8 @@ export default {
         return {
             voice: null, // ボイス取得用
             commentContent: "", // コメント投稿用
-            commentErrors: null // エラー用
+            commentErrors: null, // エラー用
+            showTextarea: false
         };
     },
     computed: {
@@ -200,6 +224,7 @@ export default {
                 return false;
             }
 
+            this.showTextarea = false;
             this.voice.comments = [response.data, ...this.voice.comments];
             this.fetchVoice();
         }
@@ -215,6 +240,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+audio {
+    height: 30px;
+}
 li {
     list-style: none;
 }
@@ -231,5 +259,16 @@ li {
 }
 .errors {
     color: red;
+}
+.comment-content {
+    margin-top: 4px;
+    font-size: 16px;
+}
+.textarea {
+    width: 340px;
+    margin: 0 auto;
+}
+.created_at-text {
+    color: #424242;
 }
 </style>

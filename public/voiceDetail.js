@@ -172,6 +172,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -192,8 +215,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // ボイス取得用
       commentContent: "",
       // コメント投稿用
-      commentErrors: null // エラー用
-
+      commentErrors: null,
+      // エラー用
+      showTextarea: false
     };
   },
   computed: {
@@ -269,11 +293,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", false);
 
               case 11:
+                _this2.showTextarea = false;
                 _this2.voice.comments = [response.data].concat(_toConsumableArray(_this2.voice.comments));
 
                 _this2.fetchVoice();
 
-              case 13:
+              case 14:
               case "end":
                 return _context2.stop();
             }
@@ -322,7 +347,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "li[data-v-06ad10ac] {\n  list-style: none;\n}\n.ul[data-v-06ad10ac] {\n  padding-left: 0;\n}\n.wrapper-1[data-v-06ad10ac] {\n  background-color: #eee;\n  padding-top: 40px;\n  height: 100%;\n}\n.audio[data-v-06ad10ac] {\n  margin-left: 20px;\n}\n.errors[data-v-06ad10ac] {\n  color: red;\n}", ""]);
+exports.push([module.i, "audio[data-v-06ad10ac] {\n  height: 30px;\n}\nli[data-v-06ad10ac] {\n  list-style: none;\n}\n.ul[data-v-06ad10ac] {\n  padding-left: 0;\n}\n.wrapper-1[data-v-06ad10ac] {\n  background-color: #eee;\n  padding-top: 40px;\n  height: 100%;\n}\n.audio[data-v-06ad10ac] {\n  margin-left: 20px;\n}\n.errors[data-v-06ad10ac] {\n  color: red;\n}\n.comment-content[data-v-06ad10ac] {\n  margin-top: 4px;\n  font-size: 16px;\n}\n.textarea[data-v-06ad10ac] {\n  width: 340px;\n  margin: 0 auto;\n}\n.created_at-text[data-v-06ad10ac] {\n  color: #424242;\n}", ""]);
 
 // exports
 
@@ -386,7 +411,7 @@ var render = function() {
             to: "/voices/" + _vm.voice.id,
             width: "340px",
             color: "#FFFFFF",
-            height: "220px",
+            height: "194px",
             outlined: "",
             ripple: false
           }
@@ -411,7 +436,7 @@ var render = function() {
               _c(
                 "v-list-item-content",
                 [
-                  _c("div", { staticClass: "mb-0" }, [
+                  _c("div", { staticClass: "mb-0 created_at-text" }, [
                     _vm._v(
                       "\n                    " +
                         _vm._s(_vm._f("moment")(_vm.voice.created_at)) +
@@ -504,7 +529,7 @@ var render = function() {
                     "v-btn",
                     { attrs: { icon: "", color: "grey darken-3" } },
                     [
-                      _c("v-icon", [_vm._v("mdi-comment-multiple-outline")]),
+                      _c("v-icon", [_vm._v("mdi-comment-outline")]),
                       _vm._v(" "),
                       _c("span", { staticClass: "subheading ml-1" }, [
                         _vm._v(_vm._s(_vm.voice.comments_count))
@@ -537,7 +562,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-container",
-        { staticClass: "commet_container" },
+        { staticClass: "commet_container pb-0" },
         [
           _c(
             "v-row",
@@ -558,6 +583,83 @@ var render = function() {
                           }
                         },
                         [
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: !_vm.showTextarea,
+                                  expression: "!showTextarea"
+                                }
+                              ],
+                              staticClass: "text-center mb-4"
+                            },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "#F26101", rounded: "" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.showTextarea = !_vm.showTextarea
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "white--text font-weight-bold"
+                                    },
+                                    [_vm._v("コメントする")]
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.showTextarea,
+                                  expression: "showTextarea"
+                                }
+                              ],
+                              staticClass: "text-center mb-4"
+                            },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    type: "submit",
+                                    color: "#F26101",
+                                    rounded: ""
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "white--text font-weight-bold"
+                                    },
+                                    [_vm._v("コメントを投稿する")]
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
                           _vm.commentErrors
                             ? _c("div", { staticClass: "errors" }, [
                                 _vm.commentErrors.content
@@ -582,8 +684,17 @@ var render = function() {
                             : _vm._e(),
                           _vm._v(" "),
                           _c("v-textarea", {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.showTextarea,
+                                expression: "showTextarea"
+                              }
+                            ],
+                            staticClass: "textarea",
                             attrs: {
-                              "background-color": "grey lighten-2",
+                              "background-color": "grey lighten-5",
                               label: "コメントを入力",
                               rows: "3",
                               outlined: ""
@@ -595,24 +706,7 @@ var render = function() {
                               },
                               expression: "commentContent"
                             }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "text-center" },
-                            [
-                              _c(
-                                "v-btn",
-                                { attrs: { type: "submit", color: "#F26101" } },
-                                [
-                                  _c("span", { staticClass: "white--text" }, [
-                                    _c("strong", [_vm._v("投稿する")])
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
-                          )
+                          })
                         ],
                         1
                       )
@@ -627,8 +721,11 @@ var render = function() {
         1
       ),
       _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
       _c(
         "v-container",
+        { staticClass: "pt-0" },
         [
           _c(
             "v-row",
@@ -649,43 +746,74 @@ var render = function() {
                                 staticClass: "mx-auto mb-2",
                                 attrs: {
                                   width: "340px",
-                                  height: "100px",
-                                  tile: ""
+                                  color: "grey lighten-5",
+                                  "min-height": "100px",
+                                  outlined: "",
+                                  ripple: false
                                 }
                               },
                               [
                                 _c(
-                                  "v-list-item-content",
+                                  "v-list-item",
                                   [
-                                    _c("div", { staticClass: "mb-0" }, [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(
-                                            _vm._f("moment")(comment.created_at)
-                                          ) +
-                                          "\n                                "
-                                      )
-                                    ]),
-                                    _vm._v(" "),
                                     _c(
-                                      "v-list-item-title",
-                                      { staticClass: "mb-1" },
+                                      "v-list-item-avatar",
+                                      { attrs: { size: "60", color: "grey" } },
                                       [
-                                        _vm._v(
-                                          "\n                                    " +
-                                            _vm._s(comment.author.name) +
-                                            "\n                                "
-                                        )
-                                      ]
+                                        _c("v-img", {
+                                          attrs: { src: comment.author.img_url }
+                                        })
+                                      ],
+                                      1
                                     ),
                                     _vm._v(" "),
-                                    _c("div", [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(comment.content) +
-                                          "\n                                "
-                                      )
-                                    ])
+                                    _c(
+                                      "v-list-item-content",
+                                      [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass: "mb-0 created_at-text"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(
+                                                  _vm._f("moment")(
+                                                    comment.created_at
+                                                  )
+                                                ) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-list-item-title",
+                                          { staticClass: "mb-1" },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(comment.author.name) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "comment-content" },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(comment.content) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ],
+                                      1
+                                    )
                                   ],
                                   1
                                 )
