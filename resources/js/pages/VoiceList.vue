@@ -40,16 +40,18 @@
 
             <v-form @submit.prevent="submit">
                 <v-card color="#FFFFFF">
-                    <v-card-title class="pb-0">
-                        <span class="headline mx-auto mt-4"
-                            >ボイスを投稿する</span
-                        >
+                    <v-card-title class="headline mt-4 orange lighten-2">
+                        <div class="card-title">
+                            <span class="white--text font-weight-bold"
+                                >ボイスを投稿する</span
+                            >
+                        </div>
                     </v-card-title>
                     <v-card-text class="pb-0">
                         <v-container>
                             <v-row>
                                 <v-col class="pb-0" cols="12" sm="6" md="4">
-                                    <h4>＊タイトルは12文字以内</h4>
+                                    <!-- <h4>＊タイトルは12文字以内</h4> -->
                                     <div v-if="voicePostErrors">
                                         <ul
                                             v-if="voicePostErrors.title"
@@ -490,6 +492,9 @@ audio {
 .custom-loader {
     animation: loader 1s infinite;
     display: flex;
+}
+.card-title {
+    margin: 0 auto;
 }
 @-moz-keyframes loader {
     from {

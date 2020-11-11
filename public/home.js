@@ -206,6 +206,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -697,7 +699,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "audio[data-v-e7b90492] {\n  height: 30px;\n}\n.wrapper-1[data-v-e7b90492] {\n  padding-top: 16px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #eee;\n}\n.plus-button[data-v-e7b90492] {\n  position: fixed;\n  bottom: 80px;\n  right: 20px;\n}\n.progress-circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 79px;\n  right: 19px;\n}\n.title-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.file-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.infinite-loading[data-v-e7b90492] {\n  margin: 0 auto;\n}\n.custom-loader[data-v-e7b90492] {\n  -webkit-animation: loader-data-v-e7b90492 1s infinite;\n          animation: loader-data-v-e7b90492 1s infinite;\n  display: flex;\n}\n@-webkit-keyframes loader-data-v-e7b90492 {\nfrom {\n    transform: rotate(0);\n}\nto {\n    transform: rotate(360deg);\n}\n}\n@keyframes loader-data-v-e7b90492 {\nfrom {\n    transform: rotate(0);\n}\nto {\n    transform: rotate(360deg);\n}\n}", ""]);
+exports.push([module.i, "audio[data-v-e7b90492] {\n  height: 30px;\n}\n.wrapper-1[data-v-e7b90492] {\n  padding-top: 16px;\n  padding-bottom: 20px;\n  height: 100%;\n  background-color: #eee;\n}\n.plus-button[data-v-e7b90492] {\n  position: fixed;\n  bottom: 80px;\n  right: 20px;\n}\n.progress-circular[data-v-e7b90492] {\n  position: fixed;\n  bottom: 79px;\n  right: 19px;\n}\n.title-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.file-error-message[data-v-e7b90492] {\n  color: red;\n  list-style: none;\n  padding: 0;\n}\n.infinite-loading[data-v-e7b90492] {\n  margin: 0 auto;\n}\n.custom-loader[data-v-e7b90492] {\n  -webkit-animation: loader-data-v-e7b90492 1s infinite;\n          animation: loader-data-v-e7b90492 1s infinite;\n  display: flex;\n}\n.card-title[data-v-e7b90492] {\n  margin: 0 auto;\n}\n@-webkit-keyframes loader-data-v-e7b90492 {\nfrom {\n    transform: rotate(0);\n}\nto {\n    transform: rotate(360deg);\n}\n}\n@keyframes loader-data-v-e7b90492 {\nfrom {\n    transform: rotate(0);\n}\nto {\n    transform: rotate(360deg);\n}\n}", ""]);
 
 // exports
 
@@ -863,11 +865,19 @@ var render = function() {
                 "v-card",
                 { attrs: { color: "#FFFFFF" } },
                 [
-                  _c("v-card-title", { staticClass: "pb-0" }, [
-                    _c("span", { staticClass: "headline mx-auto mt-4" }, [
-                      _vm._v("ボイスを投稿する")
-                    ])
-                  ]),
+                  _c(
+                    "v-card-title",
+                    { staticClass: "headline mt-4 orange lighten-2" },
+                    [
+                      _c("div", { staticClass: "card-title" }, [
+                        _c(
+                          "span",
+                          { staticClass: "white--text font-weight-bold" },
+                          [_vm._v("ボイスを投稿する")]
+                        )
+                      ])
+                    ]
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-card-text",
@@ -886,8 +896,6 @@ var render = function() {
                                   attrs: { cols: "12", sm: "6", md: "4" }
                                 },
                                 [
-                                  _c("h4", [_vm._v("＊タイトルは12文字以内")]),
-                                  _vm._v(" "),
                                   _vm.voicePostErrors
                                     ? _c("div", [
                                         _vm.voicePostErrors.title
