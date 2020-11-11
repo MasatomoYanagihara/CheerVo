@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert(
             [
-            'name' => '柳原政知',
+            'name' => 'Yanagihara',
             'email' => 'yanagihara@test.jp',
             'img_url' => 'https://images.unsplash.com/photo-1528105862282-e4333365c1d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
             'password' => Hash::make('password'),
@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
         ]);
         DB::table('users')->insert(
             [
-                'name' => '沼田竜平',
+                'name' => 'Numata',
                 'email' => 'numata@test.jp',
                 'img_url' => 'https://images.unsplash.com/photo-1517281749396-564b95a206c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
                 'password' => Hash::make('password'),
