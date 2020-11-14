@@ -11,10 +11,5 @@
     "/systemError.js": "/systemError.js",
     "/users.js": "/users.js",
     "/vendors~home~search~users~voiceDetail.js": "/vendors~home~search~users~voiceDetail.js",
-    "/voiceDetail.js": "/voiceDetail.js",
-    "/vendors~home~search~users.js": "/vendors~home~search~users.js",
-    "/search~users.js": "/search~users.js",
-    "/search~users~voiceDetail.js": "/search~users~voiceDetail.js",
-    "/vendors~search~users~voiceDetail.js": "/vendors~search~users~voiceDetail.js",
-    "/vendors~voiceDetail.js": "/vendors~voiceDetail.js"
+    "/voiceDetail.js": "/voiceDetail.js"
 }

@@ -9,7 +9,23 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _vue_composition_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vue/composition-api */ "./node_modules/@vue/composition-api/dist/vue-composition-api.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -57,28 +73,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
+/* harmony default export */ __webpack_exports__["default"] = (Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_0__["defineComponent"])({
+  setup: function setup(prop, context) {
+    var state = Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_0__["reactive"])({
       snackbar1: false,
       timeout1: 3000,
       snackbar2: false,
-      timeout2: 3000
-    };
-  },
-  computed: {
-    // ログインチェック
-    isLogin: function isLogin() {
-      return this.$store.getters["auth/check"];
-    },
-    // ユーザーID取得
-    userId: function userId() {
-      return this.$store.getters["auth/userId"];
-    }
-  },
-  methods: {
-    moveToTopOrHomepage: function moveToTopOrHomepage() {
-      if (this.$route.path === "/") {
+      timeout2: 3000,
+      // ログインチェック
+      isLogin: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_0__["computed"])(function () {
+        return context.root.$store.getters["auth/check"];
+      }),
+      // ユーザーID取得
+      userId: Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_0__["computed"])(function () {
+        return context.root.$store.getters["auth/userId"];
+      })
+    });
+
+    var moveToTopOrHomepage = function moveToTopOrHomepage() {
+      if (context.root.$route.path === "/") {
         var duration = 300; // 移動速度（0.3秒で終了）
 
         var interval = 20; // 0.020秒ごとに移動
@@ -93,13 +106,14 @@ __webpack_require__.r(__webpack_exports__);
           }
         }, interval);
       } else {
-        this.$router.push({
+        context.root.$router.push({
           name: "home"
         });
       }
-    },
-    moveToTopOrSerchPage: function moveToTopOrSerchPage() {
-      if (this.$route.path === "/search") {
+    };
+
+    var moveToTopOrSerchPage = function moveToTopOrSerchPage() {
+      if (context.root.$route.path === "/search") {
         var duration = 300; // 移動速度（0.3秒で終了）
 
         var interval = 20; // 0.020秒ごとに移動
@@ -114,17 +128,19 @@ __webpack_require__.r(__webpack_exports__);
           }
         }, interval);
       } else {
-        this.$router.push({
+        context.root.$router.push({
           name: "search"
         });
       }
-    },
-    moveToTopOrFavoritePage: function moveToTopOrFavoritePage() {
-      this.snackbar1 = true;
-    },
-    moveToTopOrMypage: function moveToTopOrMypage() {
-      if (this.isLogin) {
-        if (this.$route.path === "/users/".concat(this.userId)) {
+    };
+
+    var moveToTopOrFavoritePage = function moveToTopOrFavoritePage() {
+      state.snackbar1 = true;
+    };
+
+    var moveToTopOrMypage = function moveToTopOrMypage() {
+      if (state.isLogin) {
+        if (context.root.$route.path === "/users/".concat(context.root.userId)) {
           var duration = 300; // 移動速度（0.3秒で終了）
 
           var interval = 20; // 0.020秒ごとに移動
@@ -139,14 +155,21 @@ __webpack_require__.r(__webpack_exports__);
             }
           }, interval);
         } else {
-          this.$router.push("/users/".concat(this.userId));
+          context.root.$router.push("/users/".concat(context.root.userId));
         }
       } else {
-        this.snackbar2 = true;
+        state.snackbar2 = true;
       }
-    }
+    };
+
+    return _objectSpread(_objectSpread({}, Object(_vue_composition_api__WEBPACK_IMPORTED_MODULE_0__["toRefs"])(state)), {}, {
+      moveToTopOrHomepage: moveToTopOrHomepage,
+      moveToTopOrSerchPage: moveToTopOrSerchPage,
+      moveToTopOrFavoritePage: moveToTopOrFavoritePage,
+      moveToTopOrMypage: moveToTopOrMypage
+    });
   }
-});
+}));
 
 /***/ }),
 
@@ -593,7 +616,7 @@ var render = function() {
             expression: "snackbar1"
           }
         },
-        [_vm._v("\n        お気に入り機能は未実装です\n        ")]
+        [_vm._v("\n        お気に入り機能は近日リリース予定です\n        ")]
       ),
       _vm._v(" "),
       _c(
