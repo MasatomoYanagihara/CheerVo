@@ -73,14 +73,8 @@ class VoiceController extends Controller
      */
     public function create(StoreVoice $request)
     {
-        // 投稿ボイスの拡張子を取得する
-        // $extension = $request->voice->extension();
-
         $voice = new Voice();
 
-        // インスタンス生成時に割り振られたランダムなID値と
-        // 本来の拡張子を組み合わせてファイル名とする
-        // $voice->filename = $voice->id . '.' . $extension;
         $voice->filename = $voice->id . '.mp3';
 
         // タイトル
