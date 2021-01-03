@@ -4050,17 +4050,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: _objectSpread(_objectSpread({
-    // ログインチェック
     isLogin: function isLogin() {
-      return this.$store.getters["auth/check"];
+      return this.$store.getters["auth/getLoginCheck"];
     },
-    // ユーザーネーム取得
     userName: function userName() {
-      return this.$store.getters["auth/userName"];
+      return this.$store.getters["auth/getUserName"];
     },
-    // ユーザーID取得
     userId: function userId() {
-      return this.$store.getters["auth/userId"];
+      return this.$store.getters["auth/getUserId"];
     }
   }, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     apiStatus: function apiStatus(state) {
@@ -67531,20 +67528,16 @@ var mutations = {
   }
 };
 var getters = {
-  // ログインチェック
-  check: function check(state) {
+  getLoginCheck: function getLoginCheck(state) {
     return !!state.user;
   },
-  // ユーザーネーム取得
-  userName: function userName(state) {
+  getUserName: function getUserName(state) {
     return state.user ? state.user.name : "";
   },
-  // ユーザーID取得
-  userId: function userId(state) {
+  getUserId: function getUserId(state) {
     return state.user ? state.user.id : "";
   },
-  // ユーザーimg_url取得
-  userImg: function userImg(state) {
+  getUserImg: function getUserImg(state) {
     return state.user ? state.user.img_url : "";
   }
 };

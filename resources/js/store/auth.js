@@ -23,14 +23,10 @@ const mutations = {
 };
 
 const getters = {
-    // ログインチェック
-    check: state => !!state.user,
-    // ユーザーネーム取得
-    userName: state => (state.user ? state.user.name : ""),
-    // ユーザーID取得
-    userId: state => (state.user ? state.user.id : ""),
-    // ユーザーimg_url取得
-    userImg: state => (state.user ? state.user.img_url : "")
+    getLoginCheck: state => !!state.user,
+    getUserName: state => (state.user ? state.user.name : ""),
+    getUserId: state => (state.user ? state.user.id : ""),
+    getUserImg: state => (state.user ? state.user.img_url : "")
 };
 
 const actions = {

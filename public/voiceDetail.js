@@ -222,7 +222,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     isLogin: function isLogin() {
-      return this.$store.getters["auth/check"];
+      return this.$store.getters["auth/getLoginCheck"];
     }
   },
   methods: {

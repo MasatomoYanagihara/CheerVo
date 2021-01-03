@@ -135,9 +135,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    // ログインチェック
     isLogin: function isLogin() {
-      return this.$store.getters["auth/check"];
+      return this.$store.getters["auth/getLoginCheck"];
     }
   },
   methods: {

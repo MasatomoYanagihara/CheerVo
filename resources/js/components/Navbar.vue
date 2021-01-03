@@ -155,17 +155,14 @@ export default {
         };
     },
     computed: {
-        // ログインチェック
         isLogin() {
-            return this.$store.getters["auth/check"];
+            return this.$store.getters["auth/getLoginCheck"];
         },
-        // ユーザーネーム取得
         userName() {
-            return this.$store.getters["auth/userName"];
+            return this.$store.getters["auth/getUserName"];
         },
-        // ユーザーID取得
         userId() {
-            return this.$store.getters["auth/userId"];
+            return this.$store.getters["auth/getUserId"];
         },
         ...mapState({
             apiStatus: state => state.auth.apiStatus

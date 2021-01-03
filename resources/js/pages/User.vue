@@ -28,12 +28,11 @@ import BreadCrumbs from "../components/BreadCrumbs";
 
 export default {
     computed: {
-        // ユーザーネーム取得
         userName() {
-            return this.$store.getters["auth/userName"];
+            return this.$store.getters["auth/geUserName"];
         },
         userImg() {
-            return this.$store.getters["auth/userImg"];
+            return this.$store.getters["auth/getUserImg"];
         }
     },
     components: {

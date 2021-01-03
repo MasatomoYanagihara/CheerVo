@@ -209,7 +209,7 @@ export default {
     },
     computed: {
         isLogin() {
-            return this.$store.getters["auth/check"];
+            return this.$store.getters["auth/getLoginCheck"];
         },
         voicePostErrors() {
             return this.$store.state.voicePost.voicePostErrorMessages;

@@ -73,12 +73,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
-    // ユーザーネーム取得
     userName: function userName() {
-      return this.$store.getters["auth/userName"];
+      return this.$store.getters["auth/geUserName"];
     },
     userImg: function userImg() {
-      return this.$store.getters["auth/userImg"];
+      return this.$store.getters["auth/getUserImg"];
     }
   },
   components: {
