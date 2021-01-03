@@ -22,7 +22,7 @@
             </v-row>
         </v-container>
 
-        <v-dialog v-model="dialog" persistent max-width="600px">
+        <v-dialog v-model="isOpenPostDialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
                     class="plus-button d-flex d-sm-none"
@@ -51,7 +51,6 @@
                         <v-container>
                             <v-row>
                                 <v-col class="pb-0" cols="12" sm="6" md="4">
-                                    <!-- <h4>＊タイトルは12文字以内</h4> -->
                                     <div v-if="voicePostErrors">
                                         <ul
                                             v-if="voicePostErrors.title"
@@ -68,7 +67,9 @@
                                     <v-text-field
                                         label="タイトルを入力"
                                         required
-                                        v-model="title"
+                                        clearable
+                                        counter="12"
+                                        v-model="postTitle"
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="4">
@@ -88,8 +89,8 @@
                                     <div class="text-center mb-7">
                                         <v-btn
                                             color="grey darken-2"
-                                            v-if="!recording"
-                                            @click="rec_start"
+                                            v-if="!isRecording"
+                                            @click="startRecording"
                                             fab
                                             outlined
                                             style="width: 60px; height:60px;"
@@ -98,11 +99,11 @@
                                                 mdi-circle
                                             </v-icon>
                                         </v-btn>
-                                        <p v-if="!recording">録音する</p>
+                                        <p v-if="!isRecording">録音する</p>
                                         <v-btn
                                             color="grey darken-2"
-                                            v-if="recording"
-                                            @click="rec_stop"
+                                            v-if="isRecording"
+                                            @click="stopRecording"
                                             fab
                                             outlined
                                             style="width: 60px; height:60px;"
@@ -112,14 +113,14 @@
                                             </v-icon>
                                         </v-btn>
                                         <p
-                                            v-if="recording"
+                                            v-if="isRecording"
                                             class="red--text font-weight-bold"
                                         >
                                             録音中
                                         </p>
                                     </div>
                                     <audio
-                                        v-if="voice_veri && !recording"
+                                        v-if="voice_veri && !isRecording"
                                         class="mt-0 px-auto"
                                         id="player"
                                         controls
@@ -186,11 +187,11 @@ export default {
     },
     data() {
         return {
-            dialog: false, // ボイス投稿フォームダイアログ
+            isOpenPostDialog: false,
             uploading: false, // アップロード中ローディング
             voice: null, // 投稿用
             voices: [], // 一覧表示用
-            title: "", // タイトル投稿用
+            postTitle: "",
             snackbar: false, // スナックバー表示用（投稿が完了）
             timeout: 3000, // スナックバー表示時間（投稿が完了）
             snackbar2: false, // スナックバー表示用（お気に入り機能）
@@ -201,7 +202,7 @@ export default {
             recorder: null, // 音声にアクセスする "MediaRecorder" のインスタンス
             audioData: [], // 入力された音声データ
             audioExtension: "", // 音声ファイルの拡張子
-            recording: null, // 録音中か判定する
+            isRecording: null, // 録音中か判定する
             localstream: null,
             voice_veri: false // 録音後の音声確認
         };
@@ -220,7 +221,7 @@ export default {
             this.voice = event.target.files[0];
         },
         reset() {
-            this.title = "";
+            this.postTitle = "";
             this.voice = null;
             // this.$el.querySelector('input[type="file"]').value = null; なぜかエラーでる
         },
@@ -229,14 +230,12 @@ export default {
         },
         async submit() {
             const formData = new FormData();
-            formData.append("title", this.title);
+            formData.append("title", this.postTitle);
             formData.append("voice", this.voice);
 
-            this.dialog = false;
+            this.isOpenPostDialog = false;
             this.uploading = true;
             this.voice_veri = false;
-            const waitTime = () => console.log("1500ms待機");
-            setTimeout(waitTime, 1500);
             const response = await axios.post("/api/voices", formData);
 
             if (response.status === UNPROCESSABLE_ENTITY) {
@@ -244,7 +243,7 @@ export default {
                     "voicePost/setVoicePostErrorMessages",
                     response.data.errors
                 );
-                this.dialog = true;
+                this.isOpenPostDialog = true;
                 this.uploading = false;
                 return false;
             }
@@ -256,8 +255,8 @@ export default {
             this.moveToTop();
         },
         clickCloseButton() {
-            this.dialog = false;
-            this.recording = false;
+            this.isOpenPostDialog = false;
+            this.isRecording = false;
             this.uploading = false;
             this.voice_veri = false;
             this.reset();
@@ -273,10 +272,10 @@ export default {
 
             this.voices = response.data.data;
         },
-        // 録音開始
-        rec_start() {
+        startRecording() {
+            this.isRecording = true;
+
             const self = this;
-            this.recording = true;
             navigator.mediaDevices
                 .getUserMedia({ audio: true })
                 .then(function(stream) {
@@ -289,8 +288,7 @@ export default {
                     console.log(e);
                 });
         },
-        // 録音停止
-        rec_stop() {
+        stopRecording() {
             this.recorder.stop();
 
             const self = this;
@@ -303,21 +301,9 @@ export default {
                 );
             };
             this.localstream.getTracks().forEach(track => track.stop());
-            this.recording = false;
+            this.isRecording = false;
             this.voice_veri = true;
         },
-        // 音声ファイルの拡張子取得メソッド
-        getExtension(audioType) {
-            let extension = "wav";
-            const matches = audioType.match(/audio\/([^;]+)/);
-
-            if (matches) {
-                extension = matches[1];
-            }
-
-            return "." + extension;
-        },
-        // いいねクリックメソッド（子コンポーネントから$emit）
         onLikeClick({ id, liked, unliked }) {
             if (liked) {
                 // Goodしている
@@ -331,7 +317,6 @@ export default {
                 this.notUnlike(id);
             }
         },
-        // unlikeクリックメソッド（子コンポーネントから$emit）
         onUnLikeClick({ id, liked, unliked }) {
             if (unliked) {
                 // Badしている
@@ -464,7 +449,6 @@ audio {
     padding-top: 16px;
     padding-bottom: 20px;
     height: 100%;
-    // background-color: #8aa8b0;
     background-color: #eee;
 }
 .plus-button {

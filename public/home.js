@@ -208,6 +208,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -218,16 +219,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      dialog: false,
-      // ボイス投稿フォームダイアログ
+      isOpenPostDialog: false,
       uploading: false,
       // アップロード中ローディング
       voice: null,
       // 投稿用
       voices: [],
       // 一覧表示用
-      title: "",
-      // タイトル投稿用
+      postTitle: "",
       snackbar: false,
       // スナックバー表示用（投稿が完了）
       timeout: 3000,
@@ -246,7 +245,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // 入力された音声データ
       audioExtension: "",
       // 音声ファイルの拡張子
-      recording: null,
+      isRecording: null,
       // 録音中か判定する
       localstream: null,
       voice_veri: false // 録音後の音声確認
@@ -267,7 +266,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.voice = event.target.files[0];
     },
     reset: function reset() {
-      this.title = "";
+      this.postTitle = "";
       this.voice = null; // this.$el.querySelector('input[type="file"]').value = null; なぜかエラーでる
     },
     clearError: function clearError() {
@@ -277,41 +276,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var formData, waitTime, response;
+        var formData, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 formData = new FormData();
-                formData.append("title", _this.title);
+                formData.append("title", _this.postTitle);
                 formData.append("voice", _this.voice);
-                _this.dialog = false;
+                _this.isOpenPostDialog = false;
                 _this.uploading = true;
                 _this.voice_veri = false;
-
-                waitTime = function waitTime() {
-                  return console.log("1500ms待機");
-                };
-
-                setTimeout(waitTime, 1500);
-                _context.next = 10;
+                _context.next = 8;
                 return axios.post("/api/voices", formData);
 
-              case 10:
+              case 8:
                 response = _context.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"])) {
-                  _context.next = 16;
+                  _context.next = 14;
                   break;
                 }
 
                 _this.$store.commit("voicePost/setVoicePostErrorMessages", response.data.errors);
 
-                _this.dialog = true;
+                _this.isOpenPostDialog = true;
                 _this.uploading = false;
                 return _context.abrupt("return", false);
 
-              case 16:
+              case 14:
                 _this.reset();
 
                 _this.snackbar = true;
@@ -321,7 +314,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.moveToTop();
 
-              case 21:
+              case 19:
               case "end":
                 return _context.stop();
             }
@@ -330,8 +323,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     clickCloseButton: function clickCloseButton() {
-      this.dialog = false;
-      this.recording = false;
+      this.isOpenPostDialog = false;
+      this.isRecording = false;
       this.uploading = false;
       this.voice_veri = false;
       this.reset();
@@ -372,10 +365,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    // 録音開始
-    rec_start: function rec_start() {
+    startRecording: function startRecording() {
+      this.isRecording = true;
       var self = this;
-      this.recording = true;
       navigator.mediaDevices.getUserMedia({
         audio: true
       }).then(function (stream) {
@@ -386,8 +378,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         console.log(e);
       });
     },
-    // 録音停止
-    rec_stop: function rec_stop() {
+    stopRecording: function stopRecording() {
       this.recorder.stop();
       var self = this;
 
@@ -401,21 +392,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.localstream.getTracks().forEach(function (track) {
         return track.stop();
       });
-      this.recording = false;
+      this.isRecording = false;
       this.voice_veri = true;
     },
-    // 音声ファイルの拡張子取得メソッド
-    getExtension: function getExtension(audioType) {
-      var extension = "wav";
-      var matches = audioType.match(/audio\/([^;]+)/);
-
-      if (matches) {
-        extension = matches[1];
-      }
-
-      return "." + extension;
-    },
-    // いいねクリックメソッド（子コンポーネントから$emit）
     onLikeClick: function onLikeClick(_ref) {
       var id = _ref.id,
           liked = _ref.liked,
@@ -433,7 +412,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.notUnlike(id);
       }
     },
-    // unlikeクリックメソッド（子コンポーネントから$emit）
     onUnLikeClick: function onUnLikeClick(_ref2) {
       var id = _ref2.id,
           liked = _ref2.liked,
@@ -841,11 +819,11 @@ var render = function() {
             }
           ]),
           model: {
-            value: _vm.dialog,
+            value: _vm.isOpenPostDialog,
             callback: function($$v) {
-              _vm.dialog = $$v
+              _vm.isOpenPostDialog = $$v
             },
-            expression: "dialog"
+            expression: "isOpenPostDialog"
           }
         },
         [
@@ -930,14 +908,16 @@ var render = function() {
                                   _c("v-text-field", {
                                     attrs: {
                                       label: "タイトルを入力",
-                                      required: ""
+                                      required: "",
+                                      clearable: "",
+                                      counter: "12"
                                     },
                                     model: {
-                                      value: _vm.title,
+                                      value: _vm.postTitle,
                                       callback: function($$v) {
-                                        _vm.title = $$v
+                                        _vm.postTitle = $$v
                                       },
-                                      expression: "title"
+                                      expression: "postTitle"
                                     }
                                   })
                                 ],
@@ -983,7 +963,7 @@ var render = function() {
                                     "div",
                                     { staticClass: "text-center mb-7" },
                                     [
-                                      !_vm.recording
+                                      !_vm.isRecording
                                         ? _c(
                                             "v-btn",
                                             {
@@ -996,7 +976,7 @@ var render = function() {
                                                 fab: "",
                                                 outlined: ""
                                               },
-                                              on: { click: _vm.rec_start }
+                                              on: { click: _vm.startRecording }
                                             },
                                             [
                                               _c(
@@ -1018,11 +998,11 @@ var render = function() {
                                           )
                                         : _vm._e(),
                                       _vm._v(" "),
-                                      !_vm.recording
+                                      !_vm.isRecording
                                         ? _c("p", [_vm._v("録音する")])
                                         : _vm._e(),
                                       _vm._v(" "),
-                                      _vm.recording
+                                      _vm.isRecording
                                         ? _c(
                                             "v-btn",
                                             {
@@ -1035,7 +1015,7 @@ var render = function() {
                                                 fab: "",
                                                 outlined: ""
                                               },
-                                              on: { click: _vm.rec_stop }
+                                              on: { click: _vm.stopRecording }
                                             },
                                             [
                                               _c(
@@ -1057,7 +1037,7 @@ var render = function() {
                                           )
                                         : _vm._e(),
                                       _vm._v(" "),
-                                      _vm.recording
+                                      _vm.isRecording
                                         ? _c(
                                             "p",
                                             {
@@ -1075,7 +1055,7 @@ var render = function() {
                                     1
                                   ),
                                   _vm._v(" "),
-                                  _vm.voice_veri && !_vm.recording
+                                  _vm.voice_veri && !_vm.isRecording
                                     ? _c("audio", {
                                         staticClass: "mt-0 px-auto",
                                         attrs: { id: "player", controls: "" }
