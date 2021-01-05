@@ -71,9 +71,9 @@ export default defineComponent({
             timeout2: 3000,
 
             // ログインチェック
-            isLogin: computed(() => context.root.$store.getters["auth/check"]),
+            isLogin: computed(() => context.root.$store.getters["auth/getLoginCheck"]),
             // ユーザーID取得
-            userId: computed(() => context.root.$store.getters["auth/userId"])
+            userId: computed(() => context.root.$store.getters["auth/getUserId"])
         });
 
         const moveToTopOrHomepage = () => {
@@ -131,7 +131,7 @@ export default defineComponent({
                         }
                     }, interval);
                 } else {
-                    context.root.$router.push(`/users/${context.root.userId}`);
+                    context.root.$router.push(`/users/${state.userId}`);
                 }
             } else {
                 state.snackbar2 = true;
