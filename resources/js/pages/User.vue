@@ -29,7 +29,7 @@ import BreadCrumbs from "../components/BreadCrumbs";
 export default {
     computed: {
         userName() {
-            return this.$store.getters["auth/geUserName"];
+            return this.$store.getters["auth/getUserName"];
         },
         userImg() {
             return this.$store.getters["auth/getUserImg"];
