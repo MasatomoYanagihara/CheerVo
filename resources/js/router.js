@@ -8,7 +8,7 @@ const routes = [
     {
         path: "/",
         name: "home",
-        component: () => import(/* webpackChunkName: "home" */ './pages/VoiceList.vue'),
+        component: () => import(/* webpackChunkName: "home" */ './pages/VoiceListPage.vue'),
         meta: {
             title: 'CheerVo',
         },
@@ -16,13 +16,13 @@ const routes = [
     {
         path: "/login",
         name: "login",
-        component: () => import(/* webpackChunkName: "login" */ './pages/Login.vue'),
+        component: () => import(/* webpackChunkName: "loginPage" */ './pages/LoginPage.vue'),
         meta: {
             title: 'CheerVo - ログイン',
         },
         beforeEnter(to, from, next) {
             // getterでログイン状態を確認
-            if (store.getters["auth/check"]) {
+            if (store.getters["auth/getLoginCheck"]) {
                 // ログインしていれば"/login"にアクセスせず"/"に遷移
                 next("/");
             } else {
@@ -33,7 +33,7 @@ const routes = [
     {
         path: "/voices/:id",
         name: "voiceDetail",
-        component: () => import(/* webpackChunkName: "voiceDetail" */ './pages/VoiceDetail.vue'),
+        component: () => import(/* webpackChunkName: "voiceDetailPage" */ './pages/VoiceDetailPage.vue'),
         meta: {
             title: 'CheerVo - ボイス詳細',
         },
@@ -42,7 +42,7 @@ const routes = [
     {
         path: "/register",
         name: "register",
-        component: () => import(/* webpackChunkName: "register" */ './pages/Register.vue'),
+        component: () => import(/* webpackChunkName: "registerPage" */ './pages/RegisterPage.vue'),
         meta: {
             title: 'CheerVo - 会員登録',
         },
@@ -50,7 +50,7 @@ const routes = [
     {
         path: "/search",
         name: "search",
-        component: () => import(/* webpackChunkName: "search" */ './pages/Search.vue'),
+        component: () => import(/* webpackChunkName: "searchPage" */ './pages/SearchPage.vue'),
         meta: {
             title: 'CheerVo - 検索',
         },
@@ -58,7 +58,7 @@ const routes = [
     {
         path: "/users/:id",
         name: "users",
-        component: () => import(/* webpackChunkName: "users" */ './pages/User.vue'),
+        component: () => import(/* webpackChunkName: "user" */ './pages/User.vue'),
         meta: {
             title: 'CheerVo - マイページ',
         },
@@ -66,7 +66,7 @@ const routes = [
     {
         path: "/500",
         name: "systemError",
-        component: () => import(/* webpackChunkName: "systemError" */ './pages/errors/SystemError.vue'),
+        component: () => import(/* webpackChunkName: "systemErrorPage" */ './pages/errors/SystemErrorPages.vue'),
         meta: {
             title: 'CheerVo - システムエラー',
         },
@@ -74,9 +74,9 @@ const routes = [
     {
         path: "*",
         name: "notFound",
-        component: () => import(/* webpackChunkName: "notFound" */ './pages/errors/NotFound.vue'),
+        component: () => import(/* webpackChunkName: "notFoundPage" */ './pages/errors/NotFoundPage.vue'),
         meta: {
-            title: 'CheerV0 - NotFound',
+            title: 'CheerVo - NotFound',
         },
     }
 ];
