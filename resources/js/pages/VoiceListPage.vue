@@ -69,6 +69,7 @@
                                         required
                                         clearable
                                         counter="12"
+                                        color="#FFB74D"
                                         v-model="postTitle"
                                     ></v-text-field>
                                 </v-col>
@@ -131,12 +132,12 @@
                     </v-card-text>
                     <v-card-actions class="pt-0">
                         <v-spacer></v-spacer>
-                        <v-btn @click="submit" color="#F26101" rounded
+                        <v-btn @click="submit" class="mb-2" color="#F26101" rounded
                             ><span class="white--text"
                                 ><strong>投稿する</strong></span
                             ></v-btn
                         >
-                        <v-btn class="px-4" @click="clickCloseButton" rounded
+                        <v-btn @click="clickCloseButton" class="px-4 mb-2 mr-2"  rounded
                             >閉じる</v-btn
                         >
                     </v-card-actions>
