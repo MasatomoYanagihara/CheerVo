@@ -157,7 +157,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <BottomNavigation />
+        <bottom-navigation />
     </div>
 </template>
 
