@@ -1,24 +1,24 @@
 <template>
-    <div class="grobal_wrapper">
+    <div class="grobal-wrapper">
         <v-app>
-            <Navbar />
+            <navbar-component />
             <v-main class="v-main">
-                <RouterView />
+                <router-view />
             </v-main>
-            <Footer />
+            <footer-component />
         </v-app>
     </div>
 </template>
 
 <script>
-import Navbar from "./components/Navbar.vue";
-import Footer from "./components/Footer.vue";
+import NavbarComponent from "./components/NavbarComponent.vue";
+import FooterComponent from "./components/FooterComponent.vue";
 import { NOT_FOUND, INTERNAL_SERVER_ERROR } from "./util";
 
 export default {
     components: {
-        Navbar,
-        Footer
+        NavbarComponent,
+        FooterComponent
     },
     computed: {
         errorCode() {
@@ -50,7 +50,7 @@ a {
 }
 </style>
 <style lang="scss" scoped>
-.grobal_wrapper {
+.grobal-wrapper {
     max-width: 1600px;
     margin: 0 auto;
 }
