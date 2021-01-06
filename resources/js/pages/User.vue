@@ -13,16 +13,16 @@
                 <h2 class="mx-auto">{{ userName }}</h2>
             </div>
             <v-row>
-                <Voice v-for="voice in voices" :key="voice.id" :voice="voice" />
+                <voice-card v-for="voice in voices" :key="voice.id" :voice="voice" />
             </v-row>
         </v-container>
-        <BottomNavigation />
+        <bottom-navigation />
     </div>
 </template>
 
 <script>
 import { OK, UNPROCESSABLE_ENTITY } from "../util";
-import Voice from "../components/Voice.vue";
+import VoiceCard from "../components/VoiceCard.vue";
 import BottomNavigation from "../components/BottomNavigation";
 import BreadCrumbs from "../components/BreadCrumbs";
 

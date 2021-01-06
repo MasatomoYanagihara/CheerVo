@@ -2,7 +2,7 @@
     <div class="wrapper-1">
         <v-container>
             <v-row>
-                <Voice
+                <voice-card
                     v-for="voice in voices"
                     :key="voice.filename"
                     :voice="voice"
@@ -173,17 +173,17 @@
             </template>
         </v-snackbar>
 
-        <BottomNavigation />
+        <bottom-navigation />
     </div>
 </template>
 <script>
 import { OK, UNPROCESSABLE_ENTITY } from "../util";
-import Voice from "../components/Voice.vue";
+import VoiceCard from "../components/VoiceCard.vue";
 import BottomNavigation from "../components/BottomNavigation";
 
 export default {
     components: {
-        Voice,
+        VoiceCard,
         BottomNavigation
     },
     data() {

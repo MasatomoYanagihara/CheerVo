@@ -24,7 +24,7 @@
 
         <v-container>
             <v-row>
-                <Voice
+                <voice-card
                     v-for="voice in searchResultData"
                     :key="voice.filename"
                     :voice="voice"
@@ -62,18 +62,18 @@
             </template>
         </v-snackbar>
 
-        <BottomNavigation />
+        <bottom-navigation />
     </div>
 </template>
 
 <script>
-import Voice from "../components/Voice.vue";
+import VoiceCard from "../components/VoiceCard.vue";
 import BottomNavigation from "../components/BottomNavigation";
 import { defineComponent, reactive, toRefs } from "@vue/composition-api";
 
 export default defineComponent({
     components: {
-        Voice,
+        VoiceCard,
         BottomNavigation
     },
     setup(prop, context) {
